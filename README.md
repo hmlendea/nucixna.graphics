@@ -3,3 +3,17 @@
 # About
 
 Graphics management for the NuciXNA wrapper over MonoGame/XNA.
+
+# Installation
+
+[![Get it from NuGet](https://raw.githubusercontent.com/hmlendea/readme-assets/master/badges/stores/nuget.png)](https://nuget.org/packages/NuciXNA.Graphics)
+
+**.NET CLI**:
+```bash
+dotnet add package NuciXNA.Graphics
+```
+
+**Package Manager**:
+```powershell
+Install-Package NuciXNA.Graphics
+```

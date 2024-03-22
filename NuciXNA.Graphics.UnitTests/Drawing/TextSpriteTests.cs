@@ -28,7 +28,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
 
             textSprite.LoadContent();
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
 
             textSprite.LoadContent();
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -56,14 +56,14 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
 
             textSprite.LoadContent();
 
-            Assert.IsTrue(firstEventTime < lastEventTime);
+            Assert.That(firstEventTime < lastEventTime);
         }
 
         [Test]
         public void UnloadContent_ContentNotLoaded_ThrowsInvalidOperationException()
         {
             TextSprite textSprite = new TextSprite();
-            
+
             Assert.Throws<InvalidOperationException>(() => textSprite.UnloadContent());
         }
 
@@ -78,7 +78,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
             textSprite.LoadContent();
             textSprite.UnloadContent();
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
             textSprite.LoadContent();
             textSprite.UnloadContent();
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -108,14 +108,14 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
             textSprite.LoadContent();
             textSprite.UnloadContent();
 
-            Assert.IsTrue(firstEventTime < lastEventTime);
+            Assert.That(firstEventTime < lastEventTime);
         }
 
         [Test]
         public void Update_ContentNotLoaded_ThrowsInvalidOperationException()
         {
             TextSprite textSprite = new TextSprite();
-            
+
             Assert.Throws<InvalidOperationException>(() => textSprite.Update(null));
         }
 
@@ -130,7 +130,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
             textSprite.LoadContent();
             textSprite.Update(null);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
             textSprite.LoadContent();
             textSprite.Update(null);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -160,14 +160,14 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
             textSprite.LoadContent();
             textSprite.Update(null);
 
-            Assert.IsTrue(firstEventTime < lastEventTime);
+            Assert.That(firstEventTime < lastEventTime);
         }
 
         [Test]
         public void Draw_ContentNotLoaded_ThrowsInvalidOperationException()
         {
             TextSprite textSprite = new TextSprite();
-            
+
             Assert.Throws<InvalidOperationException>(() => textSprite.Draw(null));
         }
 
@@ -182,7 +182,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
             textSprite.LoadContent();
             textSprite.Draw(null);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -196,7 +196,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
             textSprite.LoadContent();
             textSprite.Draw(null);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -212,16 +212,16 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
             textSprite.LoadContent();
             textSprite.Draw(null);
 
-            Assert.IsTrue(firstEventTime < lastEventTime);
+            Assert.That(firstEventTime < lastEventTime);
         }
-        
+
         [Test]
         public void GetIsDisposed_NotDisposed_ReturnsFalse()
         {
             TextSprite textSprite = new TextSprite();
             textSprite.LoadContent();
 
-            Assert.IsFalse(textSprite.IsDisposed);
+            Assert.That(textSprite.IsDisposed, Is.False);
         }
     }
 }

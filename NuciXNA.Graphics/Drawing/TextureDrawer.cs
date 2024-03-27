@@ -12,7 +12,7 @@ namespace NuciXNA.Graphics.Drawing
 
         private static SpriteSortMode currentSpriteSortMode = DefaultSpriteSortMode;
         private static SamplerState currentSamplerState = DefaultSamplerState;
-        
+
         public static void Draw(
             SpriteBatch spriteBatch,
             Texture2D texture,
@@ -25,30 +25,37 @@ namespace NuciXNA.Graphics.Drawing
             Scale2D scale,
             TextureLayout textureLayout)
         {
-            Vector2 loc = location.ToXnaVector2();
-            Color colour = tint.ToXnaColor();
+            Color textureColour = tint.ToXnaColor();
             float layerDepth = 0.0f;
 
-            colour.A = (byte)(colour.A * opacity);
+            textureColour.A = (byte)(textureColour.A * opacity);
 
             if (textureLayout == TextureLayout.Tile)
             {
-                SetSpriteBatchProperties(spriteBatch, SpriteSortMode.Immediate, SamplerState.LinearWrap);
+                SetSpriteBatchProperties(spriteBatch, SpriteSortMode.Deferred, SamplerState.PointWrap);
+
+                sourceRectangle = new Rectangle2D(
+                    sourceRectangle.Location.X,
+                    sourceRectangle.Location.Y,
+                    (int)(sourceRectangle.Size.Width * scale.Horizontal),
+                    (int)(sourceRectangle.Size.Height * scale.Vertical));
+
+                scale = Scale2D.One;
             }
             else if (textureLayout == TextureLayout.Stretch)
             {
                 SetSpriteBatchProperties(spriteBatch, DefaultSpriteSortMode, DefaultSamplerState);
 
-                loc = new Vector2(
+                location = new Point2D(
                     location.X + (int)(sourceRectangle.Width * scale.Horizontal) / 2,
                     location.Y + (int)(sourceRectangle.Height * scale.Vertical) / 2);
             }
 
             spriteBatch.Draw(
                 texture,
-                loc,
+                location.ToXnaVector2(),
                 sourceRectangle.ToXnaRectangle(),
-                colour,
+                textureColour,
                 rotation,
                 origin.ToXnaVector2(),
                 scale.ToXnaVector2(),
@@ -79,7 +86,7 @@ namespace NuciXNA.Graphics.Drawing
             if (beginBatchAgain)
             {
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Immediate, null, samplerState);
+                spriteBatch.Begin(spriteSortMode, null, samplerState);
             }
         }
     }

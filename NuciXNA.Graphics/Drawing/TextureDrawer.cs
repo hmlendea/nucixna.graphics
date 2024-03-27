@@ -1,5 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
 using NuciXNA.Primitives;
 using NuciXNA.Primitives.Mapping;
 
@@ -47,8 +50,8 @@ namespace NuciXNA.Graphics.Drawing
                 SetSpriteBatchProperties(spriteBatch, DefaultSpriteSortMode, DefaultSamplerState);
 
                 location = new Point2D(
-                    location.X + (int)(sourceRectangle.Width * scale.Horizontal) / 2,
-                    location.Y + (int)(sourceRectangle.Height * scale.Vertical) / 2);
+                    location.X + (int)(sourceRectangle.Width * scale.Horizontal) / 2 - (int)Math.Round(scale.Horizontal / 2),
+                    location.Y + (int)(sourceRectangle.Height * scale.Vertical) / 2 - (int)Math.Round(scale.Vertical / 2));
             }
 
             spriteBatch.Draw(

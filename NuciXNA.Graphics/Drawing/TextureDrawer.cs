@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,7 +10,19 @@ namespace NuciXNA.Graphics.Drawing
     public class TextureDrawer
     {
         private static readonly SpriteSortMode DefaultSpriteSortMode = SpriteSortMode.Deferred;
-        private static readonly SamplerState DefaultSamplerState = SamplerState.LinearClamp;
+        private static readonly SamplerState DefaultSamplerState = new SamplerState()
+        {
+            AddressU = SamplerState.LinearClamp.AddressU,
+            AddressV = SamplerState.LinearClamp.AddressV,
+            AddressW = SamplerState.LinearClamp.AddressW,
+            BorderColor = SamplerState.LinearClamp.BorderColor,
+            ComparisonFunction = SamplerState.LinearClamp.ComparisonFunction,
+            Filter = SamplerState.LinearClamp.Filter,
+            FilterMode = SamplerState.LinearClamp.FilterMode,
+            MaxAnisotropy = SamplerState.LinearClamp.MaxAnisotropy,
+            MaxMipLevel = SamplerState.LinearClamp.MaxMipLevel,
+            MipMapLevelOfDetailBias = -1f
+        };
 
         private static SpriteSortMode currentSpriteSortMode = DefaultSpriteSortMode;
         private static SamplerState currentSamplerState = DefaultSamplerState;
@@ -47,11 +58,13 @@ namespace NuciXNA.Graphics.Drawing
             }
             else if (textureLayout == TextureLayout.Stretch)
             {
+                Size2D targetSize = sourceRectangle.Size * scale;
+
                 SetSpriteBatchProperties(spriteBatch, DefaultSpriteSortMode, DefaultSamplerState);
 
-                location = new Point2D(
-                    location.X + (int)(sourceRectangle.Width * scale.Horizontal) / 2 - (int)Math.Round(scale.Horizontal / 2),
-                    location.Y + (int)(sourceRectangle.Height * scale.Vertical) / 2 - (int)Math.Round(scale.Vertical / 2));
+                location += new Point2D(
+                    targetSize.Width / 2 - (int)Math.Round(scale.Horizontal / 2),
+                    targetSize.Height / 2 - (int)Math.Round(scale.Vertical / 2));
             }
 
             spriteBatch.Draw(

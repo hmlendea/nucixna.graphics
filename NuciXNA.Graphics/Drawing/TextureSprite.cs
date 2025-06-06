@@ -36,7 +36,7 @@ namespace NuciXNA.Graphics.Drawing
         /// Gets the texture size.
         /// </summary>
         /// <value>The texture size.</value>
-        public Size2D TextureSize => new Size2D(Texture.Width, Texture.Height);
+        public Size2D TextureSize => new(Texture.Width, Texture.Height);
 
         /// <summary>
         /// Gets or sets the source rectangle.
@@ -48,16 +48,10 @@ namespace NuciXNA.Graphics.Drawing
         /// Gets the covered screen area.
         /// </summary>
         /// <value>The covered screen area.</value>
-        public override Rectangle2D ClientRectangle
-        {
-            get
-            {
-                return new Rectangle2D(
-                    Location,
-                    (int)(SourceRectangle.Width * Scale.Horizontal),
-                    (int)(SourceRectangle.Height * Scale.Vertical));
-            }
-        }
+        public override Rectangle2D ClientRectangle => new(
+            Location,
+            (int)(SourceRectangle.Width * Scale.Horizontal),
+            (int)(SourceRectangle.Height * Scale.Vertical));
 
         /// <summary>
         /// Gets or sets the fill mode.
@@ -87,7 +81,7 @@ namespace NuciXNA.Graphics.Drawing
         {
             get
             {
-                if (SpriteSheetEffect == null || !SpriteSheetEffect.IsActive)
+                if (SpriteSheetEffect is null || !SpriteSheetEffect.IsActive)
                 {
                     return SourceRectangle;
                 }
@@ -106,17 +100,17 @@ namespace NuciXNA.Graphics.Drawing
         {
             Texture = LoadTexture();
 
-            if (SpriteSize == Size2D.Empty)
+            if (SpriteSize.Equals(Size2D.Empty))
             {
                 Size2D size;
 
-                if (Texture != null)
+                if (Texture is not null)
                 {
                     size = TextureSize;
                 }
                 else
                 {
-                    size = new Size2D(1, 1);
+                    size = new(1, 1);
                 }
 
                 SpriteSize = size;
@@ -127,14 +121,14 @@ namespace NuciXNA.Graphics.Drawing
                 SourceRectangle = new Rectangle2D(Point2D.Empty, SpriteSize);
             }
 
-            RenderTarget2D renderTarget = new RenderTarget2D(
+            RenderTarget2D renderTarget = new(
                 GraphicsManager.Instance.Graphics.GraphicsDevice,
                 SpriteSize.Width, SpriteSize.Height);
 
             GraphicsManager.Instance.Graphics.GraphicsDevice.SetRenderTarget(renderTarget);
             GraphicsManager.Instance.Graphics.GraphicsDevice.Clear(Color.Transparent);
 
-            if (Texture != null)
+            if (Texture is not null)
             {
                 GraphicsManager.Instance.SpriteBatch.Begin();
                 GraphicsManager.Instance.SpriteBatch.Draw(Texture, Vector2.Zero, Color.White);
@@ -144,8 +138,8 @@ namespace NuciXNA.Graphics.Drawing
             Texture = renderTarget;
 
             GraphicsManager.Instance.Graphics.GraphicsDevice.SetRenderTarget(null);
-            
-            if (!(SpriteSheetEffect is null) && !SpriteSheetEffect.IsContentLoaded)
+
+            if (SpriteSheetEffect is not null && !SpriteSheetEffect.IsContentLoaded)
             {
                 SpriteSheetEffect.LoadContent(this);
             }
@@ -181,10 +175,7 @@ namespace NuciXNA.Graphics.Drawing
         /// </summary>
         /// <param name="spriteBatch">Sprite batch.</param>
         protected override void DoDraw(SpriteBatch spriteBatch)
-        {
-            Point2D origin = new Point2D(SourceRectangle.Size / 2);
-
-            TextureDrawer.Draw(
+            => TextureDrawer.Draw(
                 spriteBatch,
                 Texture,
                 Location,
@@ -192,10 +183,9 @@ namespace NuciXNA.Graphics.Drawing
                 Tint,
                 ClientOpacity,
                 ClientRotation,
-                origin,
+                new(SourceRectangle.Size / 2),
                 ClientScale,
                 TextureLayout);
-        }
 
         Texture2D LoadTexture()
         {
@@ -220,7 +210,7 @@ namespace NuciXNA.Graphics.Drawing
             return texture;
         }
 
-        Texture2D TextureBlend(Texture2D source, Texture2D mask)
+        static Texture2D TextureBlend(Texture2D source, Texture2D mask)
         {
             Color[] textureBits = new Color[source.Width * source.Height];
             Color[] maskBits = new Color[mask.Width * mask.Height];
@@ -264,7 +254,7 @@ namespace NuciXNA.Graphics.Drawing
                     textureBits[indexTexture].A - 255 + maskBits[indexMask].R);
             }));
 
-            Texture2D blendedTexture = new Texture2D(source.GraphicsDevice, source.Width, source.Height);
+            Texture2D blendedTexture = new(source.GraphicsDevice, source.Width, source.Height);
             blendedTexture.SetData(textureBits);
 
             return blendedTexture;

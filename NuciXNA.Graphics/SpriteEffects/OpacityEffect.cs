@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-
-using NuciXNA.Graphics.Drawing;
+﻿using NuciXNA.Graphics.Drawing;
 
 namespace NuciXNA.Graphics.SpriteEffects
 {
@@ -16,9 +14,9 @@ namespace NuciXNA.Graphics.SpriteEffects
         public float Speed { get; set; }
 
         public float CurrentMultiplier { get; set; }
-        
+
         public float MinimumMultiplier { get; set; }
-        
+
         public float MaximumMultiplier { get; set; }
 
         /// <summary>
@@ -42,17 +40,11 @@ namespace NuciXNA.Graphics.SpriteEffects
         /// <summary>
         /// Loads the content.
         /// </summary>
-        protected override void DoLoadContent()
-        {
-            
-        }
+        protected override void DoLoadContent() { }
 
         /// <summary>
         /// Unloads the content.
         /// </summary>
-        protected override void DoUnloadContent()
-        {
-
-        }
+        protected override void DoUnloadContent() { }
     }
 }

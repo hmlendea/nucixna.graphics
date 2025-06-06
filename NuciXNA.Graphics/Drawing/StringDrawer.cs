@@ -30,7 +30,7 @@ namespace NuciXNA.Graphics.Drawing
             Vector2 textOrigin = Vector2.Zero;
             Vector2 totalSize = font.MeasureString(text);
             Color clrOutline = outlineColour.ToXnaColor();
-            
+
             string[] lines = text.Split('\n');
 
             if (verticalAlignment == Alignment.Middle)
@@ -65,20 +65,20 @@ namespace NuciXNA.Graphics.Drawing
                     {
                         for (int dy = -1; dy <= 1; dy++)
                         {
-                            Vector2 pos = new Vector2(
+                            Vector2 pos = new(
                                 bounds.X + dx + textOrigin.X,
                                 bounds.Y + dy + textOrigin.Y);
-                            
+
                             spriteBatch.DrawString(font, line, pos, clrOutline);
                         }
                     }
                 }
                 else if (outline == FontOutline.BottomRight)
                 {
-                    Vector2 pos = new Vector2(
+                    Vector2 pos = new(
                         bounds.X + 1 + textOrigin.X,
                         bounds.Y + 1 + textOrigin.Y);
-                    
+
                     spriteBatch.DrawString(font, line, pos, clrOutline);
                 }
 
@@ -87,7 +87,7 @@ namespace NuciXNA.Graphics.Drawing
                 textOrigin.Y += lineSize.Y;
             }
         }
-        
+
         /// <summary>
         /// Wraps the text on multiple lines.
         /// </summary>
@@ -98,7 +98,7 @@ namespace NuciXNA.Graphics.Drawing
         static string WrapText(SpriteFont font, string text, float maxLineWidth)
         {
             string[] words = text.Split(' ');
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             float lineWidth = 0f;
             float spaceWidth = font.MeasureString(" ").X;
 

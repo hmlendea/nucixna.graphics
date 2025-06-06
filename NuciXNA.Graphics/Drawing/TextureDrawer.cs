@@ -10,7 +10,7 @@ namespace NuciXNA.Graphics.Drawing
     public class TextureDrawer
     {
         private static readonly SpriteSortMode DefaultSpriteSortMode = SpriteSortMode.Deferred;
-        private static readonly SamplerState DefaultSamplerState = new SamplerState()
+        private static readonly SamplerState DefaultSamplerState = new()
         {
             AddressU = SamplerState.LinearClamp.AddressU,
             AddressV = SamplerState.LinearClamp.AddressV,
@@ -44,7 +44,7 @@ namespace NuciXNA.Graphics.Drawing
 
             textureColour.A = (byte)(textureColour.A * opacity);
 
-            if (textureLayout == TextureLayout.Tile)
+            if (textureLayout.Equals(TextureLayout.Tile))
             {
                 SetSpriteBatchProperties(spriteBatch, SpriteSortMode.Deferred, SamplerState.PointWrap);
 
@@ -56,7 +56,7 @@ namespace NuciXNA.Graphics.Drawing
 
                 scale = Scale2D.One;
             }
-            else if (textureLayout == TextureLayout.Stretch)
+            else if (textureLayout.Equals(TextureLayout.Stretch))
             {
                 Size2D targetSize = sourceRectangle.Size * scale;
 
@@ -86,13 +86,13 @@ namespace NuciXNA.Graphics.Drawing
         {
             bool beginBatchAgain = false;
 
-            if (spriteSortMode != currentSpriteSortMode)
+            if (!spriteSortMode.Equals(currentSpriteSortMode))
             {
                 currentSpriteSortMode = spriteSortMode;
                 beginBatchAgain = true;
             }
 
-            if (samplerState != currentSamplerState)
+            if (!samplerState.Equals(currentSamplerState))
             {
                 currentSamplerState = samplerState;
                 beginBatchAgain = true;

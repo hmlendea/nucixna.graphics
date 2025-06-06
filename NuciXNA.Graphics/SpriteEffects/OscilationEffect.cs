@@ -14,8 +14,7 @@ namespace NuciXNA.Graphics.SpriteEffects
         /// <summaryOscilationEffect
         /// Initializes a new instance of the <see cref="RotationEffect"/> class.
         /// </summary>
-        public OscilationEffect()
-            : base()
+        public OscilationEffect() : base()
         {
             MinimumMultiplier = 0.5f;
             MaximumMultiplier = 1.5f;

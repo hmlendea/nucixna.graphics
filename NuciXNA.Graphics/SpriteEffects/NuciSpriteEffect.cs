@@ -29,8 +29,8 @@ namespace NuciXNA.Graphics.SpriteEffects
         /// Gets the key.
         /// </summary>
         /// <value>The key.</value>
-        public string Key { get { return Type.ToString().Split('.').Last(); } }
-        
+        public string Key => Type.ToString().Split('.').Last();
+
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="NuciSpriteEffect"/>'s content is loaded.
         /// </summary>
@@ -116,15 +116,9 @@ namespace NuciXNA.Graphics.SpriteEffects
         /// <summary>
         /// Initializes a new instance of the <see cref="NuciSpriteEffect"/> class.
         /// </summary>
-        public NuciSpriteEffect()
-        {
-            Type = GetType();
-        }
+        public NuciSpriteEffect() => Type = GetType();
 
-        ~NuciSpriteEffect()
-        {
-            Dispose();
-        }
+        ~NuciSpriteEffect() => Dispose();
 
         /// <summary>
         /// Loads the content.
@@ -176,7 +170,7 @@ namespace NuciXNA.Graphics.SpriteEffects
             {
                 throw new InvalidOperationException("Content not loaded");
             }
-            
+
             if (!IsActive)
             {
                 return;
@@ -188,7 +182,7 @@ namespace NuciXNA.Graphics.SpriteEffects
 
             Updated?.Invoke(this, EventArgs.Empty);
         }
-        
+
         /// <summary>
         /// Disposes of this <see cref="NuciSpriteEffect"/>.
         /// </summary>
@@ -231,7 +225,7 @@ namespace NuciXNA.Graphics.SpriteEffects
 
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
-        
+
         /// <summary>
         /// Loads the content.
         /// </summary>

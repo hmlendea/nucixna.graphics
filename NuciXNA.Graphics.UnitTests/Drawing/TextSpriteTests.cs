@@ -3,16 +3,15 @@ using System;
 using NUnit.Framework;
 
 using NuciXNA.Graphics.Drawing;
-using NuciXNA.Primitives;
 
-namespace NuciXNA.UnitTests.Graphics.Drawing
+namespace NuciXNA.Graphics.UnitTests.Drawing
 {
     public class TextSpriteTests
     {
         [Test]
         public void LoadContent_ContentAlreadyLoaded_ThrowsInvalidOperationException()
         {
-            TextSprite textSprite = new TextSprite();
+            TextSprite textSprite = new();
             textSprite.LoadContent();
 
             Assert.Throws<InvalidOperationException>(() => textSprite.LoadContent());
@@ -23,7 +22,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new TextSprite();
+            TextSprite textSprite = new();
             textSprite.ContentLoading += delegate { eventFired = true; };
 
             textSprite.LoadContent();
@@ -36,7 +35,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new TextSprite();
+            TextSprite textSprite = new();
             textSprite.ContentLoaded += delegate { eventFired = true; };
 
             textSprite.LoadContent();
@@ -50,7 +49,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
             DateTime firstEventTime = DateTime.Now;
             DateTime lastEventTime = DateTime.Now;
 
-            TextSprite textSprite = new TextSprite();
+            TextSprite textSprite = new();
             textSprite.ContentLoading += delegate { firstEventTime = DateTime.Now; };
             textSprite.ContentLoading += delegate { lastEventTime = DateTime.Now; };
 
@@ -61,18 +60,14 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
 
         [Test]
         public void UnloadContent_ContentNotLoaded_ThrowsInvalidOperationException()
-        {
-            TextSprite textSprite = new TextSprite();
-
-            Assert.Throws<InvalidOperationException>(() => textSprite.UnloadContent());
-        }
+            => Assert.Throws<InvalidOperationException>(() => new TextSprite().UnloadContent());
 
         [Test]
         public void UnloadContent_FiresContentUnloading()
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new TextSprite();
+            TextSprite textSprite = new();
             textSprite.ContentUnloading += delegate { eventFired = true; };
 
             textSprite.LoadContent();
@@ -86,7 +81,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new TextSprite();
+            TextSprite textSprite = new();
             textSprite.ContentUnloaded += delegate { eventFired = true; };
 
             textSprite.LoadContent();
@@ -101,7 +96,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
             DateTime firstEventTime = DateTime.Now;
             DateTime lastEventTime = DateTime.Now;
 
-            TextSprite textSprite = new TextSprite();
+            TextSprite textSprite = new();
             textSprite.ContentUnloading += delegate { firstEventTime = DateTime.Now; };
             textSprite.ContentUnloading += delegate { lastEventTime = DateTime.Now; };
 
@@ -113,18 +108,14 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
 
         [Test]
         public void Update_ContentNotLoaded_ThrowsInvalidOperationException()
-        {
-            TextSprite textSprite = new TextSprite();
-
-            Assert.Throws<InvalidOperationException>(() => textSprite.Update(null));
-        }
+            => Assert.Throws<InvalidOperationException>(() => new TextSprite().Update(null));
 
         [Test]
         public void Update_FiresUpdating()
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new TextSprite();
+            TextSprite textSprite = new();
             textSprite.Updating += delegate { eventFired = true; };
 
             textSprite.LoadContent();
@@ -138,7 +129,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new TextSprite();
+            TextSprite textSprite = new();
             textSprite.Updated += delegate { eventFired = true; };
 
             textSprite.LoadContent();
@@ -153,7 +144,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
             DateTime firstEventTime = DateTime.Now;
             DateTime lastEventTime = DateTime.Now;
 
-            TextSprite textSprite = new TextSprite();
+            TextSprite textSprite = new();
             textSprite.Updating += delegate { firstEventTime = DateTime.Now; };
             textSprite.Updating += delegate { lastEventTime = DateTime.Now; };
 
@@ -165,18 +156,14 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
 
         [Test]
         public void Draw_ContentNotLoaded_ThrowsInvalidOperationException()
-        {
-            TextSprite textSprite = new TextSprite();
-
-            Assert.Throws<InvalidOperationException>(() => textSprite.Draw(null));
-        }
+            => Assert.Throws<InvalidOperationException>(() => new TextSprite().Draw(null));
 
         [Test]
         public void Draw_FiresDrawing()
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new TextSprite();
+            TextSprite textSprite = new();
             textSprite.Drawing += delegate { eventFired = true; };
 
             textSprite.LoadContent();
@@ -190,7 +177,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new TextSprite();
+            TextSprite textSprite = new();
             textSprite.Drawn += delegate { eventFired = true; };
 
             textSprite.LoadContent();
@@ -205,7 +192,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
             DateTime firstEventTime = DateTime.Now;
             DateTime lastEventTime = DateTime.Now;
 
-            TextSprite textSprite = new TextSprite();
+            TextSprite textSprite = new();
             textSprite.Drawing += delegate { firstEventTime = DateTime.Now; };
             textSprite.Drawing += delegate { lastEventTime = DateTime.Now; };
 
@@ -218,7 +205,7 @@ namespace NuciXNA.UnitTests.Graphics.Drawing
         [Test]
         public void GetIsDisposed_NotDisposed_ReturnsFalse()
         {
-            TextSprite textSprite = new TextSprite();
+            TextSprite textSprite = new();
             textSprite.LoadContent();
 
             Assert.That(textSprite.IsDisposed, Is.False);

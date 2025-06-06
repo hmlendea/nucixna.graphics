@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Threading;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using NuciXNA.Primitives;
@@ -11,8 +12,8 @@ namespace NuciXNA.Graphics
     public class GraphicsManager
     {
         static volatile GraphicsManager instance;
-        static object syncRoot = new object();
-        
+        static readonly Lock syncRoot = new();
+
         /// <summary>
         /// Gets the instance.
         /// </summary>
@@ -25,17 +26,14 @@ namespace NuciXNA.Graphics
                 {
                     lock (syncRoot)
                     {
-                        if (instance == null)
-                        {
-                            instance = new GraphicsManager();
-                        }
+                        instance ??= new GraphicsManager();
                     }
                 }
 
                 return instance;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the graphics device manager.
         /// </summary>
@@ -48,6 +46,6 @@ namespace NuciXNA.Graphics
         /// <value>The sprite batch.</value>
         public SpriteBatch SpriteBatch { get; set; }
 
-        public Size2D BackBufferSize => new Size2D(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
+        public Size2D BackBufferSize => new(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
     }
 }

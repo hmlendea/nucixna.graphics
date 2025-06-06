@@ -50,7 +50,7 @@ namespace NuciXNA.Graphics.Drawing
         /// </summary>
         /// <value>The covered screen area.</value>
         public override Rectangle2D ClientRectangle
-            => new Rectangle2D(Location, SpriteSize);
+            => new(Location, SpriteSize);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Sprite"/> class.
@@ -79,7 +79,7 @@ namespace NuciXNA.Graphics.Drawing
             if (SpriteSize == Size2D.Empty)
             {
                 Size2D size;
-                
+
                 if (!string.IsNullOrEmpty(Text))
                 {
                     size = new Size2D(
@@ -108,10 +108,7 @@ namespace NuciXNA.Graphics.Drawing
         /// Updates the content.
         /// </summary>
         /// <param name="gameTime">Game time.</param>
-        protected override void DoUpdate(GameTime gameTime)
-        {
-            
-        }
+        protected override void DoUpdate(GameTime gameTime) { }
 
         /// <summary>
         /// Draws the content.
@@ -124,12 +121,10 @@ namespace NuciXNA.Graphics.Drawing
                 return;
             }
 
-            string wrappedText = WrapText(font, Text, SpriteSize.Width);
-            
             StringDrawer.Draw(
                 spriteBatch,
                 font,
-                wrappedText,
+                WrapText(font, Text, SpriteSize.Width),
                 ClientRectangle,
                 Tint,
                 OutlineColour,
@@ -146,7 +141,7 @@ namespace NuciXNA.Graphics.Drawing
         /// <param name="font">Font.</param>
         /// <param name="text">Text.</param>
         /// <param name="maxLineWidth">Maximum line width.</param>
-        string WrapText(SpriteFont font, string text, float maxLineWidth)
+        static string WrapText(SpriteFont font, string text, float maxLineWidth)
         {
             if (font.MeasureString(text).X <= maxLineWidth)
             {
@@ -154,7 +149,7 @@ namespace NuciXNA.Graphics.Drawing
             }
 
             string[] words = text.Split(' ');
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             float lineWidth = 0f;
             float spaceWidth = font.MeasureString(" ").X;
 

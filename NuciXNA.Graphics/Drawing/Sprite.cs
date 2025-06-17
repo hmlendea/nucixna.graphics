@@ -13,6 +13,8 @@ namespace NuciXNA.Graphics.Drawing
     /// </summary>
     public abstract class Sprite : IDisposable
     {
+        private Rectangle2D clientRectangle = Rectangle2D.Empty;
+
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="Sprite"/> is active.
         /// </summary>
@@ -36,7 +38,7 @@ namespace NuciXNA.Graphics.Drawing
         /// </summary>
         /// <value>The rotation.</value>
         public float Rotation { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the location.
         /// </summary>
@@ -60,6 +62,12 @@ namespace NuciXNA.Graphics.Drawing
         /// </summary>
         /// <value>The covered screen area.</value>
         public abstract Rectangle2D ClientRectangle { get; }
+
+        /// <summary>
+        /// Gets or sets the movement effect.
+        /// </summary>
+        /// <value>The movement effect.</value>
+        public MovementEffect MovementEffect { get; set; }
 
         /// <summary>
         /// Gets or sets the opacity effect.
@@ -89,7 +97,7 @@ namespace NuciXNA.Graphics.Drawing
                 {
                     value *= OpacityEffect.CurrentMultiplier;
                 }
-                
+
                 return value;
             }
         }
@@ -121,7 +129,7 @@ namespace NuciXNA.Graphics.Drawing
                         Scale.Horizontal * ScaleEffect.CurrentHorizontalMultiplier,
                         Scale.Vertical * ScaleEffect.CurrentVerticalMultiplier);
                 }
-                
+
                 return value;
             }
         }
@@ -220,6 +228,7 @@ namespace NuciXNA.Graphics.Drawing
 
             ContentLoading?.Invoke(this, EventArgs.Empty);
 
+            LoadEffect(MovementEffect);
             LoadEffect(OpacityEffect);
             LoadEffect(RotationEffect);
             LoadEffect(ScaleEffect);
@@ -242,6 +251,7 @@ namespace NuciXNA.Graphics.Drawing
 
             ContentUnloading?.Invoke(this, EventArgs.Empty);
 
+            MovementEffect?.UnloadContent();
             OpacityEffect?.UnloadContent();
             RotationEffect?.UnloadContent();
             ScaleEffect?.UnloadContent();
@@ -265,12 +275,18 @@ namespace NuciXNA.Graphics.Drawing
 
             Updating?.Invoke(this, EventArgs.Empty);
 
+            MovementEffect?.Update(gameTime);
             OpacityEffect?.Update(gameTime);
             RotationEffect?.Update(gameTime);
             ScaleEffect?.Update(gameTime);
 
             DoUpdate(gameTime);
             Updated?.Invoke(this, EventArgs.Empty);
+
+            if (MovementEffect is not null && !MovementEffect.IsActive)
+            {
+                Location += MovementEffect.LocationOffset;
+            }
         }
 
         /// <summary>
@@ -290,7 +306,7 @@ namespace NuciXNA.Graphics.Drawing
 
             Drawn?.Invoke(this, EventArgs.Empty);
         }
-        
+
         /// <summary>
         /// Disposes of this <see cref="Sprite"/>.
         /// </summary>

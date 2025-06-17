@@ -48,10 +48,22 @@ namespace NuciXNA.Graphics.Drawing
         /// Gets the covered screen area.
         /// </summary>
         /// <value>The covered screen area.</value>
-        public override Rectangle2D ClientRectangle => new(
-            Location,
-            (int)(SourceRectangle.Width * Scale.Horizontal),
-            (int)(SourceRectangle.Height * Scale.Vertical));
+        public override Rectangle2D ClientRectangle
+        {
+            get
+            {
+                Point2D loc = Location;
+
+                if (MovementEffect is not null && MovementEffect.IsActive)
+                {
+                    loc += MovementEffect.LocationOffset;
+                }
+
+                return new Rectangle2D(loc,
+                    (int)(SourceRectangle.Width * Scale.Horizontal),
+                    (int)(SourceRectangle.Height * Scale.Vertical));
+            }
+        }
 
         /// <summary>
         /// Gets or sets the fill mode.
@@ -178,7 +190,7 @@ namespace NuciXNA.Graphics.Drawing
             => TextureDrawer.Draw(
                 spriteBatch,
                 Texture,
-                Location,
+                ClientRectangle.Location,
                 ClientSourceRectangle,
                 Tint,
                 ClientOpacity,

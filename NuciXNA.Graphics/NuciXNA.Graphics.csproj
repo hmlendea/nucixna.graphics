@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>NuciXNA.Graphics</RootNamespace>
-    <Version>2.1.1</Version>
+    <Version>2.2.0</Version>
     <Description>Graphics management for NuciXNA</Description>
     <Authors>Horațiu Mlendea</Authors>
     <Copyright>Copyright 2025 © Horațiu Mlendea</Copyright>

@@ -50,7 +50,19 @@ namespace NuciXNA.Graphics.Drawing
         /// </summary>
         /// <value>The covered screen area.</value>
         public override Rectangle2D ClientRectangle
-            => new(Location, SpriteSize);
+        {
+            get
+            {
+                Point2D loc = Location;
+
+                if (MovementEffect is not null && MovementEffect.IsActive)
+                {
+                    loc += MovementEffect.LocationOffset;
+                }
+
+                return new Rectangle2D(loc, SpriteSize);
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Sprite"/> class.

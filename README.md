@@ -2,7 +2,14 @@
 
 # NuciXNA.Graphics
 
-Graphics management for the NuciXNA wrapper over MonoGame/XNA.
+Graphics helpers and sprite abstractions for NuciXNA, built on top of MonoGame/XNA.
+
+It provides:
+
+- a central graphics context manager (`GraphicsManager`)
+- drawable sprite primitives (`TextSprite`, `TextureSprite`)
+- text drawing helpers with alignment and outlines
+- reusable sprite effects (movement, animation, opacity, scale, rotation)
 
 ## Installation
 
@@ -23,6 +30,128 @@ Install-Package NuciXNA.Graphics
 
 - .NET: `net10.0`
 - MonoGame DesktopGL (or compatible MonoGame runtime)
+- `NuciXNA.DataAccess` and `NuciXNA.Primitives` (restored automatically via NuGet)
+
+## Quick Start
+
+### 1. Initialize the graphics context
+
+In your game setup (after creating your `GraphicsDeviceManager` and `SpriteBatch`), assign them to the shared manager:
+
+```csharp
+using Microsoft.Xna.Framework.Graphics;
+using NuciXNA.Graphics;
+
+GraphicsManager.Instance.Graphics = graphics;
+GraphicsManager.Instance.SpriteBatch = spriteBatch;
+```
+
+### 2. Create and load a sprite
+
+```csharp
+using NuciXNA.Graphics.Drawing;
+using NuciXNA.Primitives;
+
+var label = new TextSprite
+{
+	FontName = "Default",
+	Text = "Hello NuciXNA.Graphics",
+	Location = new Point2D(32, 24),
+	SpriteSize = new Size2D(320, 64),
+	HorizontalAlignment = Alignment.Beginning,
+	VerticalAlignment = Alignment.Beginning,
+	Tint = Colour.White,
+	Opacity = 1f,
+};
+
+label.LoadContent();
+```
+
+### 3. Update and draw in the game loop
+
+```csharp
+label.Update(gameTime);
+
+spriteBatch.Begin();
+label.Draw(spriteBatch);
+spriteBatch.End();
+```
+
+## Core Types
+
+### GraphicsManager
+
+Singleton used to expose:
+
+- `GraphicsDeviceManager Graphics`
+- `SpriteBatch SpriteBatch`
+- `BackBufferSize`
+
+### Sprite base class
+
+All sprites derive from `Sprite` and provide:
+
+- lifecycle: `LoadContent()`, `UnloadContent()`, `Update()`, `Draw()`
+- transform/state: location, scale, rotation, tint, opacity
+- optional effects: movement, opacity, rotation, scale
+
+### TextSprite
+
+Useful for UI labels and dynamic text:
+
+- `FontName` for loading a `SpriteFont` from `Fonts/<name>`
+- auto text wrapping to `SpriteSize.Width`
+- horizontal/vertical alignment via `Alignment`
+- optional outlining via `FontOutline` (`None`, `Around`, `BottomRight`)
+
+### TextureSprite
+
+Texture-based sprite with optional masking and sprite-sheet animation:
+
+- `ContentFile` for texture asset path
+- `AlphaMaskFile` for alpha blending mask
+- `SourceRectangle` and `TextureLayout` (`None`, `Centre`, `Stretch`, `Tile`, `Zoom`)
+- `SpriteSheetEffect` for frame-based animation
+
+## Sprite Effects
+
+Effects inherit from `NuciSpriteEffect<TSprite>` and are activated at runtime.
+
+Included effects:
+
+- `MovementEffect` - moves the sprite toward a target location
+- `FadeEffect` - oscillates opacity between min/max multipliers
+- `ZoomEffect` - oscillates scale between min/max multipliers
+- `OscilationEffect` - oscillates rotation multiplier
+- `AnimationEffect` - advances frames for sprite sheets
+
+Example:
+
+```csharp
+using NuciXNA.Graphics.SpriteEffects;
+using NuciXNA.Primitives;
+
+var sprite = new TextureSprite
+{
+	ContentFile = "Characters/Hero",
+	Location = new Point2D(120, 200),
+	SpriteSize = new Size2D(64, 64),
+	MovementEffect = new MovementEffect
+	{
+		Speed = 6f,
+		TargetLocation = new Point2D(320, 200),
+	}
+};
+
+sprite.LoadContent();
+sprite.MovementEffect.Activate();
+```
+
+## Content Notes
+
+- `TextSprite` loads fonts from `Fonts/<FontName>` via `NuciContentManager`
+- `TextureSprite` expects valid content paths resolvable by the same content manager
+- effects and sprites must be loaded before activation, update, or draw
 
 ## Development
 
@@ -36,6 +165,12 @@ dotnet build NuciXNA.Graphics.sln
 
 ```bash
 dotnet test NuciXNA.Graphics.sln
+```
+
+### Pack
+
+```bash
+dotnet pack NuciXNA.Graphics/NuciXNA.Graphics.csproj -c Release
 ```
 
 ## Contributing

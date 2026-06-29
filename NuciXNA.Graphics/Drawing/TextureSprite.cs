@@ -72,6 +72,12 @@ namespace NuciXNA.Graphics.Drawing
         public TextureLayout TextureLayout { get; set; }
 
         /// <summary>
+        /// Gets or sets the sampler state used when drawing this sprite.
+        /// When null (the default), falls back to <see cref="GraphicsManager.DefaultSamplerState"/>.
+        /// </summary>
+        public SamplerState SamplerState { get; set; }
+
+        /// <summary>
         /// Gets or sets the sprite sheet effect.
         /// </summary>
         /// <value>The sprite sheet effect.</value>
@@ -133,23 +139,26 @@ namespace NuciXNA.Graphics.Drawing
                 SourceRectangle = new Rectangle2D(Point2D.Empty, SpriteSize);
             }
 
-            RenderTarget2D renderTarget = new(
-                GraphicsManager.Instance.Graphics.GraphicsDevice,
-                SpriteSize.Width, SpriteSize.Height);
-
-            GraphicsManager.Instance.Graphics.GraphicsDevice.SetRenderTarget(renderTarget);
-            GraphicsManager.Instance.Graphics.GraphicsDevice.Clear(Color.Transparent);
-
-            if (Texture is not null)
+            if (!string.IsNullOrWhiteSpace(AlphaMaskFile))
             {
-                GraphicsManager.Instance.SpriteBatch.Begin();
-                GraphicsManager.Instance.SpriteBatch.Draw(Texture, Vector2.Zero, Color.White);
-                GraphicsManager.Instance.SpriteBatch.End();
+                RenderTarget2D renderTarget = new(
+                    GraphicsManager.Instance.Graphics.GraphicsDevice,
+                    SpriteSize.Width, SpriteSize.Height);
+
+                GraphicsManager.Instance.Graphics.GraphicsDevice.SetRenderTarget(renderTarget);
+                GraphicsManager.Instance.Graphics.GraphicsDevice.Clear(Color.Transparent);
+
+                if (Texture is not null)
+                {
+                    GraphicsManager.Instance.SpriteBatch.Begin();
+                    GraphicsManager.Instance.SpriteBatch.Draw(Texture, Vector2.Zero, Color.White);
+                    GraphicsManager.Instance.SpriteBatch.End();
+                }
+
+                Texture = renderTarget;
+
+                GraphicsManager.Instance.Graphics.GraphicsDevice.SetRenderTarget(null);
             }
-
-            Texture = renderTarget;
-
-            GraphicsManager.Instance.Graphics.GraphicsDevice.SetRenderTarget(null);
 
             if (SpriteSheetEffect is not null && !SpriteSheetEffect.IsContentLoaded)
             {
@@ -187,7 +196,13 @@ namespace NuciXNA.Graphics.Drawing
         /// </summary>
         /// <param name="spriteBatch">Sprite batch.</param>
         protected override void DoDraw(SpriteBatch spriteBatch)
-            => TextureDrawer.Draw(
+        {
+            if (Texture is null)
+            {
+                return;
+            }
+
+            TextureDrawer.Draw(
                 spriteBatch,
                 Texture,
                 ClientRectangle.Location,
@@ -197,7 +212,9 @@ namespace NuciXNA.Graphics.Drawing
                 ClientRotation,
                 new(SourceRectangle.Size / 2),
                 ClientScale,
-                TextureLayout);
+                TextureLayout,
+                SamplerState);
+        }
 
         Texture2D LoadTexture()
         {

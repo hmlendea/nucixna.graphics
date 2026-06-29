@@ -10,22 +10,9 @@ namespace NuciXNA.Graphics.Drawing
     public class TextureDrawer
     {
         private static readonly SpriteSortMode DefaultSpriteSortMode = SpriteSortMode.Deferred;
-        private static readonly SamplerState DefaultSamplerState = new()
-        {
-            AddressU = SamplerState.LinearClamp.AddressU,
-            AddressV = SamplerState.LinearClamp.AddressV,
-            AddressW = SamplerState.LinearClamp.AddressW,
-            BorderColor = SamplerState.LinearClamp.BorderColor,
-            ComparisonFunction = SamplerState.LinearClamp.ComparisonFunction,
-            Filter = SamplerState.LinearClamp.Filter,
-            FilterMode = SamplerState.LinearClamp.FilterMode,
-            MaxAnisotropy = SamplerState.LinearClamp.MaxAnisotropy,
-            MaxMipLevel = SamplerState.LinearClamp.MaxMipLevel,
-            MipMapLevelOfDetailBias = -1f
-        };
 
         private static SpriteSortMode currentSpriteSortMode = DefaultSpriteSortMode;
-        private static SamplerState currentSamplerState = DefaultSamplerState;
+        private static SamplerState currentSamplerState;
 
         public static void Draw(
             SpriteBatch spriteBatch,
@@ -37,7 +24,8 @@ namespace NuciXNA.Graphics.Drawing
             float rotation,
             Point2D origin,
             Scale2D scale,
-            TextureLayout textureLayout)
+            TextureLayout textureLayout,
+            SamplerState samplerState = null)
         {
             Color textureColour = tint.ToXnaColor();
             float layerDepth = 0.0f;
@@ -60,7 +48,7 @@ namespace NuciXNA.Graphics.Drawing
             {
                 Size2D targetSize = sourceRectangle.Size * scale;
 
-                SetSpriteBatchProperties(spriteBatch, DefaultSpriteSortMode, DefaultSamplerState);
+                SetSpriteBatchProperties(spriteBatch, DefaultSpriteSortMode, samplerState ?? GraphicsManager.Instance.DefaultSamplerState);
 
                 location += new Point2D(
                     targetSize.Width / 2 - (int)Math.Round(scale.Horizontal / 2),

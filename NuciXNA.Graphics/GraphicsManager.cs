@@ -46,6 +46,13 @@ namespace NuciXNA.Graphics
         /// <value>The sprite batch.</value>
         public SpriteBatch SpriteBatch { get; set; }
 
+        /// <summary>
+        /// Gets or sets the default sampler state used by TextureDrawer for Stretch-layout sprites.
+        /// Override this in your game's LoadContent to change the global texture filtering.
+        /// Defaults to AnisotropicClamp for smooth scaling.
+        /// </summary>
+        public SamplerState DefaultSamplerState { get; set; } = SamplerState.AnisotropicClamp;
+
         public Size2D BackBufferSize => new(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
     }
 }

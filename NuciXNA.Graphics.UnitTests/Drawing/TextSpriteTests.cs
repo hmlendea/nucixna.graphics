@@ -276,14 +276,11 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         [Test]
         public void GivenNewTextSpriteWithPresetSpriteSize_WhenLoadContentIsCalled_ThenSpriteSizeIsPreserved()
         {
-            TextSprite textSprite = new() { SpriteSize = new Size2D(100, 50) };
+            Size2D expectedSize = new(100, 50);
+            TextSprite textSprite = new() { SpriteSize = expectedSize };
             textSprite.LoadContent();
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(textSprite.SpriteSize.Width, Is.EqualTo(100));
-                Assert.That(textSprite.SpriteSize.Height, Is.EqualTo(50));
-            });
+            Assert.That(textSprite.SpriteSize, Is.EqualTo(expectedSize));
         }
 
         [Test]
@@ -369,32 +366,28 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         [Test]
         public void GivenTextSpriteWithLocationAndSize_WhenGettingClientRectangle_ThenMatchesLocationAndSize()
         {
-            TextSprite textSprite = new() { Location = new Point2D(10, 20), SpriteSize = new Size2D(100, 50) };
+            Point2D location = new(10, 20);
+            Size2D size = new(100, 50);
+            TextSprite textSprite = new() { Location = location, SpriteSize = size };
             textSprite.LoadContent();
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(textSprite.ClientRectangle.X, Is.EqualTo(10));
-                Assert.That(textSprite.ClientRectangle.Y, Is.EqualTo(20));
-                Assert.That(textSprite.ClientRectangle.Width, Is.EqualTo(100));
-                Assert.That(textSprite.ClientRectangle.Height, Is.EqualTo(50));
-            });
+            Assert.That(textSprite.ClientRectangle, Is.EqualTo(new Rectangle2D(location, size)));
         }
 
         [Test]
         public void GivenTextSpriteWithInactiveMovementEffect_WhenGettingClientRectangle_ThenMovementOffsetIsNotApplied()
         {
-            TextSprite textSprite = new() { Location = new Point2D(10, 20), SpriteSize = new Size2D(100, 50) };
-            textSprite.MovementEffect = new MovementEffect { TargetLocation = new Point2D(200, 200) };
+            Point2D location = new(10, 20);
+            Size2D size = new(100, 50);
+            TextSprite textSprite = new()
+            {
+                Location = location,
+                SpriteSize = size,
+                MovementEffect = new MovementEffect { TargetLocation = new Point2D(200, 200) }
+            };
             textSprite.LoadContent();
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(textSprite.ClientRectangle.X, Is.EqualTo(10));
-                Assert.That(textSprite.ClientRectangle.Y, Is.EqualTo(20));
-                Assert.That(textSprite.ClientRectangle.Width, Is.EqualTo(100));
-                Assert.That(textSprite.ClientRectangle.Height, Is.EqualTo(50));
-            });
+            Assert.That(textSprite.ClientRectangle, Is.EqualTo(new Rectangle2D(location, size)));
 
             textSprite.Dispose();
         }
@@ -410,8 +403,11 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         [Test]
         public void GivenTextSpriteWithInactiveOpacityEffect_WhenGettingClientOpacity_ThenReturnsBaseOpacity()
         {
-            TextSprite textSprite = new() { Opacity = 0.8f };
-            textSprite.OpacityEffect = new FadeEffect { CurrentMultiplier = 0.5f };
+            TextSprite textSprite = new()
+            {
+                Opacity = 0.8f,
+                OpacityEffect = new FadeEffect { CurrentMultiplier = 0.5f }
+            };
             textSprite.LoadContent();
 
             Assert.That(textSprite.ClientOpacity, Is.EqualTo(0.8f));
@@ -422,8 +418,11 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         [Test]
         public void GivenTextSpriteWithActiveOpacityEffect_WhenGettingClientOpacity_ThenReturnsMultipliedOpacity()
         {
-            TextSprite textSprite = new() { Opacity = 1.0f };
-            textSprite.OpacityEffect = new FadeEffect { CurrentMultiplier = 0.5f };
+            TextSprite textSprite = new()
+            {
+                Opacity = 1.0f,
+                OpacityEffect = new FadeEffect { CurrentMultiplier = 0.5f }
+            };
             textSprite.LoadContent();
             textSprite.OpacityEffect.Activate();
 
@@ -451,8 +450,11 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         [Test]
         public void GivenTextSpriteWithActiveZoomEffect_WhenGettingClientScale_ThenReturnsScaledValue()
         {
-            TextSprite textSprite = new() { Scale = Scale2D.One };
-            textSprite.ScaleEffect = new ZoomEffect { CurrentHorizontalMultiplier = 2.0f, CurrentVerticalMultiplier = 2.0f };
+            TextSprite textSprite = new()
+            {
+                Scale = Scale2D.One,
+                ScaleEffect = new ZoomEffect { CurrentHorizontalMultiplier = 2.0f, CurrentVerticalMultiplier = 2.0f }
+            };
             textSprite.LoadContent();
             textSprite.ScaleEffect.Activate();
 

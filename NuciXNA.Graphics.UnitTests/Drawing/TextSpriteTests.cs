@@ -52,7 +52,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
 
             TextSprite textSprite = new();
             textSprite.ContentLoading += delegate { firstEventTime = DateTime.Now; };
-            textSprite.ContentLoading += delegate { lastEventTime = DateTime.Now; };
+            textSprite.ContentLoaded += delegate { lastEventTime = DateTime.Now; };
 
             textSprite.LoadContent();
 
@@ -99,7 +99,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
 
             TextSprite textSprite = new();
             textSprite.ContentUnloading += delegate { firstEventTime = DateTime.Now; };
-            textSprite.ContentUnloading += delegate { lastEventTime = DateTime.Now; };
+            textSprite.ContentUnloaded += delegate { lastEventTime = DateTime.Now; };
 
             textSprite.LoadContent();
             textSprite.UnloadContent();
@@ -147,7 +147,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
 
             TextSprite textSprite = new();
             textSprite.Updating += delegate { firstEventTime = DateTime.Now; };
-            textSprite.Updating += delegate { lastEventTime = DateTime.Now; };
+            textSprite.Updated += delegate { lastEventTime = DateTime.Now; };
 
             textSprite.LoadContent();
             textSprite.Update(null);
@@ -195,7 +195,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
 
             TextSprite textSprite = new();
             textSprite.Drawing += delegate { firstEventTime = DateTime.Now; };
-            textSprite.Drawing += delegate { lastEventTime = DateTime.Now; };
+            textSprite.Drawn += delegate { lastEventTime = DateTime.Now; };
 
             textSprite.LoadContent();
             textSprite.Draw(null);

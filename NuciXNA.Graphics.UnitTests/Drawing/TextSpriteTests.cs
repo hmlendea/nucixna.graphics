@@ -10,7 +10,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
     public class TextSpriteTests
     {
         [Test]
-        public void LoadContent_ContentAlreadyLoaded_ThrowsInvalidOperationException()
+        public void GivenLoadedTextSprite_WhenLoadContentIsCalledAgain_ThenThrowsInvalidOperationException()
         {
             TextSprite textSprite = new();
             textSprite.LoadContent();
@@ -19,7 +19,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         }
 
         [Test]
-        public void LoadContent_FiresContentLoading()
+        public void GivenNewTextSprite_WhenLoadContentIsCalled_ThenFiresContentLoadingEvent()
         {
             bool eventFired = false;
 
@@ -32,7 +32,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         }
 
         [Test]
-        public void LoadContent_FiresContentLoaded()
+        public void GivenNewTextSprite_WhenLoadContentIsCalled_ThenFiresContentLoadedEvent()
         {
             bool eventFired = false;
 
@@ -45,7 +45,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         }
 
         [Test]
-        public void LoadContent_FiresContentLoadingBeforeContentLoaded()
+        public void GivenNewTextSprite_WhenLoadContentIsCalled_ThenContentLoadingFiresBeforeContentLoaded()
         {
             DateTime firstEventTime = DateTime.Now;
             DateTime lastEventTime = DateTime.Now;
@@ -60,11 +60,11 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         }
 
         [Test]
-        public void UnloadContent_ContentNotLoaded_ThrowsInvalidOperationException()
+        public void GivenNewTextSprite_WhenUnloadContentIsCalled_ThenThrowsInvalidOperationException()
             => Assert.Throws<InvalidOperationException>(() => new TextSprite().UnloadContent());
 
         [Test]
-        public void UnloadContent_FiresContentUnloading()
+        public void GivenLoadedTextSprite_WhenUnloadContentIsCalled_ThenFiresContentUnloadingEvent()
         {
             bool eventFired = false;
 
@@ -78,7 +78,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         }
 
         [Test]
-        public void UnloadContent_FiresContentUnloaded()
+        public void GivenLoadedTextSprite_WhenUnloadContentIsCalled_ThenFiresContentUnloadedEvent()
         {
             bool eventFired = false;
 
@@ -92,7 +92,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         }
 
         [Test]
-        public void UnloadContent_FiresContentUnloadingBeforeContentUnloaded()
+        public void GivenLoadedTextSprite_WhenUnloadContentIsCalled_ThenContentUnloadingFiresBeforeContentUnloaded()
         {
             DateTime firstEventTime = DateTime.Now;
             DateTime lastEventTime = DateTime.Now;
@@ -108,11 +108,11 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         }
 
         [Test]
-        public void Update_ContentNotLoaded_ThrowsInvalidOperationException()
+        public void GivenNewTextSprite_WhenUpdateIsCalled_ThenThrowsInvalidOperationException()
             => Assert.Throws<InvalidOperationException>(() => new TextSprite().Update(null));
 
         [Test]
-        public void Update_FiresUpdating()
+        public void GivenLoadedTextSprite_WhenUpdateIsCalled_ThenFiresUpdatingEvent()
         {
             bool eventFired = false;
 
@@ -126,7 +126,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         }
 
         [Test]
-        public void Update_FiresUpdated()
+        public void GivenLoadedTextSprite_WhenUpdateIsCalled_ThenFiresUpdatedEvent()
         {
             bool eventFired = false;
 
@@ -140,7 +140,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         }
 
         [Test]
-        public void Update_FiresUpdatingBeforeUpdated()
+        public void GivenLoadedTextSprite_WhenUpdateIsCalled_ThenUpdatingFiresBeforeUpdated()
         {
             DateTime firstEventTime = DateTime.Now;
             DateTime lastEventTime = DateTime.Now;
@@ -156,11 +156,11 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         }
 
         [Test]
-        public void Draw_ContentNotLoaded_ThrowsInvalidOperationException()
+        public void GivenNewTextSprite_WhenDrawIsCalled_ThenThrowsInvalidOperationException()
             => Assert.Throws<InvalidOperationException>(() => new TextSprite().Draw(null));
 
         [Test]
-        public void Draw_FiresDrawing()
+        public void GivenLoadedTextSprite_WhenDrawIsCalled_ThenFiresDrawingEvent()
         {
             bool eventFired = false;
 
@@ -174,7 +174,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         }
 
         [Test]
-        public void Draw_FiresDrawn()
+        public void GivenLoadedTextSprite_WhenDrawIsCalled_ThenFiresDrawnEvent()
         {
             bool eventFired = false;
 
@@ -188,7 +188,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         }
 
         [Test]
-        public void Draw_FiresDrawingBeforeDrawn()
+        public void GivenLoadedTextSprite_WhenDrawIsCalled_ThenDrawingFiresBeforeDrawn()
         {
             DateTime firstEventTime = DateTime.Now;
             DateTime lastEventTime = DateTime.Now;
@@ -204,7 +204,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         }
 
         [Test]
-        public void GetIsDisposed_NotDisposed_ReturnsFalse()
+        public void GivenLoadedTextSprite_WhenCheckingIsDisposed_ThenReturnsFalse()
         {
             TextSprite textSprite = new();
             textSprite.LoadContent();

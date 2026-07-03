@@ -13,8 +13,6 @@ namespace NuciXNA.Graphics.Drawing
     /// </summary>
     public abstract class Sprite : IDisposable
     {
-        private Rectangle2D clientRectangle = Rectangle2D.Empty;
-
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="Sprite"/> is active.
         /// </summary>
@@ -109,7 +107,7 @@ namespace NuciXNA.Graphics.Drawing
             {
                 float value = Opacity;
 
-                if (OpacityEffect != null && OpacityEffect.IsActive)
+                if (OpacityEffect is not null && OpacityEffect.IsActive)
                 {
                     value *= OpacityEffect.CurrentMultiplier;
                 }
@@ -124,7 +122,7 @@ namespace NuciXNA.Graphics.Drawing
             {
                 float value = Rotation;
 
-                if (RotationEffect != null && RotationEffect.IsActive)
+                if (RotationEffect is not null && RotationEffect.IsActive)
                 {
                     value += RotationEffect.CurrentMultiplier;
                 }
@@ -139,7 +137,7 @@ namespace NuciXNA.Graphics.Drawing
             {
                 Scale2D value = Scale;
 
-                if (ScaleEffect != null && ScaleEffect.IsActive)
+                if (ScaleEffect is not null && ScaleEffect.IsActive)
                 {
                     value = new Scale2D(
                         Scale.Horizontal * ScaleEffect.CurrentHorizontalMultiplier,

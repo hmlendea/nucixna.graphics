@@ -30,7 +30,7 @@ namespace NuciXNA.Graphics.SpriteEffects
         /// </summary>
         public OpacityEffect()
         {
-            Speed = 1;
+            Speed = 1.0f;
             CurrentMultiplier = 0.0f;
             MinimumMultiplier = 0.0f;
             MaximumMultiplier = 1.0f;

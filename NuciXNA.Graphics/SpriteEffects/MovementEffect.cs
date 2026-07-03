@@ -40,7 +40,8 @@ namespace NuciXNA.Graphics.SpriteEffects
         {
             Point2D currentLocation = Sprite.Location + LocationOffset;
             Point2D direction = TargetLocation - currentLocation;
-            var distance = Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
+
+            double distance = Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
 
             if (distance <= Speed)
             {
@@ -49,10 +50,9 @@ namespace NuciXNA.Graphics.SpriteEffects
                 return;
             }
 
-            var dx = (float)(direction.X / distance * Speed);
-            var dy = (float)(direction.Y / distance * Speed);
-
-            LocationOffset += new Point2D((int)Math.Round(dx), (int)Math.Round(dy));
+            LocationOffset += new Point2D(
+                (int)Math.Round((float)(direction.X / distance * Speed)),
+                (int)Math.Round((float)(direction.Y / distance * Speed)));
         }
 
         void OnActivated(object sender, EventArgs e)

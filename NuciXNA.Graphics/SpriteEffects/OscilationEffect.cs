@@ -11,8 +11,8 @@ namespace NuciXNA.Graphics.SpriteEffects
 
         public float MaximumMultiplier { get; set; }
 
-        /// <summaryOscilationEffect
-        /// Initializes a new instance of the <see cref="RotationEffect"/> class.
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OscilationEffect"/> class.
         /// </summary>
         public OscilationEffect() : base()
         {

@@ -17,11 +17,7 @@ namespace NuciXNA.Graphics.SpriteEffects
 
         public SpriteSheetEffect()
         {
-            FrameCounter = 0;
             SwitchFrame = 100;
-            CurrentFrame = Point2D.Empty;
-            FrameAmount = Size2D.Empty;
-            FrameSize = Size2D.Empty;
         }
 
         /// <summary>

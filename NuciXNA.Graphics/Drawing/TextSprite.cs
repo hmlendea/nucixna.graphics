@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using NuciXNA.DataAccess.Content;
 using NuciXNA.Primitives;
+using NuciXNA.Primitives.Mapping;
 
 namespace NuciXNA.Graphics.Drawing
 {
@@ -94,9 +95,11 @@ namespace NuciXNA.Graphics.Drawing
 
                 if (!string.IsNullOrEmpty(Text))
                 {
+                    Vector2D measuredSize = font.MeasureString(Text).ToVector2D();
+
                     size = new Size2D(
-                        (int)font.MeasureString(Text).X,
-                        (int)font.MeasureString(Text).Y);
+                        (int)measuredSize.X,
+                        (int)measuredSize.Y);
                 }
                 else
                 {

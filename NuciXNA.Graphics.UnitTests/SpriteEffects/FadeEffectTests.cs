@@ -10,6 +10,21 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
 {
     public class FadeEffectTests
     {
+        TextSprite _sprite;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _sprite = new TextSprite();
+            _sprite.LoadContent();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _sprite.Dispose();
+        }
+
         [Test]
         public void GivenNewFadeEffect_WhenConstructed_ThenIsActiveIsFalse()
             => Assert.That(new FadeEffect().IsActive, Is.False);
@@ -28,7 +43,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
 
         [Test]
         public void GivenNewFadeEffect_WhenConstructed_ThenIsIncreasingIsTrue()
-            => Assert.That(new FadeEffect().IsIncreasing, Is.True);
+            => Assert.That(new FadeEffect().IsIncreasing);
 
         [Test]
         public void GivenNewFadeEffect_WhenConstructed_ThenSpeedIsOne()
@@ -46,11 +61,9 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenNewFadeEffect_WhenLoadContentIsCalledTwice_ThenThrowsInvalidOperationException()
         {
             FadeEffect fadeEffect = new();
-            TextSprite sprite = new();
-            sprite.LoadContent();
-            fadeEffect.LoadContent(sprite);
+            fadeEffect.LoadContent(_sprite);
 
-            Assert.Throws<InvalidOperationException>(() => fadeEffect.LoadContent(sprite));
+            Assert.Throws<InvalidOperationException>(() => fadeEffect.LoadContent(_sprite));
         }
 
         [Test]
@@ -73,21 +86,17 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenLoadedFadeEffect_WhenActivateIsCalled_ThenIsActiveIsTrue()
         {
             FadeEffect fadeEffect = new();
-            TextSprite sprite = new();
-            sprite.LoadContent();
-            fadeEffect.LoadContent(sprite);
+            fadeEffect.LoadContent(_sprite);
             fadeEffect.Activate();
 
-            Assert.That(fadeEffect.IsActive, Is.True);
+            Assert.That(fadeEffect.IsActive);
         }
 
         [Test]
         public void GivenActivatedFadeEffect_WhenDeactivateIsCalled_ThenIsActiveIsFalse()
         {
             FadeEffect fadeEffect = new();
-            TextSprite sprite = new();
-            sprite.LoadContent();
-            fadeEffect.LoadContent(sprite);
+            fadeEffect.LoadContent(_sprite);
             fadeEffect.Activate();
             fadeEffect.Deactivate();
 
@@ -98,9 +107,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenLoadedFadeEffect_WhenUnloadContentIsCalled_ThenIsContentLoadedIsFalse()
         {
             FadeEffect fadeEffect = new();
-            TextSprite sprite = new();
-            sprite.LoadContent();
-            fadeEffect.LoadContent(sprite);
+            fadeEffect.LoadContent(_sprite);
             fadeEffect.UnloadContent();
 
             Assert.That(fadeEffect.IsContentLoaded, Is.False);
@@ -110,9 +117,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedFadeEffectIncreasing_WhenUpdatedForHalfSecond_ThenCurrentMultiplierIncreases()
         {
             FadeEffect fadeEffect = new() { Speed = 1.0f, CurrentMultiplier = 0.0f, IsIncreasing = true };
-            TextSprite sprite = new();
-            sprite.LoadContent();
-            fadeEffect.LoadContent(sprite);
+            fadeEffect.LoadContent(_sprite);
             fadeEffect.Activate();
 
             fadeEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.5)));
@@ -124,9 +129,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedFadeEffectDecreasing_WhenUpdatedForHalfSecond_ThenCurrentMultiplierDecreases()
         {
             FadeEffect fadeEffect = new() { Speed = 1.0f, CurrentMultiplier = 1.0f, IsIncreasing = false };
-            TextSprite sprite = new();
-            sprite.LoadContent();
-            fadeEffect.LoadContent(sprite);
+            fadeEffect.LoadContent(_sprite);
             fadeEffect.Activate();
 
             fadeEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.5)));
@@ -138,9 +141,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedFadeEffectAtMaximum_WhenUpdated_ThenCurrentMultiplierClampsToMaximum()
         {
             FadeEffect fadeEffect = new() { Speed = 1.0f, CurrentMultiplier = 1.0f, MaximumMultiplier = 1.0f, IsIncreasing = true };
-            TextSprite sprite = new();
-            sprite.LoadContent();
-            fadeEffect.LoadContent(sprite);
+            fadeEffect.LoadContent(_sprite);
             fadeEffect.Activate();
 
             fadeEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.5)));
@@ -152,9 +153,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedFadeEffectAtMaximum_WhenUpdated_ThenDirectionReversesToDecreasing()
         {
             FadeEffect fadeEffect = new() { Speed = 1.0f, CurrentMultiplier = 1.0f, MaximumMultiplier = 1.0f, IsIncreasing = true };
-            TextSprite sprite = new();
-            sprite.LoadContent();
-            fadeEffect.LoadContent(sprite);
+            fadeEffect.LoadContent(_sprite);
             fadeEffect.Activate();
 
             fadeEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.1)));
@@ -166,9 +165,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedFadeEffectAtMinimum_WhenUpdated_ThenCurrentMultiplierClampsToMinimum()
         {
             FadeEffect fadeEffect = new() { Speed = 1.0f, CurrentMultiplier = 0.0f, MinimumMultiplier = 0.0f, IsIncreasing = false };
-            TextSprite sprite = new();
-            sprite.LoadContent();
-            fadeEffect.LoadContent(sprite);
+            fadeEffect.LoadContent(_sprite);
             fadeEffect.Activate();
 
             fadeEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.5)));
@@ -180,23 +177,19 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedFadeEffectAtMinimum_WhenUpdated_ThenDirectionReversesToIncreasing()
         {
             FadeEffect fadeEffect = new() { Speed = 1.0f, CurrentMultiplier = 0.0f, MinimumMultiplier = 0.0f, IsIncreasing = false };
-            TextSprite sprite = new();
-            sprite.LoadContent();
-            fadeEffect.LoadContent(sprite);
+            fadeEffect.LoadContent(_sprite);
             fadeEffect.Activate();
 
             fadeEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.1)));
 
-            Assert.That(fadeEffect.IsIncreasing, Is.True);
+            Assert.That(fadeEffect.IsIncreasing);
         }
 
         [Test]
         public void GivenLoadedButInactiveFadeEffect_WhenUpdated_ThenCurrentMultiplierDoesNotChange()
         {
             FadeEffect fadeEffect = new() { CurrentMultiplier = 0.5f };
-            TextSprite sprite = new();
-            sprite.LoadContent();
-            fadeEffect.LoadContent(sprite);
+            fadeEffect.LoadContent(_sprite);
 
             fadeEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
 

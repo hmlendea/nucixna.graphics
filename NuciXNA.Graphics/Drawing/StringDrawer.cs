@@ -95,8 +95,13 @@ namespace NuciXNA.Graphics.Drawing
         /// <param name="font">Font.</param>
         /// <param name="text">Text.</param>
         /// <param name="maxLineWidth">Maximum line width.</param>
-        static string WrapText(SpriteFont font, string text, float maxLineWidth)
+        internal static string WrapText(SpriteFont font, string text, float maxLineWidth)
         {
+            if (font.MeasureString(text).X <= maxLineWidth)
+            {
+                return text;
+            }
+
             string[] words = text.Split(' ');
             StringBuilder sb = new();
             float lineWidth = 0f;

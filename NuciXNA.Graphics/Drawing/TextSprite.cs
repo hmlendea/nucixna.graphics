@@ -1,10 +1,9 @@
-﻿using System.Text;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using NuciXNA.DataAccess.Content;
 using NuciXNA.Primitives;
+using NuciXNA.Primitives.Mapping;
 
 namespace NuciXNA.Graphics.Drawing
 {
@@ -50,19 +49,7 @@ namespace NuciXNA.Graphics.Drawing
         /// </summary>
         /// <value>The covered screen area.</value>
         public override Rectangle2D ClientRectangle
-        {
-            get
-            {
-                Point2D loc = Location;
-
-                if (MovementEffect is not null && MovementEffect.IsActive)
-                {
-                    loc += MovementEffect.LocationOffset;
-                }
-
-                return new Rectangle2D(loc, SpriteSize);
-            }
-        }
+            => new(ClientLocation, SpriteSize);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Sprite"/> class.
@@ -94,9 +81,11 @@ namespace NuciXNA.Graphics.Drawing
 
                 if (!string.IsNullOrEmpty(Text))
                 {
+                    Vector2D measuredSize = font.MeasureString(Text).ToVector2D();
+
                     size = new Size2D(
-                        (int)font.MeasureString(Text).X,
-                        (int)font.MeasureString(Text).Y);
+                        (int)measuredSize.X,
+                        (int)measuredSize.Y);
                 }
                 else
                 {
@@ -136,7 +125,7 @@ namespace NuciXNA.Graphics.Drawing
             StringDrawer.Draw(
                 spriteBatch,
                 font,
-                WrapText(font, Text, SpriteSize.Width),
+                StringDrawer.WrapText(font, Text, SpriteSize.Width),
                 ClientRectangle,
                 Tint,
                 OutlineColour,
@@ -144,65 +133,6 @@ namespace NuciXNA.Graphics.Drawing
                 HorizontalAlignment,
                 VerticalAlignment,
                 FontOutline);
-        }
-
-        /// <summary>
-        /// Wraps the text on multiple lines.
-        /// </summary>
-        /// <returns>The text.</returns>
-        /// <param name="font">Font.</param>
-        /// <param name="text">Text.</param>
-        /// <param name="maxLineWidth">Maximum line width.</param>
-        static string WrapText(SpriteFont font, string text, float maxLineWidth)
-        {
-            if (font.MeasureString(text).X <= maxLineWidth)
-            {
-                return text;
-            }
-
-            string[] words = text.Split(' ');
-            StringBuilder sb = new();
-            float lineWidth = 0f;
-            float spaceWidth = font.MeasureString(" ").X;
-
-            foreach (string word in words)
-            {
-                Vector2 size = font.MeasureString(word);
-
-                if (word.Contains("\r"))
-                {
-                    lineWidth = 0f;
-                    sb.Append("\r \r");
-                }
-
-                if (lineWidth + size.X < maxLineWidth)
-                {
-                    sb.Append(word + " ");
-                    lineWidth += size.X + spaceWidth;
-                }
-
-                else
-                {
-                    if (size.X > maxLineWidth)
-                    {
-                        if (sb.ToString() == " ")
-                        {
-                            sb.Append(WrapText(font, word.Insert(word.Length / 2, " ") + " ", maxLineWidth));
-                        }
-                        else
-                        {
-                            sb.Append("\n" + WrapText(font, word.Insert(word.Length / 2, " ") + " ", maxLineWidth));
-                        }
-                    }
-                    else
-                    {
-                        sb.Append("\n" + word + " ");
-                        lineWidth = size.X + spaceWidth;
-                    }
-                }
-            }
-
-            return sb.ToString();
         }
     }
 }

@@ -1,6 +1,4 @@
 using System;
-
-using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
 using NuciXNA.Graphics.Drawing;
@@ -11,207 +9,211 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
 {
     public class TextSpriteTests
     {
-        [Test]
-        public void LoadContent_ContentAlreadyLoaded_ThrowsInvalidOperationException()
-        {
-            TextSprite textSprite = new();
-            textSprite.LoadContent();
+        TextSprite _textSprite;
 
-            Assert.Throws<InvalidOperationException>(() => textSprite.LoadContent());
+        [SetUp]
+        public void SetUp()
+        {
+            _textSprite = new TextSprite();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _textSprite.Dispose();
         }
 
         [Test]
-        public void LoadContent_FiresContentLoading()
+        public void GivenLoadedTextSprite_WhenLoadContentIsCalledAgain_ThenThrowsInvalidOperationException()
+        {
+            _textSprite.LoadContent();
+
+            Assert.Throws<InvalidOperationException>(_textSprite.LoadContent);
+        }
+
+        [Test]
+        public void GivenNewTextSprite_WhenLoadContentIsCalled_ThenFiresContentLoadingEvent()
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new();
-            textSprite.ContentLoading += delegate { eventFired = true; };
+            _textSprite.ContentLoading += delegate { eventFired = true; };
 
-            textSprite.LoadContent();
+            _textSprite.LoadContent();
 
             Assert.That(eventFired);
         }
 
         [Test]
-        public void LoadContent_FiresContentLoaded()
+        public void GivenNewTextSprite_WhenLoadContentIsCalled_ThenFiresContentLoadedEvent()
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new();
-            textSprite.ContentLoaded += delegate { eventFired = true; };
+            _textSprite.ContentLoaded += delegate { eventFired = true; };
 
-            textSprite.LoadContent();
+            _textSprite.LoadContent();
 
             Assert.That(eventFired);
         }
 
         [Test]
-        public void LoadContent_FiresContentLoadingBeforeContentLoaded()
+        public void GivenNewTextSprite_WhenLoadContentIsCalled_ThenContentLoadingFiresBeforeContentLoaded()
         {
-            DateTime firstEventTime = DateTime.Now;
-            DateTime lastEventTime = DateTime.Now;
+            int callOrder = 0;
+            int contentLoadingOrder = 0;
+            int contentLoadedOrder = 0;
 
-            TextSprite textSprite = new();
-            textSprite.ContentLoading += delegate { firstEventTime = DateTime.Now; };
-            textSprite.ContentLoading += delegate { lastEventTime = DateTime.Now; };
+            _textSprite.ContentLoading += delegate { contentLoadingOrder = ++callOrder; };
+            _textSprite.ContentLoaded += delegate { contentLoadedOrder = ++callOrder; };
 
-            textSprite.LoadContent();
+            _textSprite.LoadContent();
 
-            Assert.That(firstEventTime < lastEventTime);
+            Assert.That(contentLoadingOrder, Is.LessThan(contentLoadedOrder));
         }
 
         [Test]
-        public void UnloadContent_ContentNotLoaded_ThrowsInvalidOperationException()
+        public void GivenNewTextSprite_WhenUnloadContentIsCalled_ThenThrowsInvalidOperationException()
             => Assert.Throws<InvalidOperationException>(() => new TextSprite().UnloadContent());
 
         [Test]
-        public void UnloadContent_FiresContentUnloading()
+        public void GivenLoadedTextSprite_WhenUnloadContentIsCalled_ThenFiresContentUnloadingEvent()
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new();
-            textSprite.ContentUnloading += delegate { eventFired = true; };
+            _textSprite.ContentUnloading += delegate { eventFired = true; };
 
-            textSprite.LoadContent();
-            textSprite.UnloadContent();
+            _textSprite.LoadContent();
+            _textSprite.UnloadContent();
 
             Assert.That(eventFired);
         }
 
         [Test]
-        public void UnloadContent_FiresContentUnloaded()
+        public void GivenLoadedTextSprite_WhenUnloadContentIsCalled_ThenFiresContentUnloadedEvent()
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new();
-            textSprite.ContentUnloaded += delegate { eventFired = true; };
+            _textSprite.ContentUnloaded += delegate { eventFired = true; };
 
-            textSprite.LoadContent();
-            textSprite.UnloadContent();
+            _textSprite.LoadContent();
+            _textSprite.UnloadContent();
 
             Assert.That(eventFired);
         }
 
         [Test]
-        public void UnloadContent_FiresContentUnloadingBeforeContentUnloaded()
+        public void GivenLoadedTextSprite_WhenUnloadContentIsCalled_ThenContentUnloadingFiresBeforeContentUnloaded()
         {
-            DateTime firstEventTime = DateTime.Now;
-            DateTime lastEventTime = DateTime.Now;
+            int callOrder = 0;
+            int contentUnloadingOrder = 0;
+            int contentUnloadedOrder = 0;
 
-            TextSprite textSprite = new();
-            textSprite.ContentUnloading += delegate { firstEventTime = DateTime.Now; };
-            textSprite.ContentUnloading += delegate { lastEventTime = DateTime.Now; };
+            _textSprite.ContentUnloading += delegate { contentUnloadingOrder = ++callOrder; };
+            _textSprite.ContentUnloaded += delegate { contentUnloadedOrder = ++callOrder; };
 
-            textSprite.LoadContent();
-            textSprite.UnloadContent();
+            _textSprite.LoadContent();
+            _textSprite.UnloadContent();
 
-            Assert.That(firstEventTime < lastEventTime);
+            Assert.That(contentUnloadingOrder, Is.LessThan(contentUnloadedOrder));
         }
 
         [Test]
-        public void Update_ContentNotLoaded_ThrowsInvalidOperationException()
+        public void GivenNewTextSprite_WhenUpdateIsCalled_ThenThrowsInvalidOperationException()
             => Assert.Throws<InvalidOperationException>(() => new TextSprite().Update(null));
 
         [Test]
-        public void Update_FiresUpdating()
+        public void GivenLoadedTextSprite_WhenUpdateIsCalled_ThenFiresUpdatingEvent()
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new();
-            textSprite.Updating += delegate { eventFired = true; };
+            _textSprite.Updating += delegate { eventFired = true; };
 
-            textSprite.LoadContent();
-            textSprite.Update(null);
+            _textSprite.LoadContent();
+            _textSprite.Update(null);
 
             Assert.That(eventFired);
         }
 
         [Test]
-        public void Update_FiresUpdated()
+        public void GivenLoadedTextSprite_WhenUpdateIsCalled_ThenFiresUpdatedEvent()
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new();
-            textSprite.Updated += delegate { eventFired = true; };
+            _textSprite.Updated += delegate { eventFired = true; };
 
-            textSprite.LoadContent();
-            textSprite.Update(null);
+            _textSprite.LoadContent();
+            _textSprite.Update(null);
 
             Assert.That(eventFired);
         }
 
         [Test]
-        public void Update_FiresUpdatingBeforeUpdated()
+        public void GivenLoadedTextSprite_WhenUpdateIsCalled_ThenUpdatingFiresBeforeUpdated()
         {
-            DateTime firstEventTime = DateTime.Now;
-            DateTime lastEventTime = DateTime.Now;
+            int callOrder = 0;
+            int updatingOrder = 0;
+            int updatedOrder = 0;
 
-            TextSprite textSprite = new();
-            textSprite.Updating += delegate { firstEventTime = DateTime.Now; };
-            textSprite.Updating += delegate { lastEventTime = DateTime.Now; };
+            _textSprite.Updating += delegate { updatingOrder = ++callOrder; };
+            _textSprite.Updated += delegate { updatedOrder = ++callOrder; };
 
-            textSprite.LoadContent();
-            textSprite.Update(null);
+            _textSprite.LoadContent();
+            _textSprite.Update(null);
 
-            Assert.That(firstEventTime < lastEventTime);
+            Assert.That(updatingOrder, Is.LessThan(updatedOrder));
         }
 
         [Test]
-        public void Draw_ContentNotLoaded_ThrowsInvalidOperationException()
+        public void GivenNewTextSprite_WhenDrawIsCalled_ThenThrowsInvalidOperationException()
             => Assert.Throws<InvalidOperationException>(() => new TextSprite().Draw(null));
 
         [Test]
-        public void Draw_FiresDrawing()
+        public void GivenLoadedTextSprite_WhenDrawIsCalled_ThenFiresDrawingEvent()
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new();
-            textSprite.Drawing += delegate { eventFired = true; };
+            _textSprite.Drawing += delegate { eventFired = true; };
 
-            textSprite.LoadContent();
-            textSprite.Draw(null);
+            _textSprite.LoadContent();
+            _textSprite.Draw(null);
 
             Assert.That(eventFired);
         }
 
         [Test]
-        public void Draw_FiresDrawn()
+        public void GivenLoadedTextSprite_WhenDrawIsCalled_ThenFiresDrawnEvent()
         {
             bool eventFired = false;
 
-            TextSprite textSprite = new();
-            textSprite.Drawn += delegate { eventFired = true; };
+            _textSprite.Drawn += delegate { eventFired = true; };
 
-            textSprite.LoadContent();
-            textSprite.Draw(null);
+            _textSprite.LoadContent();
+            _textSprite.Draw(null);
 
             Assert.That(eventFired);
         }
 
         [Test]
-        public void Draw_FiresDrawingBeforeDrawn()
+        public void GivenLoadedTextSprite_WhenDrawIsCalled_ThenDrawingFiresBeforeDrawn()
         {
-            DateTime firstEventTime = DateTime.Now;
-            DateTime lastEventTime = DateTime.Now;
+            int callOrder = 0;
+            int drawingOrder = 0;
+            int drawnOrder = 0;
 
-            TextSprite textSprite = new();
-            textSprite.Drawing += delegate { firstEventTime = DateTime.Now; };
-            textSprite.Drawing += delegate { lastEventTime = DateTime.Now; };
+            _textSprite.Drawing += delegate { drawingOrder = ++callOrder; };
+            _textSprite.Drawn += delegate { drawnOrder = ++callOrder; };
 
-            textSprite.LoadContent();
-            textSprite.Draw(null);
+            _textSprite.LoadContent();
+            _textSprite.Draw(null);
 
-            Assert.That(firstEventTime < lastEventTime);
+            Assert.That(drawingOrder, Is.LessThan(drawnOrder));
         }
 
         [Test]
-        public void GetIsDisposed_NotDisposed_ReturnsFalse()
+        public void GivenLoadedTextSprite_WhenCheckingIsDisposed_ThenReturnsFalse()
         {
-            TextSprite textSprite = new();
-            textSprite.LoadContent();
+            _textSprite.LoadContent();
 
-            Assert.That(textSprite.IsDisposed, Is.False);
+            Assert.That(_textSprite.IsDisposed, Is.False);
         }
 
         [Test]
@@ -228,7 +230,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
 
         [Test]
         public void GivenNewTextSprite_WhenConstructed_ThenIsActiveIsTrue()
-            => Assert.That(new TextSprite().IsActive, Is.True);
+            => Assert.That(new TextSprite().IsActive);
 
         [Test]
         public void GivenNewTextSprite_WhenConstructed_ThenOpacityIsOne()
@@ -249,10 +251,9 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         [Test]
         public void GivenNewTextSprite_WhenLoadContentIsCalled_ThenIsContentLoadedIsTrue()
         {
-            TextSprite textSprite = new();
-            textSprite.LoadContent();
+            _textSprite.LoadContent();
 
-            Assert.That(textSprite.IsContentLoaded, Is.True);
+            Assert.That(_textSprite.IsContentLoaded);
         }
 
         [Test]
@@ -262,6 +263,8 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             textSprite.LoadContent();
 
             Assert.That(textSprite.SpriteSize, Is.EqualTo(new Size2D(1, 1)));
+
+            textSprite.Dispose();
         }
 
         [Test]
@@ -271,6 +274,8 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             textSprite.LoadContent();
 
             Assert.That(textSprite.Text, Is.EqualTo(string.Empty));
+
+            textSprite.Dispose();
         }
 
         [Test]
@@ -281,16 +286,17 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             textSprite.LoadContent();
 
             Assert.That(textSprite.SpriteSize, Is.EqualTo(expectedSize));
+
+            textSprite.Dispose();
         }
 
         [Test]
         public void GivenLoadedTextSprite_WhenUnloadContentIsCalled_ThenIsContentLoadedIsFalse()
         {
-            TextSprite textSprite = new();
-            textSprite.LoadContent();
-            textSprite.UnloadContent();
+            _textSprite.LoadContent();
+            _textSprite.UnloadContent();
 
-            Assert.That(textSprite.IsContentLoaded, Is.False);
+            Assert.That(_textSprite.IsContentLoaded, Is.False);
         }
 
         [Test]
@@ -301,53 +307,51 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             textSprite.UnloadContent();
 
             Assert.That(textSprite.Text, Is.EqualTo(string.Empty));
+
+            textSprite.Dispose();
         }
 
         [Test]
         public void GivenNewTextSprite_WhenDisposeIsCalled_ThenIsDisposedIsTrue()
         {
-            TextSprite textSprite = new();
-            textSprite.Dispose();
+            _textSprite.Dispose();
 
-            Assert.That(textSprite.IsDisposed, Is.True);
+            Assert.That(_textSprite.IsDisposed);
         }
 
         [Test]
         public void GivenLoadedTextSprite_WhenDisposeIsCalled_ThenIsDisposedIsTrue()
         {
-            TextSprite textSprite = new();
-            textSprite.LoadContent();
-            textSprite.Dispose();
+            _textSprite.LoadContent();
+            _textSprite.Dispose();
 
-            Assert.That(textSprite.IsDisposed, Is.True);
+            Assert.That(_textSprite.IsDisposed);
         }
 
         [Test]
         public void GivenLoadedTextSprite_WhenDisposeIsCalled_ThenIsContentLoadedIsFalse()
         {
-            TextSprite textSprite = new();
-            textSprite.LoadContent();
-            textSprite.Dispose();
+            _textSprite.LoadContent();
+            _textSprite.Dispose();
 
-            Assert.That(textSprite.IsContentLoaded, Is.False);
+            Assert.That(_textSprite.IsContentLoaded, Is.False);
         }
 
         [Test]
         public void GivenDisposedTextSprite_WhenDisposeCalledAgain_ThenNoExceptionIsThrown()
         {
-            TextSprite textSprite = new();
-            textSprite.Dispose();
+            _textSprite.Dispose();
 
-            Assert.DoesNotThrow(() => textSprite.Dispose());
+            Assert.DoesNotThrow(_textSprite.Dispose);
         }
 
         [Test]
         public void GivenNewTextSprite_WhenDisposeIsCalled_ThenFiresDisposingEvent()
         {
             bool eventFired = false;
-            TextSprite textSprite = new();
-            textSprite.Disposing += delegate { eventFired = true; };
-            textSprite.Dispose();
+
+            _textSprite.Disposing += delegate { eventFired = true; };
+            _textSprite.Dispose();
 
             Assert.That(eventFired);
         }
@@ -356,9 +360,9 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         public void GivenNewTextSprite_WhenDisposeIsCalled_ThenFiresDisposedEvent()
         {
             bool eventFired = false;
-            TextSprite textSprite = new();
-            textSprite.Disposed += delegate { eventFired = true; };
-            textSprite.Dispose();
+
+            _textSprite.Disposed += delegate { eventFired = true; };
+            _textSprite.Dispose();
 
             Assert.That(eventFired);
         }
@@ -372,6 +376,8 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             textSprite.LoadContent();
 
             Assert.That(textSprite.ClientRectangle, Is.EqualTo(new Rectangle2D(location, size)));
+
+            textSprite.Dispose();
         }
 
         [Test]
@@ -398,6 +404,8 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             TextSprite textSprite = new() { Opacity = 0.5f };
 
             Assert.That(textSprite.ClientOpacity, Is.EqualTo(0.5f));
+
+            textSprite.Dispose();
         }
 
         [Test]
@@ -437,14 +445,14 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             TextSprite textSprite = new() { Rotation = 1.5f };
 
             Assert.That(textSprite.ClientRotation, Is.EqualTo(1.5f));
+
+            textSprite.Dispose();
         }
 
         [Test]
         public void GivenTextSpriteWithNoScaleEffect_WhenGettingClientScale_ThenReturnsBaseScale()
         {
-            TextSprite textSprite = new();
-
-            Assert.That(textSprite.ClientScale, Is.EqualTo(Scale2D.One));
+            Assert.That(_textSprite.ClientScale, Is.EqualTo(Scale2D.One));
         }
 
         [Test]

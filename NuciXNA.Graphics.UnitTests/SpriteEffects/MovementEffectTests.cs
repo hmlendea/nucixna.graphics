@@ -11,6 +11,21 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
 {
     public class MovementEffectTests
     {
+        TextSprite _sprite;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _sprite = new TextSprite();
+            _sprite.LoadContent();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _sprite.Dispose();
+        }
+
         [Test]
         public void GivenNewMovementEffect_WhenConstructed_ThenIsActiveIsFalse()
             => Assert.That(new MovementEffect().IsActive, Is.False);
@@ -31,21 +46,17 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenLoadedMovementEffect_WhenActivated_ThenIsActiveIsTrue()
         {
             MovementEffect movementEffect = new() { TargetLocation = new Point2D(100, 100) };
-            TextSprite sprite = new();
-            sprite.LoadContent();
-            movementEffect.LoadContent(sprite);
+            movementEffect.LoadContent(_sprite);
             movementEffect.Activate();
 
-            Assert.That(movementEffect.IsActive, Is.True);
+            Assert.That(movementEffect.IsActive);
         }
 
         [Test]
         public void GivenLoadedMovementEffect_WhenActivated_ThenLocationOffsetIsEmpty()
         {
             MovementEffect movementEffect = new() { TargetLocation = new Point2D(100, 100) };
-            TextSprite sprite = new();
-            sprite.LoadContent();
-            movementEffect.LoadContent(sprite);
+            movementEffect.LoadContent(_sprite);
             movementEffect.Activate();
 
             Assert.That(movementEffect.LocationOffset, Is.EqualTo(Point2D.Empty));
@@ -55,9 +66,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedMovementEffectWithDistantTarget_WhenUpdated_ThenLocationOffsetChanges()
         {
             MovementEffect movementEffect = new() { TargetLocation = new Point2D(100, 100), Speed = 10.0f };
-            TextSprite sprite = new() { Location = Point2D.Empty };
-            sprite.LoadContent();
-            movementEffect.LoadContent(sprite);
+            movementEffect.LoadContent(_sprite);
             movementEffect.Activate();
 
             movementEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
@@ -69,23 +78,19 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedMovementEffectWithDistantTarget_WhenUpdated_ThenEffectRemainsActive()
         {
             MovementEffect movementEffect = new() { TargetLocation = new Point2D(100, 100), Speed = 5.0f };
-            TextSprite sprite = new() { Location = Point2D.Empty };
-            sprite.LoadContent();
-            movementEffect.LoadContent(sprite);
+            movementEffect.LoadContent(_sprite);
             movementEffect.Activate();
 
             movementEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
 
-            Assert.That(movementEffect.IsActive, Is.True);
+            Assert.That(movementEffect.IsActive);
         }
 
         [Test]
         public void GivenActivatedMovementEffectReachingTarget_WhenUpdated_ThenEffectIsDeactivated()
         {
             MovementEffect movementEffect = new() { TargetLocation = new Point2D(5, 0), Speed = 100.0f };
-            TextSprite sprite = new() { Location = Point2D.Empty };
-            sprite.LoadContent();
-            movementEffect.LoadContent(sprite);
+            movementEffect.LoadContent(_sprite);
             movementEffect.Activate();
 
             movementEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
@@ -97,9 +102,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedMovementEffect_WhenDeactivated_ThenLocationOffsetIsEmpty()
         {
             MovementEffect movementEffect = new() { TargetLocation = new Point2D(100, 100), Speed = 10.0f };
-            TextSprite sprite = new() { Location = Point2D.Empty };
-            sprite.LoadContent();
-            movementEffect.LoadContent(sprite);
+            movementEffect.LoadContent(_sprite);
             movementEffect.Activate();
             movementEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
             movementEffect.Deactivate();
@@ -111,9 +114,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenLoadedButInactiveMovementEffect_WhenUpdated_ThenLocationOffsetDoesNotChange()
         {
             MovementEffect movementEffect = new() { TargetLocation = new Point2D(100, 100) };
-            TextSprite sprite = new() { Location = Point2D.Empty };
-            sprite.LoadContent();
-            movementEffect.LoadContent(sprite);
+            movementEffect.LoadContent(_sprite);
 
             movementEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
 

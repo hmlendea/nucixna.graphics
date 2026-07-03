@@ -38,8 +38,8 @@ namespace NuciXNA.Graphics.SpriteEffects
         /// </summary>
         protected override void DoUpdate(GameTime gameTime)
         {
-            var currentLocation = Sprite.Location + LocationOffset;
-            var direction = TargetLocation - currentLocation;
+            Point2D currentLocation = Sprite.Location + LocationOffset;
+            Point2D direction = TargetLocation - currentLocation;
             var distance = Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
 
             if (distance <= Speed)

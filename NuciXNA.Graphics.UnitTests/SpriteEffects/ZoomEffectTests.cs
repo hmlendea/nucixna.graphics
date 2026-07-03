@@ -28,7 +28,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
 
         [Test]
         public void GivenNewZoomEffect_WhenConstructed_ThenIsIncreasingIsTrue()
-            => Assert.That(new ZoomEffect().IsIncreasing, Is.True);
+            => Assert.That(new ZoomEffect().IsIncreasing);
 
         [Test]
         public void GivenNewZoomEffect_WhenConstructed_ThenMinimumMultiplierIsZero()
@@ -119,7 +119,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
 
             zoomEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.1)));
 
-            Assert.That(zoomEffect.IsIncreasing, Is.True);
+            Assert.That(zoomEffect.IsIncreasing);
         }
 
         [Test]

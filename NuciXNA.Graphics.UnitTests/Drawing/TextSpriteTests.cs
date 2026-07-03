@@ -15,7 +15,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             TextSprite textSprite = new();
             textSprite.LoadContent();
 
-            Assert.Throws<InvalidOperationException>(() => textSprite.LoadContent());
+            Assert.Throws<InvalidOperationException>(textSprite.LoadContent);
         }
 
         [Test]
@@ -226,7 +226,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
 
         [Test]
         public void GivenNewTextSprite_WhenConstructed_ThenIsActiveIsTrue()
-            => Assert.That(new TextSprite().IsActive, Is.True);
+            => Assert.That(new TextSprite().IsActive);
 
         [Test]
         public void GivenNewTextSprite_WhenConstructed_ThenOpacityIsOne()
@@ -250,7 +250,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             TextSprite textSprite = new();
             textSprite.LoadContent();
 
-            Assert.That(textSprite.IsContentLoaded, Is.True);
+            Assert.That(textSprite.IsContentLoaded);
         }
 
         [Test]
@@ -307,7 +307,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             TextSprite textSprite = new();
             textSprite.Dispose();
 
-            Assert.That(textSprite.IsDisposed, Is.True);
+            Assert.That(textSprite.IsDisposed);
         }
 
         [Test]
@@ -317,7 +317,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             textSprite.LoadContent();
             textSprite.Dispose();
 
-            Assert.That(textSprite.IsDisposed, Is.True);
+            Assert.That(textSprite.IsDisposed);
         }
 
         [Test]
@@ -336,7 +336,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             TextSprite textSprite = new();
             textSprite.Dispose();
 
-            Assert.DoesNotThrow(() => textSprite.Dispose());
+            Assert.DoesNotThrow(textSprite.Dispose);
         }
 
         [Test]

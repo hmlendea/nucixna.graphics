@@ -28,7 +28,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
 
         [Test]
         public void GivenNewFadeEffect_WhenConstructed_ThenIsIncreasingIsTrue()
-            => Assert.That(new FadeEffect().IsIncreasing, Is.True);
+            => Assert.That(new FadeEffect().IsIncreasing);
 
         [Test]
         public void GivenNewFadeEffect_WhenConstructed_ThenSpeedIsOne()
@@ -78,7 +78,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
             fadeEffect.LoadContent(sprite);
             fadeEffect.Activate();
 
-            Assert.That(fadeEffect.IsActive, Is.True);
+            Assert.That(fadeEffect.IsActive);
         }
 
         [Test]

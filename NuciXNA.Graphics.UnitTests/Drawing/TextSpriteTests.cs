@@ -1,6 +1,4 @@
 using System;
-
-using Microsoft.Xna.Framework;
 using NUnit.Framework;
 
 using NuciXNA.Graphics.Drawing;

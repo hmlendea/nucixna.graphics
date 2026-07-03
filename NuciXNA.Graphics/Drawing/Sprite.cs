@@ -64,6 +64,22 @@ namespace NuciXNA.Graphics.Drawing
         public abstract Rectangle2D ClientRectangle { get; }
 
         /// <summary>
+        /// Gets the location with the active movement effect offset applied.
+        /// </summary>
+        protected Point2D ClientLocation
+        {
+            get
+            {
+                if (MovementEffect is not null && MovementEffect.IsActive)
+                {
+                    return Location + MovementEffect.LocationOffset;
+                }
+
+                return Location;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the movement effect.
         /// </summary>
         /// <value>The movement effect.</value>

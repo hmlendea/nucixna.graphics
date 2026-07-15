@@ -7,42 +7,20 @@
 
 Graphics helpers and sprite abstractions for NuciXNA, built on top of MonoGame/XNA.
 
-It provides:
+## ✨ Features
 
-- a central graphics context manager (`GraphicsManager`)
-- drawable sprite primitives (`TextSprite`, `TextureSprite`)
-- text drawing helpers with alignment and outlines
-- reusable sprite effects (movement, animation, opacity, scale, rotation)
+- Central graphics context manager (`GraphicsManager`)
+- Drawable sprite primitives (`TextSprite`, `TextureSprite`)
+- Text drawing with alignment, word wrapping, and outlines
+- Reusable sprite effects: movement, animation, opacity, scale, rotation
 
-## Installation
+## 🚀 Usage
 
-[![Get it from NuGet](https://raw.githubusercontent.com/hmlendea/readme-assets/master/badges/stores/nuget.png)](https://nuget.org/packages/NuciXNA.Graphics)
+### 1. Initialise the graphics context
 
-### .NET CLI
-
-```bash
-dotnet add package NuciXNA.Graphics
-```
-
-### Package Manager
-```powershell
-Install-Package NuciXNA.Graphics
-```
-
-## Requirements
-
-- .NET: `net10.0`
-- MonoGame DesktopGL (or compatible MonoGame runtime)
-- `NuciXNA.DataAccess` and `NuciXNA.Primitives` (restored automatically via NuGet)
-
-## Quick Start
-
-### 1. Initialize the graphics context
-
-In your game setup (after creating your `GraphicsDeviceManager` and `SpriteBatch`), assign them to the shared manager:
+In your game setup, after creating your `GraphicsDeviceManager` and `SpriteBatch`, assign them to the shared manager:
 
 ```csharp
-using Microsoft.Xna.Framework.Graphics;
 using NuciXNA.Graphics;
 
 GraphicsManager.Instance.Graphics = graphics;
@@ -55,16 +33,16 @@ GraphicsManager.Instance.SpriteBatch = spriteBatch;
 using NuciXNA.Graphics.Drawing;
 using NuciXNA.Primitives;
 
-var label = new TextSprite
+TextSprite label = new()
 {
-	FontName = "Default",
-	Text = "Hello NuciXNA.Graphics",
-	Location = new Point2D(32, 24),
-	SpriteSize = new Size2D(320, 64),
-	HorizontalAlignment = Alignment.Beginning,
-	VerticalAlignment = Alignment.Beginning,
-	Tint = Colour.White,
-	Opacity = 1f,
+    FontName = "Default",
+    Text = "Hello NuciXNA.Graphics",
+    Location = new Point2D(32, 24),
+    SpriteSize = new Size2D(320, 64),
+    HorizontalAlignment = Alignment.Middle,
+    VerticalAlignment = Alignment.Middle,
+    Tint = Colour.White,
+    Opacity = 1.0f,
 };
 
 label.LoadContent();
@@ -80,123 +58,116 @@ label.Draw(spriteBatch);
 spriteBatch.End();
 ```
 
-## Core Types
-
-### GraphicsManager
-
-Singleton used to expose:
-
-- `GraphicsDeviceManager Graphics`
-- `SpriteBatch SpriteBatch`
-- `BackBufferSize`
-
-### Sprite base class
-
-All sprites derive from `Sprite` and provide:
-
-- lifecycle: `LoadContent()`, `UnloadContent()`, `Update()`, `Draw()`
-- transform/state: location, scale, rotation, tint, opacity
-- optional effects: movement, opacity, rotation, scale
-
-### TextSprite
-
-Useful for UI labels and dynamic text:
-
-- `FontName` for loading a `SpriteFont` from `Fonts/<name>`
-- auto text wrapping to `SpriteSize.Width`
-- horizontal/vertical alignment via `Alignment`
-- optional outlining via `FontOutline` (`None`, `Around`, `BottomRight`)
-
-### TextureSprite
-
-Texture-based sprite with optional masking and sprite-sheet animation:
-
-- `ContentFile` for texture asset path
-- `AlphaMaskFile` for alpha blending mask
-- `SourceRectangle` and `TextureLayout` (`None`, `Centre`, `Stretch`, `Tile`, `Zoom`)
-- `SpriteSheetEffect` for frame-based animation
-
-## Sprite Effects
-
-Effects inherit from `NuciSpriteEffect<TSprite>` and are activated at runtime.
-
-Included effects:
-
-- `MovementEffect` - moves the sprite toward a target location
-- `FadeEffect` - oscillates opacity between min/max multipliers
-- `ZoomEffect` - oscillates scale between min/max multipliers
-- `OscilationEffect` - oscillates rotation multiplier
-- `AnimationEffect` - advances frames for sprite sheets
-
-Example:
+### 4. Apply a sprite effect
 
 ```csharp
 using NuciXNA.Graphics.SpriteEffects;
 using NuciXNA.Primitives;
 
-var sprite = new TextureSprite
+TextureSprite hero = new()
 {
-	ContentFile = "Characters/Hero",
-	Location = new Point2D(120, 200),
-	SpriteSize = new Size2D(64, 64),
-	MovementEffect = new MovementEffect
-	{
-		Speed = 6f,
-		TargetLocation = new Point2D(320, 200),
-	}
+    ContentFile = "Characters/Hero",
+    Location = new Point2D(120, 200),
+    SpriteSize = new Size2D(64, 64),
+    MovementEffect = new MovementEffect
+    {
+        Speed = 6.0f,
+        TargetLocation = new Point2D(320, 200),
+    }
 };
 
-sprite.LoadContent();
-sprite.MovementEffect.Activate();
+hero.LoadContent();
+hero.MovementEffect.Activate();
 ```
 
-## Content Notes
+## 📦 Installation
 
-- `TextSprite` loads fonts from `Fonts/<FontName>` via `NuciContentManager`
-- `TextureSprite` expects valid content paths resolvable by the same content manager
-- effects and sprites must be loaded before activation, update, or draw
+[![Get it from NuGet](https://raw.githubusercontent.com/hmlendea/readme-assets/master/badges/stores/nuget.png)](https://nuget.org/packages/NuciXNA.Graphics)
 
-## Development
+### .NET CLI
+
+```bash
+dotnet add package NuciXNA.Graphics
+```
+
+### Package Manager Console
+
+```powershell
+Install-Package NuciXNA.Graphics
+```
+
+## 🛠️ Development
+
+### Requirements
+
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
+- MonoGame DesktopGL (or compatible MonoGame runtime)
+
+All NuGet dependencies are restored automatically by `dotnet restore`.
 
 ### Build
 
 ```bash
-dotnet build NuciXNA.Graphics.sln
+dotnet build NuciXNA.Graphics/NuciXNA.Graphics.csproj
 ```
 
 ### Test
 
 ```bash
-dotnet test NuciXNA.Graphics.sln
+dotnet test NuciXNA.Graphics.slnx
 ```
 
-### Pack
+### Dependencies
+
+| Package | Purpose |
+|---------|---------|
+| `MonoGame.Framework.DesktopGL` | XNA/MonoGame runtime |
+| `NuciXNA.DataAccess` | Content loading (`NuciContentManager`) |
+| `NuciXNA.Primitives` | `Point2D`, `Size2D`, `Scale2D`, `Colour`, `Rectangle2D` |
+
+### Release
 
 ```bash
 dotnet pack NuciXNA.Graphics/NuciXNA.Graphics.csproj -c Release
 ```
 
-## Contributing
+## 🗂️ Project Structure
 
-Contributions are welcome.
+The solution contains the following projects:
 
-When contributing:
+- `NuciXNA.Graphics`: Core library with sprite primitives, effects, and the graphics manager
+- `NuciXNA.Graphics.UnitTests`: Unit tests for the library
 
-- keep the project cross-platform
-- preserve the existing public API unless a breaking change is intentional
-- keep the changes focused and consistent with the current coding style
-- update the documentation when the behavior changes
-- include tests for any new behavior
+Key directories inside `NuciXNA.Graphics/`:
 
-## Related Projects
+| Directory | Purpose |
+|-----------|--------|
+| `Drawing/` | Sprite primitives, text rendering, alignment, and outlines |
+| `SpriteEffects/` | Reusable sprite effects (movement, animation, opacity, scale, rotation) |
 
-- [NuciXNA.DataAccess](https://github.com/hmlendea/nucixna.dataaccess)
-- [NuciXNA.Graphics](https://github.com/hmlendea/nucixna.graphics)
-- [NuciXNA.GUI](https://github.com/hmlendea/nucixna.gui)
-- [NuciXNA.Input](https://github.com/hmlendea/nucixna.input)
-- [NuciXNA.Primitives](https://github.com/hmlendea/nucixna.Primitives)
+## 🤝 Contributing
 
-## License
+Contributions are welcome. Please:
+- Keep changes cross-platform
+- Keep the existing public contract intact unless a breaking change is intentional
+- Keep pull requests focused and consistent with the existing code style
+- Update documentation when behaviour changes
+- Add unit tests for any new or changed functionality
 
-Licensed under the GNU General Public License v3.0 or later.
+## 🔗 Related Projects
+
+- [NuciXNA.DataAccess](https://github.com/hmlendea/nucixna.dataaccess): Content loading utilities for NuciXNA
+- [NuciXNA.GUI](https://github.com/hmlendea/nucixna.gui): GUI controls built on top of NuciXNA.Graphics
+- [NuciXNA.Input](https://github.com/hmlendea/nucixna.input): Input handling for NuciXNA
+- [NuciXNA.Primitives](https://github.com/hmlendea/nucixna.primitives): Primitive types used across NuciXNA
+
+## 💝 Support
+
+Found a bug or have a suggestion? [Open an issue](https://github.com/hmlendea/nucixna.graphics/issues)!
+
+If you find this project useful, consider [funding it](https://hmlendea.go.ro/funding) or giving a ⭐️ on GitHub!
+
+## 📄 License
+
+Licensed under the `GNU General Public License v3.0` or later.
 See [LICENSE](./LICENSE) for details.

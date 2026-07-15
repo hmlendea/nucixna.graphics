@@ -1,6 +1,7 @@
 using System;
 
 using Microsoft.Xna.Framework;
+
 using NUnit.Framework;
 
 using NuciXNA.Graphics.Drawing;
@@ -8,21 +9,22 @@ using NuciXNA.Graphics.SpriteEffects;
 
 namespace NuciXNA.Graphics.UnitTests.SpriteEffects
 {
+    [TestFixture]
     public class ZoomEffectTests
     {
-        TextSprite _sprite;
+        private TextSprite sprite;
 
         [SetUp]
         public void SetUp()
         {
-            _sprite = new TextSprite();
-            _sprite.LoadContent();
+            sprite = new TextSprite();
+            sprite.LoadContent();
         }
 
         [TearDown]
         public void TearDown()
         {
-            _sprite.Dispose();
+            sprite.Dispose();
         }
 
         [Test]
@@ -57,7 +59,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedZoomEffectIncreasing_WhenUpdated_ThenHorizontalAndVerticalMultipliersAreEqual()
         {
             ZoomEffect zoomEffect = new() { Speed = 0.5f, CurrentHorizontalMultiplier = 1.0f, IsIncreasing = true };
-            zoomEffect.LoadContent(_sprite);
+            zoomEffect.LoadContent(sprite);
             zoomEffect.Activate();
 
             zoomEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
@@ -69,7 +71,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedZoomEffectIncreasing_WhenUpdated_ThenHorizontalMultiplierIncreases()
         {
             ZoomEffect zoomEffect = new() { Speed = 0.5f, CurrentHorizontalMultiplier = 1.0f, MaximumMultiplier = 2.0f, IsIncreasing = true };
-            zoomEffect.LoadContent(_sprite);
+            zoomEffect.LoadContent(sprite);
             zoomEffect.Activate();
 
             zoomEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
@@ -81,7 +83,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedZoomEffectAtMaximum_WhenUpdated_ThenHorizontalMultiplierClampsToMaximum()
         {
             ZoomEffect zoomEffect = new() { Speed = 1.0f, CurrentHorizontalMultiplier = 2.0f, MaximumMultiplier = 2.0f, IsIncreasing = true };
-            zoomEffect.LoadContent(_sprite);
+            zoomEffect.LoadContent(sprite);
             zoomEffect.Activate();
 
             zoomEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.5)));
@@ -93,7 +95,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedZoomEffectAtMaximum_WhenUpdated_ThenDirectionReversesToDecreasing()
         {
             ZoomEffect zoomEffect = new() { Speed = 1.0f, CurrentHorizontalMultiplier = 2.0f, MaximumMultiplier = 2.0f, IsIncreasing = true };
-            zoomEffect.LoadContent(_sprite);
+            zoomEffect.LoadContent(sprite);
             zoomEffect.Activate();
 
             zoomEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.1)));
@@ -105,7 +107,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedZoomEffectAtMinimum_WhenUpdated_ThenHorizontalMultiplierClampsToMinimum()
         {
             ZoomEffect zoomEffect = new() { Speed = 1.0f, CurrentHorizontalMultiplier = 0.0f, MinimumMultiplier = 0.0f, IsIncreasing = false };
-            zoomEffect.LoadContent(_sprite);
+            zoomEffect.LoadContent(sprite);
             zoomEffect.Activate();
 
             zoomEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.5)));
@@ -117,7 +119,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenActivatedZoomEffectAtMinimum_WhenUpdated_ThenDirectionReversesToIncreasing()
         {
             ZoomEffect zoomEffect = new() { Speed = 1.0f, CurrentHorizontalMultiplier = 0.0f, MinimumMultiplier = 0.0f, IsIncreasing = false };
-            zoomEffect.LoadContent(_sprite);
+            zoomEffect.LoadContent(sprite);
             zoomEffect.Activate();
 
             zoomEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.1)));
@@ -129,7 +131,7 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         public void GivenLoadedButInactiveZoomEffect_WhenUpdated_ThenHorizontalMultiplierDoesNotChange()
         {
             ZoomEffect zoomEffect = new() { CurrentHorizontalMultiplier = 1.5f };
-            zoomEffect.LoadContent(_sprite);
+            zoomEffect.LoadContent(sprite);
 
             zoomEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
 

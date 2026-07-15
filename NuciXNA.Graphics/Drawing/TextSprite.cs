@@ -7,9 +7,9 @@ using NuciXNA.Primitives.Mapping;
 
 namespace NuciXNA.Graphics.Drawing
 {
-    public class TextSprite : Sprite
+    public sealed class TextSprite : Sprite
     {
-        SpriteFont font;
+        private SpriteFont font;
 
         /// <summary>
         /// Gets or sets the text.
@@ -23,6 +23,10 @@ namespace NuciXNA.Graphics.Drawing
         /// <value>The name of the font.</value>
         public string FontName { get; set; }
 
+        /// <summary>
+        /// Gets or sets the outline colour of the text.
+        /// </summary>
+        /// <value>The outline colour.</value>
         public Colour OutlineColour { get; set; }
 
         // TODO: Make this a number (Outline size)

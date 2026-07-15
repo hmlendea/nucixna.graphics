@@ -4,15 +4,16 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using NuciXNA.DataAccess.Content;
-using NuciXNA.Graphics.SpriteEffects;
 using NuciXNA.Primitives;
+
+using NuciXNA.Graphics.SpriteEffects;
 
 namespace NuciXNA.Graphics.Drawing
 {
-    public class TextureSprite : Sprite
+    public sealed class TextureSprite : Sprite
     {
-        string loadedContentFile;
-        string loadedAlphaMaskFile;
+        private string loadedContentFile;
+        private string loadedAlphaMaskFile;
 
         /// <summary>
         /// Gets or sets the content file.
@@ -73,7 +74,7 @@ namespace NuciXNA.Graphics.Drawing
         public SpriteSheetEffect SpriteSheetEffect { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Sprite"/> class.
+        /// Initialises a new instance of the <see cref="TextureSprite"/> class.
         /// </summary>
         public TextureSprite() : base()
         {
@@ -84,6 +85,9 @@ namespace NuciXNA.Graphics.Drawing
             TextureLayout = TextureLayout.Stretch;
         }
 
+        /// <summary>
+        /// Gets the source rectangle adjusted for the current sprite sheet frame.
+        /// </summary>
         public Rectangle2D ClientSourceRectangle
         {
             get
@@ -107,17 +111,13 @@ namespace NuciXNA.Graphics.Drawing
         {
             Texture = LoadTexture();
 
-            if (SpriteSize.Equals(Size2D.Empty))
+            if (SpriteSize == Size2D.Empty)
             {
-                Size2D size;
+                Size2D size = new(1, 1);
 
                 if (Texture is not null)
                 {
                     size = TextureSize;
-                }
-                else
-                {
-                    size = new(1, 1);
                 }
 
                 SpriteSize = size;
@@ -132,7 +132,8 @@ namespace NuciXNA.Graphics.Drawing
             {
                 RenderTarget2D renderTarget = new(
                     GraphicsManager.Instance.Graphics.GraphicsDevice,
-                    SpriteSize.Width, SpriteSize.Height);
+                    SpriteSize.Width,
+                    SpriteSize.Height);
 
                 GraphicsManager.Instance.Graphics.GraphicsDevice.SetRenderTarget(renderTarget);
                 GraphicsManager.Instance.Graphics.GraphicsDevice.Clear(Color.Transparent);
@@ -191,6 +192,13 @@ namespace NuciXNA.Graphics.Drawing
                 return;
             }
 
+            SamplerState effectiveSamplerState = GraphicsManager.Instance.DefaultSamplerState;
+
+            if (SamplerState is not null)
+            {
+                effectiveSamplerState = SamplerState;
+            }
+
             TextureDrawer.Draw(
                 spriteBatch,
                 Texture,
@@ -202,10 +210,10 @@ namespace NuciXNA.Graphics.Drawing
                 new(SourceRectangle.Size / 2),
                 ClientScale,
                 TextureLayout,
-                SamplerState);
+                effectiveSamplerState);
         }
 
-        Texture2D LoadTexture()
+        private Texture2D LoadTexture()
         {
             Texture2D texture = null;
 
@@ -228,7 +236,7 @@ namespace NuciXNA.Graphics.Drawing
             return texture;
         }
 
-        static Texture2D TextureBlend(Texture2D source, Texture2D mask)
+        private static Texture2D TextureBlend(Texture2D source, Texture2D mask)
         {
             Color[] textureBits = new Color[source.Width * source.Height];
             Color[] maskBits = new Color[mask.Width * mask.Height];
@@ -260,10 +268,10 @@ namespace NuciXNA.Graphics.Drawing
                 endY = startY + mask.Height;
             }
 
-            Parallel.For(startY, endY, y => Parallel.For(startX, endX, x =>
+            Parallel.For(startY, endY, pixelY => Parallel.For(startX, endX, pixelX =>
             {
-                int indexTexture = x - startX + (y - startY) * source.Width;
-                int indexMask = x - startX + (y - startY) * mask.Width;
+                int indexTexture = pixelX - startX + (pixelY - startY) * source.Width;
+                int indexMask = pixelX - startX + (pixelY - startY) * mask.Width;
 
                 textureBits[indexTexture] = Color.FromNonPremultiplied(
                     textureBits[indexTexture].R,

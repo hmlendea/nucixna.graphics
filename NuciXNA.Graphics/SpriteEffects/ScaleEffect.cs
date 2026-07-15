@@ -13,12 +13,24 @@ namespace NuciXNA.Graphics.SpriteEffects
         /// <value>The speed.</value>
         public float Speed { get; set; }
 
+        /// <summary>
+        /// Gets or sets the current horizontal scale multiplier.
+        /// </summary>
         public float CurrentHorizontalMultiplier { get; set; }
 
+        /// <summary>
+        /// Gets or sets the current vertical scale multiplier.
+        /// </summary>
         public float CurrentVerticalMultiplier { get; set; }
 
+        /// <summary>
+        /// Gets or sets the minimum scale multiplier.
+        /// </summary>
         public float MinimumMultiplier { get; set; }
 
+        /// <summary>
+        /// Gets or sets the maximum scale multiplier.
+        /// </summary>
         public float MaximumMultiplier { get; set; }
 
         /// <summary>

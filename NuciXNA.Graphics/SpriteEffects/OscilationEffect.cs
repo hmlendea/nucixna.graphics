@@ -7,8 +7,14 @@ namespace NuciXNA.Graphics.SpriteEffects
     /// </summary>
     public class OscilationEffect : RotationEffect
     {
+        /// <summary>
+        /// Gets or sets the minimum rotation multiplier.
+        /// </summary>
         public float MinimumMultiplier { get; set; }
 
+        /// <summary>
+        /// Gets or sets the maximum rotation multiplier.
+        /// </summary>
         public float MaximumMultiplier { get; set; }
 
         /// <summary>

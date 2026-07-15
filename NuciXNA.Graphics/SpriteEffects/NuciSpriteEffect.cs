@@ -2,6 +2,7 @@
 using System.Linq;
 
 using Microsoft.Xna.Framework;
+
 using NuciXNA.Graphics.Drawing;
 
 namespace NuciXNA.Graphics.SpriteEffects
@@ -17,6 +18,9 @@ namespace NuciXNA.Graphics.SpriteEffects
         /// <value><c>true</c> if active; otherwise, <c>false</c>.</value>
         public bool IsActive { get; private set; }
 
+        /// <summary>
+        /// Gets the sprite this effect is attached to.
+        /// </summary>
         protected TSprite Sprite { get; private set; }
 
         /// <summary>

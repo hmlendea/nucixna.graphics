@@ -3,6 +3,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
 using NuciXNA.Primitives;
 using NuciXNA.Primitives.Mapping;
 
@@ -10,6 +11,9 @@ namespace NuciXNA.Graphics.Drawing
 {
     public static class StringDrawer
     {
+        /// <summary>
+        /// Draws a string within the specified bounds with alignment, opacity, and optional outline.
+        /// </summary>
         public static void Draw(
             SpriteBatch spriteBatch,
             SpriteFont font,
@@ -61,13 +65,13 @@ namespace NuciXNA.Graphics.Drawing
 
                 if (outline == FontOutline.Around)
                 {
-                    for (int dx = -1; dx <= 1; dx++)
+                    for (int deltaX = -1; deltaX <= 1; deltaX++)
                     {
-                        for (int dy = -1; dy <= 1; dy++)
+                        for (int deltaY = -1; deltaY <= 1; deltaY++)
                         {
                             Vector2 pos = new(
-                                bounds.X + dx + textOrigin.X,
-                                bounds.Y + dy + textOrigin.Y);
+                                bounds.X + deltaX + textOrigin.X,
+                                bounds.Y + deltaY + textOrigin.Y);
 
                             spriteBatch.DrawString(font, line, pos, clrOutline);
                         }
@@ -122,7 +126,6 @@ namespace NuciXNA.Graphics.Drawing
                     sb.Append(word + " ");
                     lineWidth += size.X + spaceWidth;
                 }
-
                 else
                 {
                     if (size.X > maxLineWidth)

@@ -13,10 +13,19 @@ namespace NuciXNA.Graphics.SpriteEffects
         /// <value>The speed.</value>
         public float Speed { get; set; }
 
+        /// <summary>
+        /// Gets or sets the current opacity multiplier.
+        /// </summary>
         public float CurrentMultiplier { get; set; }
 
+        /// <summary>
+        /// Gets or sets the minimum opacity multiplier.
+        /// </summary>
         public float MinimumMultiplier { get; set; }
 
+        /// <summary>
+        /// Gets or sets the maximum opacity multiplier.
+        /// </summary>
         public float MaximumMultiplier { get; set; }
 
         /// <summary>

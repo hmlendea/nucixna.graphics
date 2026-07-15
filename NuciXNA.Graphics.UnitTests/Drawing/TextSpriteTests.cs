@@ -1,5 +1,7 @@
 using System;
 
+using Microsoft.Xna.Framework;
+
 using NuciXNA.Primitives;
 
 using NUnit.Framework;
@@ -470,6 +472,115 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             textSprite.ScaleEffect.Activate();
 
             Assert.That(textSprite.ClientScale, Is.EqualTo(new Scale2D(2.0f, 2.0f)));
+
+            textSprite.Dispose();
+        }
+
+        [Test]
+        public void GivenNewTextSprite_WhenConstructed_ThenLocationIsEmpty()
+            => Assert.That(new TextSprite().Location, Is.EqualTo(Point2D.Empty));
+
+        [Test]
+        public void GivenNewTextSprite_WhenConstructed_ThenRotationIsZero()
+            => Assert.That(new TextSprite().Rotation, Is.EqualTo(0.0f));
+
+        [Test]
+        public void GivenNewTextSprite_WhenConstructed_ThenSpriteSizeIsEmpty()
+            => Assert.That(new TextSprite().SpriteSize, Is.EqualTo(Size2D.Empty));
+
+        [Test]
+        public void GivenNewTextSprite_WhenConstructed_ThenFontOutlineIsNone()
+            => Assert.That(new TextSprite().FontOutline, Is.EqualTo(FontOutline.None));
+
+        [Test]
+        public void GivenNewTextSprite_WhenConstructed_ThenHorizontalAlignmentIsBeginning()
+            => Assert.That(new TextSprite().HorizontalAlignment, Is.EqualTo(Alignment.Beginning));
+
+        [Test]
+        public void GivenNewTextSprite_WhenConstructed_ThenVerticalAlignmentIsBeginning()
+            => Assert.That(new TextSprite().VerticalAlignment, Is.EqualTo(Alignment.Beginning));
+
+        [Test]
+        public void GivenNewTextSprite_WhenConstructed_ThenFontNameIsNull()
+            => Assert.That(new TextSprite().FontName, Is.Null);
+
+        [Test]
+        public void GivenNewTextSprite_WhenDisposeIsCalled_ThenDisposingFiresBeforeDisposed()
+        {
+            int callOrder = 0;
+            int disposingOrder = 0;
+            int disposedOrder = 0;
+
+            textSprite.Disposing += delegate { disposingOrder = ++callOrder; };
+            textSprite.Disposed += delegate { disposedOrder = ++callOrder; };
+
+            textSprite.Dispose();
+
+            Assert.That(disposingOrder, Is.LessThan(disposedOrder));
+        }
+
+        [Test]
+        public void GivenTextSpriteWithInactiveRotationEffect_WhenGettingClientRotation_ThenReturnsBaseRotation()
+        {
+            TextSprite textSprite = new()
+            {
+                Rotation = 1.5f,
+                RotationEffect = new OscilationEffect { CurrentMultiplier = 0.5f }
+            };
+            textSprite.LoadContent();
+
+            Assert.That(textSprite.ClientRotation, Is.EqualTo(1.5f));
+
+            textSprite.Dispose();
+        }
+
+        [Test]
+        public void GivenTextSpriteWithActiveRotationEffect_WhenGettingClientRotation_ThenAddsRotationMultiplier()
+        {
+            TextSprite textSprite = new()
+            {
+                Rotation = 1.0f,
+                RotationEffect = new OscilationEffect { CurrentMultiplier = 0.5f }
+            };
+            textSprite.LoadContent();
+            textSprite.RotationEffect.Activate();
+
+            Assert.That(textSprite.ClientRotation, Is.EqualTo(1.5f).Within(0.001f));
+
+            textSprite.Dispose();
+        }
+
+        [Test]
+        public void GivenTextSpriteWithInactiveScaleEffect_WhenGettingClientScale_ThenReturnsBaseScale()
+        {
+            TextSprite textSprite = new()
+            {
+                Scale = Scale2D.One,
+                ScaleEffect = new ZoomEffect { CurrentHorizontalMultiplier = 2.0f, CurrentVerticalMultiplier = 2.0f }
+            };
+            textSprite.LoadContent();
+
+            Assert.That(textSprite.ClientScale, Is.EqualTo(Scale2D.One));
+
+            textSprite.Dispose();
+        }
+
+        [Test]
+        public void GivenTextSpriteWithActiveMovementEffect_AfterUpdate_ThenClientRectangleLocationIsOffset()
+        {
+            Point2D location = new(10, 20);
+            Size2D size = new(100, 50);
+            TextSprite textSprite = new()
+            {
+                Location = location,
+                SpriteSize = size,
+                MovementEffect = new MovementEffect { TargetLocation = new Point2D(1000, 1000), Speed = 10.0f }
+            };
+            textSprite.LoadContent();
+            textSprite.MovementEffect.Activate();
+            textSprite.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
+
+            Assert.That(textSprite.ClientRectangle.Location, Is.Not.EqualTo(location));
 
             textSprite.Dispose();
         }

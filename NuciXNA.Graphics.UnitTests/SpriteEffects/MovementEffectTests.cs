@@ -135,5 +135,46 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         [Test]
         public void GivenUnloadedMovementEffect_WhenUpdateIsCalled_ThenThrowsInvalidOperationException()
             => Assert.Throws<InvalidOperationException>(() => new MovementEffect().Update(null));
+
+        [Test]
+        public void GivenNewMovementEffect_WhenConstructed_ThenIsDisposedIsFalse()
+            => Assert.That(new MovementEffect().IsDisposed, Is.False);
+
+        [Test]
+        public void GivenNewMovementEffect_WhenUnloadContentIsCalled_ThenThrowsInvalidOperationException()
+            => Assert.Throws<InvalidOperationException>(() => new MovementEffect().UnloadContent());
+
+        [Test]
+        public void GivenMovementEffect_WhenLoadContentCalledTwice_ThenThrowsInvalidOperationException()
+        {
+            MovementEffect movementEffect = new();
+            movementEffect.LoadContent(sprite);
+
+            Assert.Throws<InvalidOperationException>(() => movementEffect.LoadContent(sprite));
+        }
+
+        [Test]
+        public void GivenActivatedMovementEffectWithOffset_WhenReactivated_ThenLocationOffsetResetsToEmpty()
+        {
+            MovementEffect movementEffect = new() { TargetLocation = new Point2D(100, 100), Speed = 10.0f };
+            movementEffect.LoadContent(sprite);
+            movementEffect.Activate();
+            movementEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
+            movementEffect.Activate();
+
+            Assert.That(movementEffect.LocationOffset, Is.EqualTo(Point2D.Empty));
+        }
+
+        [Test]
+        public void GivenActivatedMovementEffectReachingTarget_WhenUpdated_ThenLocationOffsetIsEmpty()
+        {
+            MovementEffect movementEffect = new() { TargetLocation = new Point2D(5, 0), Speed = 100.0f };
+            movementEffect.LoadContent(sprite);
+            movementEffect.Activate();
+
+            movementEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
+
+            Assert.That(movementEffect.LocationOffset, Is.EqualTo(Point2D.Empty));
+        }
     }
 }

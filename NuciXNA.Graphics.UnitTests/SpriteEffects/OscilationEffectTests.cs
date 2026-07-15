@@ -133,5 +133,76 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
 
             Assert.That(oscilationEffect.CurrentMultiplier, Is.EqualTo(1.2f));
         }
+
+        [Test]
+        public void GivenNewOscilationEffect_WhenConstructed_ThenIsDisposedIsFalse()
+            => Assert.That(new OscilationEffect().IsDisposed, Is.False);
+
+        [Test]
+        public void GivenNewOscilationEffect_WhenConstructed_ThenSpeedIsOne()
+            => Assert.That(new OscilationEffect().Speed, Is.EqualTo(1.0f));
+
+        [Test]
+        public void GivenUnloadedOscilationEffect_WhenActivateIsCalled_ThenThrowsInvalidOperationException()
+            => Assert.Throws<InvalidOperationException>(() => new OscilationEffect().Activate());
+
+        [Test]
+        public void GivenUnloadedOscilationEffect_WhenDeactivateIsCalled_ThenThrowsInvalidOperationException()
+            => Assert.Throws<InvalidOperationException>(() => new OscilationEffect().Deactivate());
+
+        [Test]
+        public void GivenUnloadedOscilationEffect_WhenUpdateIsCalled_ThenThrowsInvalidOperationException()
+            => Assert.Throws<InvalidOperationException>(() => new OscilationEffect().Update(null));
+
+        [Test]
+        public void GivenOscilationEffect_WhenLoadContentCalledTwice_ThenThrowsInvalidOperationException()
+        {
+            OscilationEffect oscilationEffect = new();
+            oscilationEffect.LoadContent(sprite);
+
+            Assert.Throws<InvalidOperationException>(() => oscilationEffect.LoadContent(sprite));
+        }
+
+        [Test]
+        public void GivenLoadedOscilationEffect_WhenActivated_ThenIsActiveIsTrue()
+        {
+            OscilationEffect oscilationEffect = new();
+            oscilationEffect.LoadContent(sprite);
+            oscilationEffect.Activate();
+
+            Assert.That(oscilationEffect.IsActive);
+        }
+
+        [Test]
+        public void GivenActivatedOscilationEffect_WhenDeactivated_ThenIsActiveIsFalse()
+        {
+            OscilationEffect oscilationEffect = new();
+            oscilationEffect.LoadContent(sprite);
+            oscilationEffect.Activate();
+            oscilationEffect.Deactivate();
+
+            Assert.That(oscilationEffect.IsActive, Is.False);
+        }
+
+        [Test]
+        public void GivenLoadedOscilationEffect_WhenUnloaded_ThenIsContentLoadedIsFalse()
+        {
+            OscilationEffect oscilationEffect = new();
+            oscilationEffect.LoadContent(sprite);
+            oscilationEffect.UnloadContent();
+
+            Assert.That(oscilationEffect.IsContentLoaded, Is.False);
+        }
+
+        [Test]
+        public void GivenActivatedOscilationEffect_WhenUnloaded_ThenIsActiveIsFalse()
+        {
+            OscilationEffect oscilationEffect = new();
+            oscilationEffect.LoadContent(sprite);
+            oscilationEffect.Activate();
+            oscilationEffect.UnloadContent();
+
+            Assert.That(oscilationEffect.IsActive, Is.False);
+        }
     }
 }

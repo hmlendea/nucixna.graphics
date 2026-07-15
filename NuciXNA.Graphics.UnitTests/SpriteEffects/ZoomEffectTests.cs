@@ -137,5 +137,102 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
 
             Assert.That(zoomEffect.CurrentHorizontalMultiplier, Is.EqualTo(1.5f));
         }
+
+        [Test]
+        public void GivenNewZoomEffect_WhenConstructed_ThenIsDisposedIsFalse()
+            => Assert.That(new ZoomEffect().IsDisposed, Is.False);
+
+        [Test]
+        public void GivenNewZoomEffect_WhenConstructed_ThenSpeedIs0Point1()
+            => Assert.That(new ZoomEffect().Speed, Is.EqualTo(0.1f));
+
+        [Test]
+        public void GivenUnloadedZoomEffect_WhenActivateIsCalled_ThenThrowsInvalidOperationException()
+            => Assert.Throws<InvalidOperationException>(() => new ZoomEffect().Activate());
+
+        [Test]
+        public void GivenUnloadedZoomEffect_WhenDeactivateIsCalled_ThenThrowsInvalidOperationException()
+            => Assert.Throws<InvalidOperationException>(() => new ZoomEffect().Deactivate());
+
+        [Test]
+        public void GivenUnloadedZoomEffect_WhenUpdateIsCalled_ThenThrowsInvalidOperationException()
+            => Assert.Throws<InvalidOperationException>(() => new ZoomEffect().Update(null));
+
+        [Test]
+        public void GivenZoomEffect_WhenLoadContentCalledTwice_ThenThrowsInvalidOperationException()
+        {
+            ZoomEffect zoomEffect = new();
+            zoomEffect.LoadContent(sprite);
+
+            Assert.Throws<InvalidOperationException>(() => zoomEffect.LoadContent(sprite));
+        }
+
+        [Test]
+        public void GivenLoadedZoomEffect_WhenActivated_ThenIsActiveIsTrue()
+        {
+            ZoomEffect zoomEffect = new();
+            zoomEffect.LoadContent(sprite);
+            zoomEffect.Activate();
+
+            Assert.That(zoomEffect.IsActive);
+        }
+
+        [Test]
+        public void GivenActivatedZoomEffect_WhenDeactivated_ThenIsActiveIsFalse()
+        {
+            ZoomEffect zoomEffect = new();
+            zoomEffect.LoadContent(sprite);
+            zoomEffect.Activate();
+            zoomEffect.Deactivate();
+
+            Assert.That(zoomEffect.IsActive, Is.False);
+        }
+
+        [Test]
+        public void GivenActivatedZoomEffectDecreasing_WhenUpdated_ThenHorizontalAndVerticalMultipliersAreEqual()
+        {
+            ZoomEffect zoomEffect = new()
+            {
+                Speed = 0.5f,
+                CurrentHorizontalMultiplier = 1.0f,
+                MinimumMultiplier = 0.0f,
+                IsIncreasing = false
+            };
+            zoomEffect.LoadContent(sprite);
+            zoomEffect.Activate();
+
+            zoomEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
+
+            Assert.That(zoomEffect.CurrentHorizontalMultiplier, Is.EqualTo(zoomEffect.CurrentVerticalMultiplier));
+        }
+
+        [Test]
+        public void GivenActivatedZoomEffectDecreasing_WhenUpdated_ThenHorizontalMultiplierDecreases()
+        {
+            ZoomEffect zoomEffect = new()
+            {
+                Speed = 0.5f,
+                CurrentHorizontalMultiplier = 1.0f,
+                MinimumMultiplier = 0.0f,
+                IsIncreasing = false
+            };
+            zoomEffect.LoadContent(sprite);
+            zoomEffect.Activate();
+
+            zoomEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
+
+            Assert.That(zoomEffect.CurrentHorizontalMultiplier, Is.EqualTo(0.5f).Within(0.001f));
+        }
+
+        [Test]
+        public void GivenLoadedButInactiveZoomEffect_WhenUpdated_ThenVerticalMultiplierDoesNotChange()
+        {
+            ZoomEffect zoomEffect = new() { CurrentVerticalMultiplier = 1.5f };
+            zoomEffect.LoadContent(sprite);
+
+            zoomEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
+
+            Assert.That(zoomEffect.CurrentVerticalMultiplier, Is.EqualTo(1.5f));
+        }
     }
 }

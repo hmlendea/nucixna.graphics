@@ -197,5 +197,196 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
 
             Assert.That(fadeEffect.CurrentMultiplier, Is.EqualTo(0.5f));
         }
+
+        [Test]
+        public void GivenNewFadeEffect_WhenLoadContentIsCalled_ThenIsContentLoadedIsTrue()
+        {
+            FadeEffect fadeEffect = new();
+            fadeEffect.LoadContent(sprite);
+
+            Assert.That(fadeEffect.IsContentLoaded);
+        }
+
+        [Test]
+        public void GivenNewFadeEffect_WhenLoadContentIsCalled_ThenFiresContentLoadingEvent()
+        {
+            bool eventFired = false;
+            FadeEffect fadeEffect = new();
+            fadeEffect.ContentLoading += delegate { eventFired = true; };
+
+            fadeEffect.LoadContent(sprite);
+
+            Assert.That(eventFired);
+        }
+
+        [Test]
+        public void GivenNewFadeEffect_WhenLoadContentIsCalled_ThenFiresContentLoadedEvent()
+        {
+            bool eventFired = false;
+            FadeEffect fadeEffect = new();
+            fadeEffect.ContentLoaded += delegate { eventFired = true; };
+
+            fadeEffect.LoadContent(sprite);
+
+            Assert.That(eventFired);
+        }
+
+        [Test]
+        public void GivenNewFadeEffect_WhenLoadContentIsCalled_ThenContentLoadingFiresBeforeContentLoaded()
+        {
+            int callOrder = 0;
+            int contentLoadingOrder = 0;
+            int contentLoadedOrder = 0;
+            FadeEffect fadeEffect = new();
+            fadeEffect.ContentLoading += delegate { contentLoadingOrder = ++callOrder; };
+            fadeEffect.ContentLoaded += delegate { contentLoadedOrder = ++callOrder; };
+
+            fadeEffect.LoadContent(sprite);
+
+            Assert.That(contentLoadingOrder, Is.LessThan(contentLoadedOrder));
+        }
+
+        [Test]
+        public void GivenLoadedFadeEffect_WhenUnloadContentIsCalled_ThenIsActiveIsFalse()
+        {
+            FadeEffect fadeEffect = new();
+            fadeEffect.LoadContent(sprite);
+            fadeEffect.Activate();
+            fadeEffect.UnloadContent();
+
+            Assert.That(fadeEffect.IsActive, Is.False);
+        }
+
+        [Test]
+        public void GivenLoadedFadeEffect_WhenActivateIsCalled_ThenFiresActivatingEvent()
+        {
+            bool eventFired = false;
+            FadeEffect fadeEffect = new();
+            fadeEffect.LoadContent(sprite);
+            fadeEffect.Activating += delegate { eventFired = true; };
+
+            fadeEffect.Activate();
+
+            Assert.That(eventFired);
+        }
+
+        [Test]
+        public void GivenLoadedFadeEffect_WhenActivateIsCalled_ThenFiresActivatedEvent()
+        {
+            bool eventFired = false;
+            FadeEffect fadeEffect = new();
+            fadeEffect.LoadContent(sprite);
+            fadeEffect.Activated += delegate { eventFired = true; };
+
+            fadeEffect.Activate();
+
+            Assert.That(eventFired);
+        }
+
+        [Test]
+        public void GivenLoadedFadeEffect_WhenActivateIsCalled_ThenActivatingFiresBeforeActivated()
+        {
+            int callOrder = 0;
+            int activatingOrder = 0;
+            int activatedOrder = 0;
+            FadeEffect fadeEffect = new();
+            fadeEffect.LoadContent(sprite);
+            fadeEffect.Activating += delegate { activatingOrder = ++callOrder; };
+            fadeEffect.Activated += delegate { activatedOrder = ++callOrder; };
+
+            fadeEffect.Activate();
+
+            Assert.That(activatingOrder, Is.LessThan(activatedOrder));
+        }
+
+        [Test]
+        public void GivenActivatedFadeEffect_WhenDeactivateIsCalled_ThenFiresDeactivatingEvent()
+        {
+            bool eventFired = false;
+            FadeEffect fadeEffect = new();
+            fadeEffect.LoadContent(sprite);
+            fadeEffect.Activate();
+            fadeEffect.Deactivating += delegate { eventFired = true; };
+
+            fadeEffect.Deactivate();
+
+            Assert.That(eventFired);
+        }
+
+        [Test]
+        public void GivenActivatedFadeEffect_WhenDeactivateIsCalled_ThenFiresDeactivatedEvent()
+        {
+            bool eventFired = false;
+            FadeEffect fadeEffect = new();
+            fadeEffect.LoadContent(sprite);
+            fadeEffect.Activate();
+            fadeEffect.Deactivated += delegate { eventFired = true; };
+
+            fadeEffect.Deactivate();
+
+            Assert.That(eventFired);
+        }
+
+        [Test]
+        public void GivenActivatedFadeEffect_WhenDeactivateIsCalled_ThenDeactivatingFiresBeforeDeactivated()
+        {
+            int callOrder = 0;
+            int deactivatingOrder = 0;
+            int deactivatedOrder = 0;
+            FadeEffect fadeEffect = new();
+            fadeEffect.LoadContent(sprite);
+            fadeEffect.Activate();
+            fadeEffect.Deactivating += delegate { deactivatingOrder = ++callOrder; };
+            fadeEffect.Deactivated += delegate { deactivatedOrder = ++callOrder; };
+
+            fadeEffect.Deactivate();
+
+            Assert.That(deactivatingOrder, Is.LessThan(deactivatedOrder));
+        }
+
+        [Test]
+        public void GivenNewFadeEffect_WhenDisposed_ThenIsDisposedIsTrue()
+        {
+            FadeEffect fadeEffect = new();
+            fadeEffect.Dispose();
+
+            Assert.That(fadeEffect.IsDisposed);
+        }
+
+        [Test]
+        public void GivenActivatedFadeEffectIncreasing_WhenUpdatedByLargeAmount_ThenClampsToMaximum()
+        {
+            FadeEffect fadeEffect = new()
+            {
+                Speed = 1.0f,
+                CurrentMultiplier = 0.5f,
+                MaximumMultiplier = 1.0f,
+                IsIncreasing = true
+            };
+            fadeEffect.LoadContent(sprite);
+            fadeEffect.Activate();
+
+            fadeEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(10.0)));
+
+            Assert.That(fadeEffect.CurrentMultiplier, Is.EqualTo(1.0f));
+        }
+
+        [Test]
+        public void GivenActivatedFadeEffectDecreasing_WhenUpdatedByLargeAmount_ThenClampsToMinimum()
+        {
+            FadeEffect fadeEffect = new()
+            {
+                Speed = 1.0f,
+                CurrentMultiplier = 0.5f,
+                MinimumMultiplier = 0.0f,
+                IsIncreasing = false
+            };
+            fadeEffect.LoadContent(sprite);
+            fadeEffect.Activate();
+
+            fadeEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(10.0)));
+
+            Assert.That(fadeEffect.CurrentMultiplier, Is.EqualTo(0.0f));
+        }
     }
 }

@@ -3,8 +3,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using NuciXNA.Graphics.SpriteEffects;
 using NuciXNA.Primitives;
+
+using NuciXNA.Graphics.SpriteEffects;
 
 namespace NuciXNA.Graphics.Drawing
 {
@@ -62,22 +63,6 @@ namespace NuciXNA.Graphics.Drawing
         public abstract Rectangle2D ClientRectangle { get; }
 
         /// <summary>
-        /// Gets the location with the active movement effect offset applied.
-        /// </summary>
-        protected Point2D ClientLocation
-        {
-            get
-            {
-                if (MovementEffect is not null && MovementEffect.IsActive)
-                {
-                    return Location + MovementEffect.LocationOffset;
-                }
-
-                return Location;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the movement effect.
         /// </summary>
         /// <value>The movement effect.</value>
@@ -101,6 +86,9 @@ namespace NuciXNA.Graphics.Drawing
         /// <value>The scale effect.</value>
         public ScaleEffect ScaleEffect { get; set; }
 
+        /// <summary>
+        /// Gets the effective opacity after applying any active opacity effect.
+        /// </summary>
         public float ClientOpacity
         {
             get
@@ -116,6 +104,9 @@ namespace NuciXNA.Graphics.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets the effective rotation after applying any active rotation effect.
+        /// </summary>
         public float ClientRotation
         {
             get
@@ -131,6 +122,9 @@ namespace NuciXNA.Graphics.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets the effective scale after applying any active scale effect.
+        /// </summary>
         public Scale2D ClientScale
         {
             get
@@ -159,6 +153,22 @@ namespace NuciXNA.Graphics.Drawing
         /// </summary>
         /// <value><c>true</c> if destroyed; otherwise, <c>false</c>.</value>
         public bool IsDisposed { get; private set; }
+
+        /// <summary>
+        /// Gets the location with the active movement effect offset applied.
+        /// </summary>
+        protected Point2D ClientLocation
+        {
+            get
+            {
+                if (MovementEffect is not null && MovementEffect.IsActive)
+                {
+                    return Location + MovementEffect.LocationOffset;
+                }
+
+                return Location;
+            }
+        }
 
         /// <summary>
         /// Occurs when this <see cref="Sprite"/> began loading its content.
@@ -211,7 +221,7 @@ namespace NuciXNA.Graphics.Drawing
         public event EventHandler Disposed;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Sprite"/> class.
+        /// Initialises a new instance of the <see cref="Sprite"/> class.
         /// </summary>
         public Sprite()
         {
@@ -376,7 +386,7 @@ namespace NuciXNA.Graphics.Drawing
             }
         }
 
-        void LoadEffect(NuciSpriteEffect<Sprite> effect)
+        private void LoadEffect(NuciSpriteEffect<Sprite> effect)
         {
             if (effect is null)
             {

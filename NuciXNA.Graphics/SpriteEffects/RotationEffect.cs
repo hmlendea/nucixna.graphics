@@ -13,6 +13,9 @@ namespace NuciXNA.Graphics.SpriteEffects
         /// <value>The speed.</value>
         public float Speed { get; set; }
 
+        /// <summary>
+        /// Gets or sets the current rotation multiplier.
+        /// </summary>
         public float CurrentMultiplier { get; set; }
 
         /// <summary>

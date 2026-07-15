@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,10 +10,10 @@ namespace NuciXNA.Graphics
     /// <summary>
     /// Graphics Manager.
     /// </summary>
-    public class GraphicsManager
+    public sealed class GraphicsManager
     {
-        static volatile GraphicsManager instance;
-        static readonly Lock syncRoot = new();
+        private static volatile GraphicsManager instance;
+        private static readonly Lock syncRoot = new();
 
         /// <summary>
         /// Gets the instance.
@@ -53,6 +54,12 @@ namespace NuciXNA.Graphics
         /// </summary>
         public SamplerState DefaultSamplerState { get; set; } = SamplerState.AnisotropicClamp;
 
+        /// <summary>
+        /// Gets the back buffer size.
+        /// </summary>
+        /// <value>The back buffer size.</value>
         public Size2D BackBufferSize => new(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
+
+        private GraphicsManager() { }
     }
 }

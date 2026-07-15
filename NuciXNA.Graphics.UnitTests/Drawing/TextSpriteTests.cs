@@ -1,34 +1,37 @@
 using System;
+
+using NuciXNA.Primitives;
+
 using NUnit.Framework;
 
 using NuciXNA.Graphics.Drawing;
 using NuciXNA.Graphics.SpriteEffects;
-using NuciXNA.Primitives;
 
 namespace NuciXNA.Graphics.UnitTests.Drawing
 {
+    [TestFixture]
     public class TextSpriteTests
     {
-        TextSprite _textSprite;
+        private TextSprite textSprite;
 
         [SetUp]
         public void SetUp()
         {
-            _textSprite = new TextSprite();
+            textSprite = new TextSprite();
         }
 
         [TearDown]
         public void TearDown()
         {
-            _textSprite.Dispose();
+            textSprite.Dispose();
         }
 
         [Test]
         public void GivenLoadedTextSprite_WhenLoadContentIsCalledAgain_ThenThrowsInvalidOperationException()
         {
-            _textSprite.LoadContent();
+            textSprite.LoadContent();
 
-            Assert.Throws<InvalidOperationException>(_textSprite.LoadContent);
+            Assert.Throws<InvalidOperationException>(textSprite.LoadContent);
         }
 
         [Test]
@@ -36,9 +39,9 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         {
             bool eventFired = false;
 
-            _textSprite.ContentLoading += delegate { eventFired = true; };
+            textSprite.ContentLoading += delegate { eventFired = true; };
 
-            _textSprite.LoadContent();
+            textSprite.LoadContent();
 
             Assert.That(eventFired);
         }
@@ -48,9 +51,9 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         {
             bool eventFired = false;
 
-            _textSprite.ContentLoaded += delegate { eventFired = true; };
+            textSprite.ContentLoaded += delegate { eventFired = true; };
 
-            _textSprite.LoadContent();
+            textSprite.LoadContent();
 
             Assert.That(eventFired);
         }
@@ -62,10 +65,10 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             int contentLoadingOrder = 0;
             int contentLoadedOrder = 0;
 
-            _textSprite.ContentLoading += delegate { contentLoadingOrder = ++callOrder; };
-            _textSprite.ContentLoaded += delegate { contentLoadedOrder = ++callOrder; };
+            textSprite.ContentLoading += delegate { contentLoadingOrder = ++callOrder; };
+            textSprite.ContentLoaded += delegate { contentLoadedOrder = ++callOrder; };
 
-            _textSprite.LoadContent();
+            textSprite.LoadContent();
 
             Assert.That(contentLoadingOrder, Is.LessThan(contentLoadedOrder));
         }
@@ -79,10 +82,10 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         {
             bool eventFired = false;
 
-            _textSprite.ContentUnloading += delegate { eventFired = true; };
+            textSprite.ContentUnloading += delegate { eventFired = true; };
 
-            _textSprite.LoadContent();
-            _textSprite.UnloadContent();
+            textSprite.LoadContent();
+            textSprite.UnloadContent();
 
             Assert.That(eventFired);
         }
@@ -92,10 +95,10 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         {
             bool eventFired = false;
 
-            _textSprite.ContentUnloaded += delegate { eventFired = true; };
+            textSprite.ContentUnloaded += delegate { eventFired = true; };
 
-            _textSprite.LoadContent();
-            _textSprite.UnloadContent();
+            textSprite.LoadContent();
+            textSprite.UnloadContent();
 
             Assert.That(eventFired);
         }
@@ -107,11 +110,11 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             int contentUnloadingOrder = 0;
             int contentUnloadedOrder = 0;
 
-            _textSprite.ContentUnloading += delegate { contentUnloadingOrder = ++callOrder; };
-            _textSprite.ContentUnloaded += delegate { contentUnloadedOrder = ++callOrder; };
+            textSprite.ContentUnloading += delegate { contentUnloadingOrder = ++callOrder; };
+            textSprite.ContentUnloaded += delegate { contentUnloadedOrder = ++callOrder; };
 
-            _textSprite.LoadContent();
-            _textSprite.UnloadContent();
+            textSprite.LoadContent();
+            textSprite.UnloadContent();
 
             Assert.That(contentUnloadingOrder, Is.LessThan(contentUnloadedOrder));
         }
@@ -125,10 +128,10 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         {
             bool eventFired = false;
 
-            _textSprite.Updating += delegate { eventFired = true; };
+            textSprite.Updating += delegate { eventFired = true; };
 
-            _textSprite.LoadContent();
-            _textSprite.Update(null);
+            textSprite.LoadContent();
+            textSprite.Update(null);
 
             Assert.That(eventFired);
         }
@@ -138,10 +141,10 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         {
             bool eventFired = false;
 
-            _textSprite.Updated += delegate { eventFired = true; };
+            textSprite.Updated += delegate { eventFired = true; };
 
-            _textSprite.LoadContent();
-            _textSprite.Update(null);
+            textSprite.LoadContent();
+            textSprite.Update(null);
 
             Assert.That(eventFired);
         }
@@ -153,11 +156,11 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             int updatingOrder = 0;
             int updatedOrder = 0;
 
-            _textSprite.Updating += delegate { updatingOrder = ++callOrder; };
-            _textSprite.Updated += delegate { updatedOrder = ++callOrder; };
+            textSprite.Updating += delegate { updatingOrder = ++callOrder; };
+            textSprite.Updated += delegate { updatedOrder = ++callOrder; };
 
-            _textSprite.LoadContent();
-            _textSprite.Update(null);
+            textSprite.LoadContent();
+            textSprite.Update(null);
 
             Assert.That(updatingOrder, Is.LessThan(updatedOrder));
         }
@@ -171,10 +174,10 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         {
             bool eventFired = false;
 
-            _textSprite.Drawing += delegate { eventFired = true; };
+            textSprite.Drawing += delegate { eventFired = true; };
 
-            _textSprite.LoadContent();
-            _textSprite.Draw(null);
+            textSprite.LoadContent();
+            textSprite.Draw(null);
 
             Assert.That(eventFired);
         }
@@ -184,10 +187,10 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         {
             bool eventFired = false;
 
-            _textSprite.Drawn += delegate { eventFired = true; };
+            textSprite.Drawn += delegate { eventFired = true; };
 
-            _textSprite.LoadContent();
-            _textSprite.Draw(null);
+            textSprite.LoadContent();
+            textSprite.Draw(null);
 
             Assert.That(eventFired);
         }
@@ -199,11 +202,11 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             int drawingOrder = 0;
             int drawnOrder = 0;
 
-            _textSprite.Drawing += delegate { drawingOrder = ++callOrder; };
-            _textSprite.Drawn += delegate { drawnOrder = ++callOrder; };
+            textSprite.Drawing += delegate { drawingOrder = ++callOrder; };
+            textSprite.Drawn += delegate { drawnOrder = ++callOrder; };
 
-            _textSprite.LoadContent();
-            _textSprite.Draw(null);
+            textSprite.LoadContent();
+            textSprite.Draw(null);
 
             Assert.That(drawingOrder, Is.LessThan(drawnOrder));
         }
@@ -211,9 +214,9 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         [Test]
         public void GivenLoadedTextSprite_WhenCheckingIsDisposed_ThenReturnsFalse()
         {
-            _textSprite.LoadContent();
+            textSprite.LoadContent();
 
-            Assert.That(_textSprite.IsDisposed, Is.False);
+            Assert.That(textSprite.IsDisposed, Is.False);
         }
 
         [Test]
@@ -251,9 +254,9 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         [Test]
         public void GivenNewTextSprite_WhenLoadContentIsCalled_ThenIsContentLoadedIsTrue()
         {
-            _textSprite.LoadContent();
+            textSprite.LoadContent();
 
-            Assert.That(_textSprite.IsContentLoaded);
+            Assert.That(textSprite.IsContentLoaded);
         }
 
         [Test]
@@ -293,10 +296,10 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         [Test]
         public void GivenLoadedTextSprite_WhenUnloadContentIsCalled_ThenIsContentLoadedIsFalse()
         {
-            _textSprite.LoadContent();
-            _textSprite.UnloadContent();
+            textSprite.LoadContent();
+            textSprite.UnloadContent();
 
-            Assert.That(_textSprite.IsContentLoaded, Is.False);
+            Assert.That(textSprite.IsContentLoaded, Is.False);
         }
 
         [Test]
@@ -314,35 +317,35 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         [Test]
         public void GivenNewTextSprite_WhenDisposeIsCalled_ThenIsDisposedIsTrue()
         {
-            _textSprite.Dispose();
+            textSprite.Dispose();
 
-            Assert.That(_textSprite.IsDisposed);
+            Assert.That(textSprite.IsDisposed);
         }
 
         [Test]
         public void GivenLoadedTextSprite_WhenDisposeIsCalled_ThenIsDisposedIsTrue()
         {
-            _textSprite.LoadContent();
-            _textSprite.Dispose();
+            textSprite.LoadContent();
+            textSprite.Dispose();
 
-            Assert.That(_textSprite.IsDisposed);
+            Assert.That(textSprite.IsDisposed);
         }
 
         [Test]
         public void GivenLoadedTextSprite_WhenDisposeIsCalled_ThenIsContentLoadedIsFalse()
         {
-            _textSprite.LoadContent();
-            _textSprite.Dispose();
+            textSprite.LoadContent();
+            textSprite.Dispose();
 
-            Assert.That(_textSprite.IsContentLoaded, Is.False);
+            Assert.That(textSprite.IsContentLoaded, Is.False);
         }
 
         [Test]
         public void GivenDisposedTextSprite_WhenDisposeCalledAgain_ThenNoExceptionIsThrown()
         {
-            _textSprite.Dispose();
+            textSprite.Dispose();
 
-            Assert.DoesNotThrow(_textSprite.Dispose);
+            Assert.DoesNotThrow(textSprite.Dispose);
         }
 
         [Test]
@@ -350,8 +353,8 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         {
             bool eventFired = false;
 
-            _textSprite.Disposing += delegate { eventFired = true; };
-            _textSprite.Dispose();
+            textSprite.Disposing += delegate { eventFired = true; };
+            textSprite.Dispose();
 
             Assert.That(eventFired);
         }
@@ -361,8 +364,8 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         {
             bool eventFired = false;
 
-            _textSprite.Disposed += delegate { eventFired = true; };
-            _textSprite.Dispose();
+            textSprite.Disposed += delegate { eventFired = true; };
+            textSprite.Dispose();
 
             Assert.That(eventFired);
         }
@@ -452,7 +455,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
         [Test]
         public void GivenTextSpriteWithNoScaleEffect_WhenGettingClientScale_ThenReturnsBaseScale()
         {
-            Assert.That(_textSprite.ClientScale, Is.EqualTo(Scale2D.One));
+            Assert.That(textSprite.ClientScale, Is.EqualTo(Scale2D.One));
         }
 
         [Test]

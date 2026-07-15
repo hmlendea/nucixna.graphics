@@ -1,7 +1,10 @@
 ﻿using System;
+
 using Microsoft.Xna.Framework;
-using NuciXNA.Graphics.Drawing;
+
 using NuciXNA.Primitives;
+
+using NuciXNA.Graphics.Drawing;
 
 namespace NuciXNA.Graphics.SpriteEffects
 {
@@ -10,10 +13,20 @@ namespace NuciXNA.Graphics.SpriteEffects
     /// </summary>
     public class MovementEffect : NuciSpriteEffect<Sprite>
     {
+        /// <summary>
+        /// Gets or sets the movement speed in units per second.
+        /// </summary>
         public float Speed { get; set; } = 7.5f;
 
+        /// <summary>
+        /// Gets or sets the target location to move towards.
+        /// </summary>
         public Point2D TargetLocation { get; set; }
-        public Point2D LocationOffset { get; protected set; } = Point2D.Empty;
+
+        /// <summary>
+        /// Gets the current location offset from the sprite's base location.
+        /// </summary>
+        public Point2D LocationOffset { get; private set; } = Point2D.Empty;
 
         /// <summary>
         /// Loads the content.
@@ -55,10 +68,10 @@ namespace NuciXNA.Graphics.SpriteEffects
                 (int)Math.Round((float)(direction.Y / distance * Speed)));
         }
 
-        void OnActivated(object sender, EventArgs e)
+        private void OnActivated(object sender, EventArgs e)
             => LocationOffset = Point2D.Empty;
 
-        void OnDeactivated(object sender, EventArgs e)
+        private void OnDeactivated(object sender, EventArgs e)
             => LocationOffset = Point2D.Empty;
     }
 }

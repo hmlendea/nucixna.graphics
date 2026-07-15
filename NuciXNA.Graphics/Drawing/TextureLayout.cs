@@ -16,7 +16,7 @@
         None,
 
         /// <summary>
-        /// The texture is streched across the client rectangle.
+        /// The texture is stretched across the client rectangle.
         /// </summary>
         Stretch,
 

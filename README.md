@@ -154,6 +154,10 @@ Contributions are welcome. Please:
 - Update documentation when behaviour changes
 - Add unit tests for any new or changed functionality
 
+## 🏗️ Architecture
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for the system architecture, component diagram, runtime flow, and extension points.
+
 ## 🔗 Related Projects
 
 - [NuciXNA.DataAccess](https://github.com/hmlendea/nucixna.dataaccess): Content loading utilities for NuciXNA

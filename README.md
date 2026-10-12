@@ -161,7 +161,11 @@ Contributions are welcome. Please:
 - [NuciXNA.Input](https://github.com/hmlendea/nucixna.input): Input handling for NuciXNA
 - [NuciXNA.Primitives](https://github.com/hmlendea/nucixna.primitives): Primitive types used across NuciXNA
 
-## 💝 Support
+## �️ Security
+
+See [SECURITY.md](SECURITY.md) for the vulnerability reporting and disclosure policy.
+
+## �💝 Support
 
 Found a bug or have a suggestion? [Open an issue](https://github.com/hmlendea/nucixna.graphics/issues)!
 

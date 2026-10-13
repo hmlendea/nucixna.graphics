@@ -3,9 +3,9 @@
 namespace NuciXNA.Graphics.SpriteEffects
 {
     /// <summary>
-    /// Oscilation sprite effect.
+    /// Oscillation sprite effect.
     /// </summary>
-    public class OscilationEffect : RotationEffect
+    public class OscillationEffect : RotationEffect
     {
         /// <summary>
         /// Gets or sets the minimum rotation multiplier.
@@ -18,9 +18,9 @@ namespace NuciXNA.Graphics.SpriteEffects
         public float MaximumMultiplier { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OscilationEffect"/> class.
+        /// Initializes a new instance of the <see cref="OscillationEffect"/> class.
         /// </summary>
-        public OscilationEffect() : base()
+        public OscillationEffect() : base()
         {
             MinimumMultiplier = 0.5f;
             MaximumMultiplier = 1.5f;

@@ -525,7 +525,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             TextSprite textSprite = new()
             {
                 Rotation = 1.5f,
-                RotationEffect = new OscilationEffect { CurrentMultiplier = 0.5f }
+                RotationEffect = new OscillationEffect { CurrentMultiplier = 0.5f }
             };
             textSprite.LoadContent();
 
@@ -540,7 +540,7 @@ namespace NuciXNA.Graphics.UnitTests.Drawing
             TextSprite textSprite = new()
             {
                 Rotation = 1.0f,
-                RotationEffect = new OscilationEffect { CurrentMultiplier = 0.5f }
+                RotationEffect = new OscillationEffect { CurrentMultiplier = 0.5f }
             };
             textSprite.LoadContent();
             textSprite.RotationEffect.Activate();

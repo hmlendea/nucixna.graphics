@@ -78,16 +78,6 @@ namespace NuciXNA.Graphics.SpriteEffects
         public event EventHandler Updated;
 
         /// <summary>
-        /// Occurs when this <see cref="NuciSpriteEffect"/> began drawing.
-        /// </summary>
-        public event EventHandler Drawing;
-
-        /// <summary>
-        /// Occurs when this <see cref="NuciSpriteEffect"/> finished drawing.
-        /// </summary>
-        public event EventHandler Drawn;
-
-        /// <summary>
         /// Occurs when this <see cref="NuciSpriteEffect"/> began disposing.
         /// </summary>
         public event EventHandler Disposing;

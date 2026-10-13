@@ -10,7 +10,7 @@ using NuciXNA.Graphics.SpriteEffects;
 namespace NuciXNA.Graphics.UnitTests.SpriteEffects
 {
     [TestFixture]
-    public class OscilationEffectTests
+    public class OscillationEffectTests
     {
         private TextSprite sprite;
 
@@ -28,181 +28,181 @@ namespace NuciXNA.Graphics.UnitTests.SpriteEffects
         }
 
         [Test]
-        public void GivenNewOscilationEffect_WhenConstructed_ThenIsActiveIsFalse()
-            => Assert.That(new OscilationEffect().IsActive, Is.False);
+        public void GivenNewOscillationEffect_WhenConstructed_ThenIsActiveIsFalse()
+            => Assert.That(new OscillationEffect().IsActive, Is.False);
 
         [Test]
-        public void GivenNewOscilationEffect_WhenConstructed_ThenIsContentLoadedIsFalse()
-            => Assert.That(new OscilationEffect().IsContentLoaded, Is.False);
+        public void GivenNewOscillationEffect_WhenConstructed_ThenIsContentLoadedIsFalse()
+            => Assert.That(new OscillationEffect().IsContentLoaded, Is.False);
 
         [Test]
-        public void GivenNewOscilationEffect_WhenConstructed_ThenCurrentMultiplierIsOne()
-            => Assert.That(new OscilationEffect().CurrentMultiplier, Is.EqualTo(1.0f));
+        public void GivenNewOscillationEffect_WhenConstructed_ThenCurrentMultiplierIsOne()
+            => Assert.That(new OscillationEffect().CurrentMultiplier, Is.EqualTo(1.0f));
 
         [Test]
-        public void GivenNewOscilationEffect_WhenConstructed_ThenIsIncreasingIsTrue()
-            => Assert.That(new OscilationEffect().IsIncreasing);
+        public void GivenNewOscillationEffect_WhenConstructed_ThenIsIncreasingIsTrue()
+            => Assert.That(new OscillationEffect().IsIncreasing);
 
         [Test]
-        public void GivenNewOscilationEffect_WhenConstructed_ThenMinimumMultiplierIsHalf()
-            => Assert.That(new OscilationEffect().MinimumMultiplier, Is.EqualTo(0.5f));
+        public void GivenNewOscillationEffect_WhenConstructed_ThenMinimumMultiplierIsHalf()
+            => Assert.That(new OscillationEffect().MinimumMultiplier, Is.EqualTo(0.5f));
 
         [Test]
-        public void GivenNewOscilationEffect_WhenConstructed_ThenMaximumMultiplierIs1Point5()
-            => Assert.That(new OscilationEffect().MaximumMultiplier, Is.EqualTo(1.5f));
+        public void GivenNewOscillationEffect_WhenConstructed_ThenMaximumMultiplierIs1Point5()
+            => Assert.That(new OscillationEffect().MaximumMultiplier, Is.EqualTo(1.5f));
 
         [Test]
-        public void GivenActivatedOscilationEffectIncreasing_WhenUpdated_ThenCurrentMultiplierIncreases()
+        public void GivenActivatedOscillationEffectIncreasing_WhenUpdated_ThenCurrentMultiplierIncreases()
         {
-            OscilationEffect oscilationEffect = new() { Speed = 1.0f, CurrentMultiplier = 1.0f, MaximumMultiplier = 2.0f, IsIncreasing = true };
-            oscilationEffect.LoadContent(sprite);
-            oscilationEffect.Activate();
+            OscillationEffect oscillationEffect = new() { Speed = 1.0f, CurrentMultiplier = 1.0f, MaximumMultiplier = 2.0f, IsIncreasing = true };
+            oscillationEffect.LoadContent(sprite);
+            oscillationEffect.Activate();
 
-            oscilationEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.2)));
+            oscillationEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.2)));
 
-            Assert.That(oscilationEffect.CurrentMultiplier, Is.EqualTo(1.2f).Within(0.001f));
+            Assert.That(oscillationEffect.CurrentMultiplier, Is.EqualTo(1.2f).Within(0.001f));
         }
 
         [Test]
-        public void GivenActivatedOscilationEffectDecreasing_WhenUpdated_ThenCurrentMultiplierDecreases()
+        public void GivenActivatedOscillationEffectDecreasing_WhenUpdated_ThenCurrentMultiplierDecreases()
         {
-            OscilationEffect oscilationEffect = new() { Speed = 1.0f, CurrentMultiplier = 1.0f, MinimumMultiplier = 0.0f, IsIncreasing = false };
-            oscilationEffect.LoadContent(sprite);
-            oscilationEffect.Activate();
+            OscillationEffect oscillationEffect = new() { Speed = 1.0f, CurrentMultiplier = 1.0f, MinimumMultiplier = 0.0f, IsIncreasing = false };
+            oscillationEffect.LoadContent(sprite);
+            oscillationEffect.Activate();
 
-            oscilationEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.2)));
+            oscillationEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.2)));
 
-            Assert.That(oscilationEffect.CurrentMultiplier, Is.EqualTo(0.8f).Within(0.001f));
+            Assert.That(oscillationEffect.CurrentMultiplier, Is.EqualTo(0.8f).Within(0.001f));
         }
 
         [Test]
-        public void GivenActivatedOscilationEffectAtMaximum_WhenUpdated_ThenCurrentMultiplierClampsToMaximum()
+        public void GivenActivatedOscillationEffectAtMaximum_WhenUpdated_ThenCurrentMultiplierClampsToMaximum()
         {
-            OscilationEffect oscilationEffect = new() { Speed = 1.0f, CurrentMultiplier = 1.5f, MaximumMultiplier = 1.5f, IsIncreasing = true };
-            oscilationEffect.LoadContent(sprite);
-            oscilationEffect.Activate();
+            OscillationEffect oscillationEffect = new() { Speed = 1.0f, CurrentMultiplier = 1.5f, MaximumMultiplier = 1.5f, IsIncreasing = true };
+            oscillationEffect.LoadContent(sprite);
+            oscillationEffect.Activate();
 
-            oscilationEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.5)));
+            oscillationEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.5)));
 
-            Assert.That(oscilationEffect.CurrentMultiplier, Is.EqualTo(1.5f));
+            Assert.That(oscillationEffect.CurrentMultiplier, Is.EqualTo(1.5f));
         }
 
         [Test]
-        public void GivenActivatedOscilationEffectAtMaximum_WhenUpdated_ThenDirectionReversesToDecreasing()
+        public void GivenActivatedOscillationEffectAtMaximum_WhenUpdated_ThenDirectionReversesToDecreasing()
         {
-            OscilationEffect oscilationEffect = new() { Speed = 1.0f, CurrentMultiplier = 1.5f, MaximumMultiplier = 1.5f, IsIncreasing = true };
-            oscilationEffect.LoadContent(sprite);
-            oscilationEffect.Activate();
+            OscillationEffect oscillationEffect = new() { Speed = 1.0f, CurrentMultiplier = 1.5f, MaximumMultiplier = 1.5f, IsIncreasing = true };
+            oscillationEffect.LoadContent(sprite);
+            oscillationEffect.Activate();
 
-            oscilationEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.1)));
+            oscillationEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.1)));
 
-            Assert.That(oscilationEffect.IsIncreasing, Is.False);
+            Assert.That(oscillationEffect.IsIncreasing, Is.False);
         }
 
         [Test]
-        public void GivenActivatedOscilationEffectAtMinimum_WhenUpdated_ThenCurrentMultiplierClampsToMinimum()
+        public void GivenActivatedOscillationEffectAtMinimum_WhenUpdated_ThenCurrentMultiplierClampsToMinimum()
         {
-            OscilationEffect oscilationEffect = new() { Speed = 1.0f, CurrentMultiplier = 0.5f, MinimumMultiplier = 0.5f, IsIncreasing = false };
-            oscilationEffect.LoadContent(sprite);
-            oscilationEffect.Activate();
+            OscillationEffect oscillationEffect = new() { Speed = 1.0f, CurrentMultiplier = 0.5f, MinimumMultiplier = 0.5f, IsIncreasing = false };
+            oscillationEffect.LoadContent(sprite);
+            oscillationEffect.Activate();
 
-            oscilationEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.5)));
+            oscillationEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.5)));
 
-            Assert.That(oscilationEffect.CurrentMultiplier, Is.EqualTo(0.5f));
+            Assert.That(oscillationEffect.CurrentMultiplier, Is.EqualTo(0.5f));
         }
 
         [Test]
-        public void GivenActivatedOscilationEffectAtMinimum_WhenUpdated_ThenDirectionReversesToIncreasing()
+        public void GivenActivatedOscillationEffectAtMinimum_WhenUpdated_ThenDirectionReversesToIncreasing()
         {
-            OscilationEffect oscilationEffect = new() { Speed = 1.0f, CurrentMultiplier = 0.5f, MinimumMultiplier = 0.5f, IsIncreasing = false };
-            oscilationEffect.LoadContent(sprite);
-            oscilationEffect.Activate();
+            OscillationEffect oscillationEffect = new() { Speed = 1.0f, CurrentMultiplier = 0.5f, MinimumMultiplier = 0.5f, IsIncreasing = false };
+            oscillationEffect.LoadContent(sprite);
+            oscillationEffect.Activate();
 
-            oscilationEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.1)));
+            oscillationEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(0.1)));
 
-            Assert.That(oscilationEffect.IsIncreasing);
+            Assert.That(oscillationEffect.IsIncreasing);
         }
 
         [Test]
-        public void GivenLoadedButInactiveOscilationEffect_WhenUpdated_ThenCurrentMultiplierDoesNotChange()
+        public void GivenLoadedButInactiveOscillationEffect_WhenUpdated_ThenCurrentMultiplierDoesNotChange()
         {
-            OscilationEffect oscilationEffect = new() { CurrentMultiplier = 1.2f };
-            oscilationEffect.LoadContent(sprite);
+            OscillationEffect oscillationEffect = new() { CurrentMultiplier = 1.2f };
+            oscillationEffect.LoadContent(sprite);
 
-            oscilationEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
+            oscillationEffect.Update(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0)));
 
-            Assert.That(oscilationEffect.CurrentMultiplier, Is.EqualTo(1.2f));
+            Assert.That(oscillationEffect.CurrentMultiplier, Is.EqualTo(1.2f));
         }
 
         [Test]
-        public void GivenNewOscilationEffect_WhenConstructed_ThenIsDisposedIsFalse()
-            => Assert.That(new OscilationEffect().IsDisposed, Is.False);
+        public void GivenNewOscillationEffect_WhenConstructed_ThenIsDisposedIsFalse()
+            => Assert.That(new OscillationEffect().IsDisposed, Is.False);
 
         [Test]
-        public void GivenNewOscilationEffect_WhenConstructed_ThenSpeedIsOne()
-            => Assert.That(new OscilationEffect().Speed, Is.EqualTo(1.0f));
+        public void GivenNewOscillationEffect_WhenConstructed_ThenSpeedIsOne()
+            => Assert.That(new OscillationEffect().Speed, Is.EqualTo(1.0f));
 
         [Test]
-        public void GivenUnloadedOscilationEffect_WhenActivateIsCalled_ThenThrowsInvalidOperationException()
-            => Assert.Throws<InvalidOperationException>(() => new OscilationEffect().Activate());
+        public void GivenUnloadedOscillationEffect_WhenActivateIsCalled_ThenThrowsInvalidOperationException()
+            => Assert.Throws<InvalidOperationException>(() => new OscillationEffect().Activate());
 
         [Test]
-        public void GivenUnloadedOscilationEffect_WhenDeactivateIsCalled_ThenThrowsInvalidOperationException()
-            => Assert.Throws<InvalidOperationException>(() => new OscilationEffect().Deactivate());
+        public void GivenUnloadedOscillationEffect_WhenDeactivateIsCalled_ThenThrowsInvalidOperationException()
+            => Assert.Throws<InvalidOperationException>(() => new OscillationEffect().Deactivate());
 
         [Test]
-        public void GivenUnloadedOscilationEffect_WhenUpdateIsCalled_ThenThrowsInvalidOperationException()
-            => Assert.Throws<InvalidOperationException>(() => new OscilationEffect().Update(null));
+        public void GivenUnloadedOscillationEffect_WhenUpdateIsCalled_ThenThrowsInvalidOperationException()
+            => Assert.Throws<InvalidOperationException>(() => new OscillationEffect().Update(null));
 
         [Test]
-        public void GivenOscilationEffect_WhenLoadContentCalledTwice_ThenThrowsInvalidOperationException()
+        public void GivenOscillationEffect_WhenLoadContentCalledTwice_ThenThrowsInvalidOperationException()
         {
-            OscilationEffect oscilationEffect = new();
-            oscilationEffect.LoadContent(sprite);
+            OscillationEffect oscillationEffect = new();
+            oscillationEffect.LoadContent(sprite);
 
-            Assert.Throws<InvalidOperationException>(() => oscilationEffect.LoadContent(sprite));
+            Assert.Throws<InvalidOperationException>(() => oscillationEffect.LoadContent(sprite));
         }
 
         [Test]
-        public void GivenLoadedOscilationEffect_WhenActivated_ThenIsActiveIsTrue()
+        public void GivenLoadedOscillationEffect_WhenActivated_ThenIsActiveIsTrue()
         {
-            OscilationEffect oscilationEffect = new();
-            oscilationEffect.LoadContent(sprite);
-            oscilationEffect.Activate();
+            OscillationEffect oscillationEffect = new();
+            oscillationEffect.LoadContent(sprite);
+            oscillationEffect.Activate();
 
-            Assert.That(oscilationEffect.IsActive);
+            Assert.That(oscillationEffect.IsActive);
         }
 
         [Test]
-        public void GivenActivatedOscilationEffect_WhenDeactivated_ThenIsActiveIsFalse()
+        public void GivenActivatedOscillationEffect_WhenDeactivated_ThenIsActiveIsFalse()
         {
-            OscilationEffect oscilationEffect = new();
-            oscilationEffect.LoadContent(sprite);
-            oscilationEffect.Activate();
-            oscilationEffect.Deactivate();
+            OscillationEffect oscillationEffect = new();
+            oscillationEffect.LoadContent(sprite);
+            oscillationEffect.Activate();
+            oscillationEffect.Deactivate();
 
-            Assert.That(oscilationEffect.IsActive, Is.False);
+            Assert.That(oscillationEffect.IsActive, Is.False);
         }
 
         [Test]
-        public void GivenLoadedOscilationEffect_WhenUnloaded_ThenIsContentLoadedIsFalse()
+        public void GivenLoadedOscillationEffect_WhenUnloaded_ThenIsContentLoadedIsFalse()
         {
-            OscilationEffect oscilationEffect = new();
-            oscilationEffect.LoadContent(sprite);
-            oscilationEffect.UnloadContent();
+            OscillationEffect oscillationEffect = new();
+            oscillationEffect.LoadContent(sprite);
+            oscillationEffect.UnloadContent();
 
-            Assert.That(oscilationEffect.IsContentLoaded, Is.False);
+            Assert.That(oscillationEffect.IsContentLoaded, Is.False);
         }
 
         [Test]
-        public void GivenActivatedOscilationEffect_WhenUnloaded_ThenIsActiveIsFalse()
+        public void GivenActivatedOscillationEffect_WhenUnloaded_ThenIsActiveIsFalse()
         {
-            OscilationEffect oscilationEffect = new();
-            oscilationEffect.LoadContent(sprite);
-            oscilationEffect.Activate();
-            oscilationEffect.UnloadContent();
+            OscillationEffect oscillationEffect = new();
+            oscillationEffect.LoadContent(sprite);
+            oscillationEffect.Activate();
+            oscillationEffect.UnloadContent();
 
-            Assert.That(oscilationEffect.IsActive, Is.False);
+            Assert.That(oscillationEffect.IsActive, Is.False);
         }
     }
 }

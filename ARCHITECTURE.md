@@ -333,7 +333,7 @@ Paths:
 - `NuciXNA.Graphics/SpriteEffects/SpriteSheetEffect.cs`
 - `NuciXNA.Graphics/SpriteEffects/AnimationEffect.cs`
 - `NuciXNA.Graphics/SpriteEffects/ZoomEffect.cs`
-- `NuciXNA.Graphics/SpriteEffects/OscilationEffect.cs`
+- `NuciXNA.Graphics/SpriteEffects/OscillationEffect.cs`
 
 Responsibilities:
 - Define the `NuciSpriteEffect<TSprite>` base class with activation/deactivation and lifecycle

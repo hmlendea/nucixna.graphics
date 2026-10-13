@@ -18,6 +18,7 @@ Graphics helpers and sprite abstractions for NuciXNA, built on top of MonoGame/X
 - [Dependencies](#dependencies)
 - [Project Structure](#project-structure)
 - [Architecture](#architecture)
+- [GitHub Actions](#github-actions)
 - [Contributing](#contributing)
 - [Code of Conduct](#code-of-conduct)
 - [Related Projects](#related-projects)
@@ -190,6 +191,12 @@ NuciXNA.Graphics follows a library/SDK architecture with a singleton `GraphicsMa
 
 See the [architecture documentation](ARCHITECTURE.md) for the system context, principal components, runtime flows, ownership boundaries, dependencies, constraints, and extension points.
 
+## ⚙️ GitHub Actions
+
+| Workflow | Purpose | What it does |
+|----------|---------|--------------|
+| [ dotnet.yml ](https://github.com/hmlendea/nucixna.graphics/blob/main/.github/workflows/dotnet.yml) | Continuous integration | Restores dependencies, builds the solution, and runs unit tests on every push and pull request to `master` |
+
 ## 🤝 Contributing
 
 You are welcome to submit any suggestion, feedback, or modification to this project.
@@ -198,7 +205,7 @@ When doing so, please:
 - Maintain cross-platform compatibility
 - Preserve the existing public contract unless a breaking change is intentional
 - Submit focused pull requests that conform to the existing code style
-- Maintain your branch synchronised with `main`
+- Maintain your branch synchronised with `master`
 - Revise the documentation when functionality changes
 - Properly test all modifications, including edge cases and error conditions
 - Add tests for additional or modified functionality

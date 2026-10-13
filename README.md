@@ -1,13 +1,31 @@
 [![Donate](https://img.shields.io/badge/-%E2%99%A5%20Donate-%23ff69b4)](https://hmlendea.go.ro/funding)
 [![Latest Release](https://img.shields.io/github/v/release/hmlendea/nucixna.graphics)](https://github.com/hmlendea/nucixna.graphics/releases/latest)
 [![Build Status](https://github.com/hmlendea/nucixna.graphics/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hmlendea/nucixna.graphics/actions/workflows/dotnet.yml)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://gnu.org/licenses/gpl-3.0)
+[![NuGet](https://img.shields.io/nuget/v/NuciXNA.Graphics)](https://nuget.org/packages/NuciXNA.Graphics)
+[![License](https://img.shields.io/github/license/hmlendea/nucixna.graphics)](https://github.com/hmlendea/nucixna.graphics/blob/main/LICENSE)
 
 # NuciXNA.Graphics
 
 Graphics helpers and sprite abstractions for NuciXNA, built on top of MonoGame/XNA.
 
-## ✨ Features
+## 📑 Table of Contents
+
+- [Capabilities](#capabilities)
+- [Usage](#usage)
+- [Installation](#installation)
+- [System Requirements](#system-requirements)
+- [Development](#development)
+- [Dependencies](#dependencies)
+- [Project Structure](#project-structure)
+- [Architecture](#architecture)
+- [Contributing](#contributing)
+- [Code of Conduct](#code-of-conduct)
+- [Related Projects](#related-projects)
+- [Security](#security)
+- [Project Engagement](#project-engagement)
+- [License](#license)
+
+## ✨ Capabilities
 
 - Central graphics context manager (`GraphicsManager`)
 - Drawable sprite primitives (`TextSprite`, `TextureSprite`)
@@ -82,28 +100,44 @@ hero.MovementEffect.Activate();
 
 ## 📦 Installation
 
-[![Get it from NuGet](https://raw.githubusercontent.com/hmlendea/readme-assets/master/badges/stores/nuget.png)](https://nuget.org/packages/NuciXNA.Graphics)
+[![Obtain it from NuGet](https://raw.githubusercontent.com/hmlendea/readme-assets/master/badges/stores/nuget.png)](https://nuget.org/packages/NuciXNA.Graphics)
 
-### .NET CLI
+### Package Manager Installation
 
 ```bash
 dotnet add package NuciXNA.Graphics
 ```
 
-### Package Manager Console
-
+Or, via the `Package Manager Console`:
 ```powershell
 Install-Package NuciXNA.Graphics
 ```
+
+## 🖥️ System Requirements
+
+| Component | Minimum | Recommended |
+|-----------|---------|-------------|
+| .NET SDK | 10.0 | 10.0 |
+| MonoGame | DesktopGL 3.8.4 | DesktopGL 3.8.4 |
+| OS | Linux, macOS, Windows | Linux, macOS, Windows |
 
 ## 🛠️ Development
 
 ### Requirements
 
-- [.NET 10 SDK](https://dotnet.microsoft.com/download)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 - MonoGame DesktopGL (or compatible MonoGame runtime)
 
-All NuGet dependencies are restored automatically by `dotnet restore`.
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/hmlendea/nucixna.graphics.git
+cd nucixna.graphics
+
+# Restore dependencies
+dotnet restore
+```
 
 ### Build
 
@@ -117,46 +151,63 @@ dotnet build NuciXNA.Graphics/NuciXNA.Graphics.csproj
 dotnet test NuciXNA.Graphics.slnx
 ```
 
-### Dependencies
-
-| Package | Purpose |
-|---------|---------|
-| `MonoGame.Framework.DesktopGL` | XNA/MonoGame runtime |
-| `NuciXNA.DataAccess` | Content loading (`NuciContentManager`) |
-| `NuciXNA.Primitives` | `Point2D`, `Size2D`, `Scale2D`, `Colour`, `Rectangle2D` |
-
-### Release
+### Formatting
 
 ```bash
-dotnet pack NuciXNA.Graphics/NuciXNA.Graphics.csproj -c Release
+dotnet format
 ```
+
+## 📦 Dependencies
+
+| Package | Version | Scope | Purpose |
+|---------|---------|-------|---------|
+| `MonoGame.Framework.DesktopGL` | 3.8.4 | Runtime | XNA/MonoGame runtime |
+| `NuciXNA.DataAccess` | 4.0.3 | Runtime | Content loading (`NuciContentManager`) |
+| `NuciXNA.Primitives` | 2.1.7 | Runtime | `Point2D`, `Size2D`, `Scale2D`, `Colour`, `Rectangle2D` |
+| `Microsoft.NET.Test.Sdk` | 18.7.0 | Development | Test runner |
+| `NUnit` | 4.6.1 | Development | Test framework |
+| `NUnit3TestAdapter` | 6.2.0 | Development | Test adapter |
 
 ## 🗂️ Project Structure
 
 The solution contains the following projects:
 
-- `NuciXNA.Graphics`: Core library with sprite primitives, effects, and the graphics manager
-- `NuciXNA.Graphics.UnitTests`: Unit tests for the library
+| Project | Type | Purpose |
+|---------|------|---------|
+| `NuciXNA.Graphics` | Library | Core library with sprite primitives, effects, and the graphics manager |
+| `NuciXNA.Graphics.UnitTests` | Test | Unit tests for the library |
 
-Key directories inside `NuciXNA.Graphics/`:
+### Directories
 
 | Directory | Purpose |
 |-----------|--------|
-| `Drawing/` | Sprite primitives, text rendering, alignment, and outlines |
-| `SpriteEffects/` | Reusable sprite effects (movement, animation, opacity, scale, rotation) |
-
-## 🤝 Contributing
-
-Contributions are welcome. Please:
-- Keep changes cross-platform
-- Keep the existing public contract intact unless a breaking change is intentional
-- Keep pull requests focused and consistent with the existing code style
-- Update documentation when behaviour changes
-- Add unit tests for any new or changed functionality
+| `NuciXNA.Graphics/Drawing/` | Sprite primitives, text rendering, alignment, and outlines |
+| `NuciXNA.Graphics/SpriteEffects/` | Reusable sprite effects (movement, animation, opacity, scale, rotation) |
 
 ## 🏗️ Architecture
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for the system architecture, component diagram, runtime flow, and extension points.
+NuciXNA.Graphics follows a library/SDK architecture with a singleton `GraphicsManager`, composable `Sprite` hierarchy, and stateless drawing helpers.
+
+See the [architecture documentation](ARCHITECTURE.md) for the system context, principal components, runtime flows, ownership boundaries, dependencies, constraints, and extension points.
+
+## 🤝 Contributing
+
+You are welcome to submit any suggestion, feedback, or modification to this project.
+
+When doing so, please:
+- Maintain cross-platform compatibility
+- Preserve the existing public contract unless a breaking change is intentional
+- Submit focused pull requests that conform to the existing code style
+- Maintain your branch synchronised with `main`
+- Revise the documentation when functionality changes
+- Properly test all modifications, including edge cases and error conditions
+- Add tests for additional or modified functionality
+
+See the [contributing guidelines](CONTRIBUTING.md) for details on how to report issues, suggest enhancements, and submit changes.
+
+## 📜 Code of Conduct
+
+See the [Code of Conduct](CODE_OF_CONDUCT.md) for the standards of conduct expected in all project spaces.
 
 ## 🔗 Related Projects
 
@@ -165,17 +216,21 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for the system architecture, component di
 - [NuciXNA.Input](https://github.com/hmlendea/nucixna.input): Input handling for NuciXNA
 - [NuciXNA.Primitives](https://github.com/hmlendea/nucixna.primitives): Primitive types used across NuciXNA
 
-## �️ Security
+## 🔒 Security
 
-See [SECURITY.md](SECURITY.md) for the vulnerability reporting and disclosure policy.
+NuciXNA.Graphics contains no network communication, telemetry, or external data processing; its attack surface is limited to rendering logic and content-loading helpers.
 
-## �💝 Support
+For information on reporting security vulnerabilities, see [SECURITY.md](SECURITY.md).
 
-Found a bug or have a suggestion? [Open an issue](https://github.com/hmlendea/nucixna.graphics/issues)!
+## 💝 Project Engagement
 
-If you find this project useful, consider [funding it](https://hmlendea.go.ro/funding) or giving a ⭐️ on GitHub!
+Discovered a problem or have a suggestion? [Open an issue](https://github.com/hmlendea/nucixna.graphics/issues)!
+
+If you find this project useful, consider [funding it](https://hmlendea.go.ro/funding) or starring ⭐️ it on GitHub!
+
+[![Donate](https://raw.githubusercontent.com/hmlendea/readme-assets/master/donate_generic.png)](https://hmlendea.go.ro/funding)
 
 ## 📄 License
 
-Licensed under the `GNU General Public License v3.0` or later.
-See [LICENSE](./LICENSE) for details.
+This project is being distributed under the `GNU General Public License v3.0` or later.
+See [LICENSE](./LICENSE) for further information.

@@ -196,6 +196,8 @@ See the [architecture documentation](ARCHITECTURE.md) for the system context, pr
 | Workflow | Purpose | What it does |
 |----------|---------|--------------|
 | [ dotnet.yml ](https://github.com/hmlendea/nucixna.graphics/blob/main/.github/workflows/dotnet.yml) | Continuous integration | Restores dependencies, builds the solution, and runs unit tests on every push and pull request to `master` |
+| [ nuget-release.yml ](https://github.com/hmlendea/nucixna.graphics/blob/main/.github/workflows/nuget-release.yml) | NuGet.org release | Packs and publishes the NuGet package to NuGet.org when a GitHub release is published |
+| [ github-release.yml ](https://github.com/hmlendea/nucixna.graphics/blob/main/.github/workflows/github-release.yml) | GitHub Release | Packs the NuGet package, uploads it to the GitHub Release, and appends the SHA256 checksum to the release notes |
 
 ## 🤝 Contributing
 

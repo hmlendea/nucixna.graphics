@@ -165,12 +165,12 @@ dotnet format
 | Package | Version | Scope | Purpose |
 |---------|---------|-------|---------|
 | `MonoGame.Framework.DesktopGL` | 3.8.4 | Runtime | XNA/MonoGame runtime |
-| `NuciXNA.DataAccess` | 4.0.3 | Runtime | Content loading (`NuciContentManager`) |
-| `NuciXNA.Primitives` | 2.1.7 | Runtime | `Point2D`, `Size2D`, `Scale2D`, `Colour`, `Rectangle2D` |
-| `Microsoft.NET.Test.Sdk` | 18.7.0 | Development | Test runner |
-| `Microsoft.CodeAnalysis.CSharp` | 4.14.0 | Development | Roslyn source-convention analysis for the architecture tests |
-| `NUnit` | 4.6.1 | Development | Test framework |
-| `NUnit3TestAdapter` | 6.2.0 | Development | Test adapter |
+| `NuciXNA.DataAccess` | 4.0.6 | Runtime | Content loading (`NuciContentManager`) |
+| `NuciXNA.Primitives` | 2.1.9 | Runtime | `Point2D`, `Size2D`, `Scale2D`, `Colour`, `Rectangle2D` |
+| `Microsoft.NET.Test.Sdk` | 18.12.0 | Development | Test runner |
+| `Microsoft.CodeAnalysis.CSharp` | 5.12.0 | Development | Roslyn source-convention analysis for the architecture tests |
+| `NUnit` | 5.0.0 | Development | Test framework |
+| `NUnit3TestAdapter` | 6.3.1 | Development | Test adapter |
 | `TngTech.ArchUnitNET` | 0.13.5 | Development | Architecture and dependency rule enforcement |
 
 ## 🗂️ Project Structure

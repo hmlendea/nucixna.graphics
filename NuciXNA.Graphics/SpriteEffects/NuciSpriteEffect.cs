@@ -19,11 +19,6 @@ namespace NuciXNA.Graphics.SpriteEffects
         public bool IsActive { get; private set; }
 
         /// <summary>
-        /// Gets the sprite this effect is attached to.
-        /// </summary>
-        protected TSprite Sprite { get; private set; }
-
-        /// <summary>
         /// Gets the type.
         /// </summary>
         /// <value>The type.</value>
@@ -46,6 +41,11 @@ namespace NuciXNA.Graphics.SpriteEffects
         /// </summary>
         /// <value><c>true</c> if destroyed; otherwise, <c>false</c>.</value>
         public bool IsDisposed { get; private set; }
+
+        /// <summary>
+        /// Gets the sprite this effect is attached to.
+        /// </summary>
+        protected TSprite Sprite { get; private set; }
 
         /// <summary>
         /// Occurs when this <see cref="NuciSpriteEffect"/> began loading its content.

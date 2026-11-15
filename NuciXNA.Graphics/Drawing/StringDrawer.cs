@@ -9,6 +9,9 @@ using NuciXNA.Primitives.Mapping;
 
 namespace NuciXNA.Graphics.Drawing
 {
+    /// <summary>
+    /// Draws and wraps strings with alignment, opacity, and optional outline support.
+    /// </summary>
     public static class StringDrawer
     {
         /// <summary>
@@ -86,7 +89,11 @@ namespace NuciXNA.Graphics.Drawing
                     spriteBatch.DrawString(font, line, pos, clrOutline);
                 }
 
-                spriteBatch.DrawString(font, line, bounds.Location.ToXnaVector2() + textOrigin, fontColour.ToXnaColor());
+                spriteBatch.DrawString(
+                    font,
+                    line,
+                    bounds.Location.ToXnaVector2() + textOrigin,
+                    fontColour.ToXnaColor());
 
                 textOrigin.Y += lineSize.Y;
             }
@@ -132,11 +139,15 @@ namespace NuciXNA.Graphics.Drawing
                     {
                         if (sb.ToString() == " ")
                         {
-                            sb.Append(WrapText(font, word.Insert(word.Length / 2, " ") + " ", maxLineWidth));
+                            string wrappedWord = word.Insert(word.Length / 2, " ") + " ";
+
+                            sb.Append(WrapText(font, wrappedWord, maxLineWidth));
                         }
                         else
                         {
-                            sb.Append("\n" + WrapText(font, word.Insert(word.Length / 2, " ") + " ", maxLineWidth));
+                            string wrappedWord = word.Insert(word.Length / 2, " ") + " ";
+
+                            sb.Append("\n" + WrapText(font, wrappedWord, maxLineWidth));
                         }
                     }
                     else

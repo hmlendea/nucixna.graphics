@@ -10,6 +10,9 @@ using NuciXNA.Graphics.SpriteEffects;
 
 namespace NuciXNA.Graphics.Drawing
 {
+    /// <summary>
+    /// Renders textures with layout modes, alpha masking, and sprite sheet support.
+    /// </summary>
     public sealed class TextureSprite : Sprite
     {
         private string loadedContentFile;
@@ -74,25 +77,14 @@ namespace NuciXNA.Graphics.Drawing
         public SpriteSheetEffect SpriteSheetEffect { get; set; }
 
         /// <summary>
-        /// Initialises a new instance of the <see cref="TextureSprite"/> class.
-        /// </summary>
-        public TextureSprite() : base()
-        {
-            ContentFile = string.Empty;
-            AlphaMaskFile = string.Empty;
-
-            SourceRectangle = Rectangle2D.Empty;
-            TextureLayout = TextureLayout.Stretch;
-        }
-
-        /// <summary>
         /// Gets the source rectangle adjusted for the current sprite sheet frame.
         /// </summary>
         public Rectangle2D ClientSourceRectangle
         {
             get
             {
-                if (SpriteSheetEffect is null || !SpriteSheetEffect.IsActive)
+                if (SpriteSheetEffect is null ||
+                    !SpriteSheetEffect.IsActive)
                 {
                     return SourceRectangle;
                 }
@@ -102,6 +94,18 @@ namespace NuciXNA.Graphics.Drawing
                     SpriteSheetEffect.CurrentFrame.Y * SourceRectangle.Height,
                     SourceRectangle.Size);
             }
+        }
+
+        /// <summary>
+        /// Initialises a new instance of the <see cref="TextureSprite"/> class.
+        /// </summary>
+        public TextureSprite() : base()
+        {
+            ContentFile = string.Empty;
+            AlphaMaskFile = string.Empty;
+
+            SourceRectangle = Rectangle2D.Empty;
+            TextureLayout = TextureLayout.Stretch;
         }
 
         /// <summary>
@@ -150,7 +154,8 @@ namespace NuciXNA.Graphics.Drawing
                 GraphicsManager.Instance.Graphics.GraphicsDevice.SetRenderTarget(null);
             }
 
-            if (SpriteSheetEffect is not null && !SpriteSheetEffect.IsContentLoaded)
+            if (SpriteSheetEffect is not null &&
+                !SpriteSheetEffect.IsContentLoaded)
             {
                 SpriteSheetEffect.LoadContent(this);
             }

@@ -468,6 +468,7 @@ No other external dependencies (no HTTP, logging, configuration, DI containers, 
 | Test Boundary | Tool | Command | Coverage Focus |
 |---------------|------|---------|----------------|
 | Unit tests (sprite effects, drawing logic) | NUnit 4.6.1 + NUnit3TestAdapter | `dotnet test NuciXNA.Graphics.slnx` | Effect state transitions, `TextureDrawer` sampler logic, `StringDrawer` alignment/wrapping |
+| Architecture and fitness tests | NUnit + ArchUnitNET + Roslyn | `dotnet test NuciXNA.Graphics.ArchitectureTests/NuciXNA.Graphics.ArchitectureTests.csproj` | Public contract inventory, namespace placement, permitted dependency edges, project/solution conventions, and source-file conventions |
 | Build verification | .NET SDK 10 | `dotnet build NuciXNA.Graphics/NuciXNA.Graphics.csproj` | Compilation, dependency resolution |
 | Pack verification | .NET SDK 10 | `dotnet pack NuciXNA.Graphics/NuciXNA.Graphics.csproj -c Release` | NuGet package contents, version, metadata |
 
@@ -510,8 +511,9 @@ No other external dependencies (no HTTP, logging, configuration, DI containers, 
 | Graphics Manager | `NuciXNA.Graphics/GraphicsManager.cs` |
 | Drawing Primitives | `NuciXNA.Graphics/Drawing/` |
 | Sprite Effects | `NuciXNA.Graphics/SpriteEffects/` |
+| Architecture Tests | `NuciXNA.Graphics.ArchitectureTests/` |
 | Unit Tests | `NuciXNA.Graphics.UnitTests/` |
-| Solution / Build | `NuciXNA.Graphics.slnx`, `NuciXNA.Graphics/NuciXNA.Graphics.csproj`, `NuciXNA.Graphics.UnitTests/NuciXNA.Graphics.UnitTests.csproj` |
+| Solution / Build | `NuciXNA.Graphics.slnx`, `NuciXNA.Graphics/NuciXNA.Graphics.csproj`, `NuciXNA.Graphics.ArchitectureTests/NuciXNA.Graphics.ArchitectureTests.csproj`, `NuciXNA.Graphics.UnitTests/NuciXNA.Graphics.UnitTests.csproj` |
 
 ## 📚 Related Documentation
 

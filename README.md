@@ -166,8 +166,10 @@ dotnet format
 | `NuciXNA.DataAccess` | 4.0.3 | Runtime | Content loading (`NuciContentManager`) |
 | `NuciXNA.Primitives` | 2.1.7 | Runtime | `Point2D`, `Size2D`, `Scale2D`, `Colour`, `Rectangle2D` |
 | `Microsoft.NET.Test.Sdk` | 18.7.0 | Development | Test runner |
+| `Microsoft.CodeAnalysis.CSharp` | 4.14.0 | Development | Roslyn source-convention analysis for the architecture tests |
 | `NUnit` | 4.6.1 | Development | Test framework |
 | `NUnit3TestAdapter` | 6.2.0 | Development | Test adapter |
+| `TngTech.ArchUnitNET` | 0.13.5 | Development | Architecture and dependency rule enforcement |
 
 ## 🗂️ Project Structure
 
@@ -176,6 +178,7 @@ The solution contains the following projects:
 | Project | Type | Purpose |
 |---------|------|---------|
 | `NuciXNA.Graphics` | Library | Core library with sprite primitives, effects, and the graphics manager |
+| `NuciXNA.Graphics.ArchitectureTests` | Test | Architecture, dependency, and source-convention fitness tests |
 | `NuciXNA.Graphics.UnitTests` | Test | Unit tests for the library |
 
 ### Directories

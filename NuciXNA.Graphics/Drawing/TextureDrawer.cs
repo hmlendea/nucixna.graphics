@@ -15,10 +15,10 @@ namespace NuciXNA.Graphics.Drawing
     /// </summary>
     public static class TextureDrawer
     {
-        private static SpriteSortMode DefaultSpriteSortMode => SpriteSortMode.Deferred;
-
         private static SpriteSortMode currentSpriteSortMode = SpriteSortMode.Deferred;
         private static SamplerState currentSamplerState;
+
+        private static SpriteSortMode DefaultSpriteSortMode => SpriteSortMode.Deferred;
 
         /// <summary>
         /// Draws a texture using the graphics manager's default sampler state for Stretch layout.
@@ -133,4 +133,3 @@ namespace NuciXNA.Graphics.Drawing
         }
     }
 }
-

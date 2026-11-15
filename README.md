@@ -1,6 +1,7 @@
 [![Donate](https://img.shields.io/badge/-%E2%99%A5%20Donate-%23ff69b4)](https://hmlendea.go.ro/funding)
 [![Latest Release](https://img.shields.io/github/v/release/hmlendea/nucixna.graphics)](https://github.com/hmlendea/nucixna.graphics/releases/latest)
 [![Build Status](https://github.com/hmlendea/nucixna.graphics/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hmlendea/nucixna.graphics/actions/workflows/dotnet.yml)
+[![Security Scan](https://github.com/hmlendea/nucixna.graphics/actions/workflows/security.yml/badge.svg)](https://github.com/hmlendea/nucixna.graphics/actions/workflows/security.yml)
 [![NuGet](https://img.shields.io/nuget/v/NuciXNA.Graphics)](https://nuget.org/packages/NuciXNA.Graphics)
 [![License](https://img.shields.io/github/license/hmlendea/nucixna.graphics)](https://github.com/hmlendea/nucixna.graphics/blob/main/LICENSE)
 
@@ -23,6 +24,7 @@ Graphics helpers and sprite abstractions for NuciXNA, built on top of MonoGame/X
 - [Code of Conduct](#code-of-conduct)
 - [Related Projects](#related-projects)
 - [Security](#security)
+- [Support](#support)
 - [Project Engagement](#project-engagement)
 - [License](#license)
 
@@ -198,9 +200,10 @@ See the [architecture documentation](ARCHITECTURE.md) for the system context, pr
 
 | Workflow | Purpose | What it does |
 |----------|---------|--------------|
-| [ dotnet.yml ](https://github.com/hmlendea/nucixna.graphics/blob/main/.github/workflows/dotnet.yml) | Continuous integration | Restores dependencies, builds the solution, and runs unit tests on every push and pull request to `master` |
-| [ nuget-release.yml ](https://github.com/hmlendea/nucixna.graphics/blob/main/.github/workflows/nuget-release.yml) | NuGet.org release | Packs and publishes the NuGet package to NuGet.org when a GitHub release is published |
-| [ github-release.yml ](https://github.com/hmlendea/nucixna.graphics/blob/main/.github/workflows/github-release.yml) | GitHub Release | Packs the NuGet package, uploads it to the GitHub Release, and appends the SHA256 checksum to the release notes |
+| [ dotnet.yml ](https://github.com/hmlendea/nucixna.graphics/blob/master/.github/workflows/dotnet.yml) | Continuous integration | Restores dependencies, builds the solution, and runs unit tests on every push and pull request to `master` |
+| [ security.yml ](https://github.com/hmlendea/nucixna.graphics/blob/master/.github/workflows/security.yml) | Security scanning | Runs CodeQL analysis of the C# source, checks direct and transitive NuGet dependencies for known vulnerabilities, and publishes results to GitHub Code Scanning weekly and for pushes and pull requests targeting `master` |
+| [ nuget-release.yml ](https://github.com/hmlendea/nucixna.graphics/blob/master/.github/workflows/nuget-release.yml) | NuGet.org release | Packs and publishes the NuGet package to NuGet.org when a GitHub release is published |
+| [ github-release.yml ](https://github.com/hmlendea/nucixna.graphics/blob/master/.github/workflows/github-release.yml) | GitHub Release | Packs the NuGet package, uploads it to the GitHub Release, and appends the SHA256 checksum to the release notes |
 
 ## 🤝 Contributing
 
@@ -233,6 +236,10 @@ See the [Code of Conduct](CODE_OF_CONDUCT.md) for the standards of conduct expec
 NuciXNA.Graphics contains no network communication, telemetry, or external data processing; its attack surface is limited to rendering logic and content-loading helpers.
 
 For information on reporting security vulnerabilities, see [SECURITY.md](SECURITY.md).
+
+## 💬 Support
+
+For support, please [open an issue](https://github.com/hmlendea/nucixna.graphics/issues).
 
 ## 💝 Project Engagement
 

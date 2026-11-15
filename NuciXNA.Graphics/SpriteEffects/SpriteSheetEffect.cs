@@ -4,6 +4,9 @@ using NuciXNA.Graphics.Drawing;
 
 namespace NuciXNA.Graphics.SpriteEffects
 {
+    /// <summary>
+    /// Base class for effects that advance a sprite sheet frame.
+    /// </summary>
     public abstract class SpriteSheetEffect : NuciSpriteEffect<TextureSprite>
     {
         /// <summary>

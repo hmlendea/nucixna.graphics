@@ -7,6 +7,9 @@ using NuciXNA.Primitives.Mapping;
 
 namespace NuciXNA.Graphics.Drawing
 {
+    /// <summary>
+    /// Renders text with alignment, word wrapping, and optional outlines.
+    /// </summary>
     public sealed class TextSprite : Sprite
     {
         private SpriteFont font;

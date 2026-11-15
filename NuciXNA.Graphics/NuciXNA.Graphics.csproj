@@ -4,6 +4,9 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>NuciXNA.Graphics</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <IsPackable>true</IsPackable>
     <Version>3.0.0</Version>
     <Description>Graphics management for NuciXNA</Description>
     <Authors>Horațiu Mlendea</Authors>

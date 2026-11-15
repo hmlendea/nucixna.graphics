@@ -12,8 +12,8 @@ namespace NuciXNA.Graphics
     /// </summary>
     public sealed class GraphicsManager
     {
-        private static volatile GraphicsManager instance;
         private static readonly Lock syncRoot = new();
+        private static volatile GraphicsManager instance;
 
         /// <summary>
         /// Gets the instance.
